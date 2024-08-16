@@ -465,7 +465,7 @@
                             <div class="card-body">
                                 <h6 class="ribbon ribbon-blue-bg fs-14 mb-3">All Levels</h6>
                                 <h5 class="card-title"><a href="course-details.html">The Business Intelligence Analyst Course 2021</a></h5>
-                                <p class="card-text"><a href="teacher-detail.html">Jose Portilla</a></p>
+                                <p class="card-text"><a href="">Jose Portilla</a></p>
                                 <div class="rating-wrap d-flex align-items-center py-2">
                                     <div class="review-stars">
                                         <span class="rating-number">4.4</span>
@@ -497,7 +497,7 @@
                             <div class="card-body">
                                 <h6 class="ribbon ribbon-blue-bg fs-14 mb-3">All Levels</h6>
                                 <h5 class="card-title"><a href="course-details.html">The Business Intelligence Analyst Course 2021</a></h5>
-                                <p class="card-text"><a href="teacher-detail.html">Jose Portilla</a></p>
+                                <p class="card-text"><a href="">Jose Portilla</a></p>
                                 <div class="rating-wrap d-flex align-items-center py-2">
                                     <div class="review-stars">
                                         <span class="rating-number">4.4</span>
@@ -526,7 +526,7 @@
                             <div class="card-body">
                                 <h6 class="ribbon ribbon-blue-bg fs-14 mb-3">All Levels</h6>
                                 <h5 class="card-title"><a href="course-details.html">The Business Intelligence Analyst Course 2021</a></h5>
-                                <p class="card-text"><a href="teacher-detail.html">Jose Portilla</a></p>
+                                <p class="card-text"><a href="">Jose Portilla</a></p>
                                 <div class="rating-wrap d-flex align-items-center py-2">
                                     <div class="review-stars">
                                         <span class="rating-number">4.4</span>
@@ -555,7 +555,7 @@
                             <div class="card-body">
                                 <h6 class="ribbon ribbon-blue-bg fs-14 mb-3">All Levels</h6>
                                 <h5 class="card-title"><a href="course-details.html">The Business Intelligence Analyst Course 2021</a></h5>
-                                <p class="card-text"><a href="teacher-detail.html">Jose Portilla</a></p>
+                                <p class="card-text"><a href="">Jose Portilla</a></p>
                                 <div class="rating-wrap d-flex align-items-center py-2">
                                     <div class="review-stars">
                                         <span class="rating-number">4.4</span>
@@ -587,7 +587,7 @@
                             <div class="card-body">
                                 <h6 class="ribbon ribbon-blue-bg fs-14 mb-3">All Levels</h6>
                                 <h5 class="card-title"><a href="course-details.html">The Business Intelligence Analyst Course 2021</a></h5>
-                                <p class="card-text"><a href="teacher-detail.html">Jose Portilla</a></p>
+                                <p class="card-text"><a href="">Jose Portilla</a></p>
                                 <div class="rating-wrap d-flex align-items-center py-2">
                                     <div class="review-stars">
                                         <span class="rating-number">4.4</span>
@@ -619,7 +619,7 @@
                             <div class="card-body">
                                 <h6 class="ribbon ribbon-blue-bg fs-14 mb-3">All Levels</h6>
                                 <h5 class="card-title"><a href="course-details.html">The Business Intelligence Analyst Course 2021</a></h5>
-                                <p class="card-text"><a href="teacher-detail.html">Jose Portilla</a></p>
+                                <p class="card-text"><a href="">Jose Portilla</a></p>
                                 <div class="rating-wrap d-flex align-items-center py-2">
                                     <div class="review-stars">
                                         <span class="rating-number">4.4</span>
@@ -648,7 +648,7 @@
                             <div class="card-body">
                                 <h6 class="ribbon ribbon-blue-bg fs-14 mb-3">All Levels</h6>
                                 <h5 class="card-title"><a href="course-details.html">The Business Intelligence Analyst Course 2021</a></h5>
-                                <p class="card-text"><a href="teacher-detail.html">Jose Portilla</a></p>
+                                <p class="card-text"><a href="">Jose Portilla</a></p>
                                 <div class="rating-wrap d-flex align-items-center py-2">
                                     <div class="review-stars">
                                         <span class="rating-number">4.4</span>
@@ -677,7 +677,7 @@
                             <div class="card-body">
                                 <h6 class="ribbon ribbon-blue-bg fs-14 mb-3">All Levels</h6>
                                 <h5 class="card-title"><a href="course-details.html">The Business Intelligence Analyst Course 2021</a></h5>
-                                <p class="card-text"><a href="teacher-detail.html">Jose Portilla</a></p>
+                                <p class="card-text"><a href="">Jose Portilla</a></p>
                                 <div class="rating-wrap d-flex align-items-center py-2">
                                     <div class="review-stars">
                                         <span class="rating-number">4.4</span>
@@ -709,7 +709,7 @@
                             <div class="card-body">
                                 <h6 class="ribbon ribbon-blue-bg fs-14 mb-3">All Levels</h6>
                                 <h5 class="card-title"><a href="course-details.html">The Business Intelligence Analyst Course 2021</a></h5>
-                                <p class="card-text"><a href="teacher-detail.html">Jose Portilla</a></p>
+                                <p class="card-text"><a href="">Jose Portilla</a></p>
                                 <div class="rating-wrap d-flex align-items-center py-2">
                                     <div class="review-stars">
                                         <span class="rating-number">4.4</span>
@@ -741,7 +741,7 @@
                             <div class="card-body">
                                 <h6 class="ribbon ribbon-blue-bg fs-14 mb-3">All Levels</h6>
                                 <h5 class="card-title"><a href="course-details.html">The Business Intelligence Analyst Course 2021</a></h5>
-                                <p class="card-text"><a href="teacher-detail.html">Jose Portilla</a></p>
+                                <p class="card-text"><a href="">Jose Portilla</a></p>
                                 <div class="rating-wrap d-flex align-items-center py-2">
                                     <div class="review-stars">
                                         <span class="rating-number">4.4</span>
@@ -802,7 +802,7 @@
     <div id="tooltip_content_1">
         <div class="card card-item">
             <div class="card-body">
-                <p class="card-text pb-2">By <a href="teacher-detail.html">Jose Portilla</a></p>
+                <p class="card-text pb-2">By <a href="">Jose Portilla</a></p>
                 <h5 class="card-title pb-1"><a href="course-details.html">The Business Intelligence Analyst Course 2021</a></h5>
                 <div class="d-flex align-items-center pb-1">
                     <h6 class="ribbon fs-14 mr-2">Bestseller</h6>

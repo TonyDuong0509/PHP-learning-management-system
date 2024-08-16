@@ -7,6 +7,7 @@ require_once ABSPATH . "app/Repositories/Interfaces/CourseSectionsRepositoryInte
 require_once ABSPATH . "app/Repositories/Interfaces/CourseLecturesRepositoryInterface.php";
 require_once ABSPATH . "app/Repositories/Interfaces/CourseRepositoryInterface.php";
 require_once ABSPATH . "app/Repositories/Interfaces/CourseTypesRepositoryInterface.php";
+require_once ABSPATH . "app/Repositories/Interfaces/WishListRepositoryInterface.php";
 
 require_once ABSPATH . "app/Models/Category.php";
 require_once ABSPATH . "app/Repositories/CategoryRepository.php";
@@ -24,6 +25,8 @@ require_once ABSPATH . "app/Models/CourseLectures.php";
 require_once ABSPATH . "app/Repositories/CourseLecturesRepository.php";
 require_once ABSPATH . "app/Models/CourseTypes.php";
 require_once ABSPATH . "app/Repositories/CourseTypesRepository.php";
+require_once ABSPATH . "app/Models/Wishlists.php";
+require_once ABSPATH . "app/Repositories/WishListRepository.php";
 
 require_once ABSPATH . "Container/ServiceContainer.php";
 

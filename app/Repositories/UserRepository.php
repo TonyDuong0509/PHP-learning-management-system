@@ -112,4 +112,13 @@ class UserRepository implements UserRepositoryInterface
     }
 
     public function delete($id) {}
+
+    public function checkExist($email)
+    {
+        $condition = "email = '$email' AND status = 1";
+        $users = $this->fetchAll($condition);
+        $user = current($users);
+
+        return $user;
+    }
 }

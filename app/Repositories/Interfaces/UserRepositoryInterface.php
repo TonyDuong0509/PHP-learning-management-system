@@ -11,4 +11,5 @@ interface UserRepositoryInterface
     public function getById($id);
     public function update($category);
     public function delete($id);
+    public function checkExist($email);
 }

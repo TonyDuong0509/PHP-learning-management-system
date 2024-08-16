@@ -28,7 +28,7 @@
     <div id="tooltip_content_1">
         <div class="card card-item">
             <div class="card-body">
-                <p class="card-text pb-2">By <a href="teacher-detail.html">Jose Portilla</a></p>
+                <p class="card-text pb-2">By <a href="<?php echo $router->generate('instructor.details', ['id' => $course->getInstructorId()]); ?>">Jose Portilla</a></p>
                 <h5 class="card-title pb-1"><a href="course-details.html">The Business Intelligence Analyst Course 2021</a></h5>
                 <div class="d-flex align-items-center pb-1">
                     <h6 class="ribbon fs-14 mr-2">Bestseller</h6>
@@ -56,7 +56,7 @@
     <div id="tooltip_content_2">
         <div class="card card-item">
             <div class="card-body">
-                <p class="card-text pb-2">By <a href="teacher-detail.html">Jose Portilla</a></p>
+                <p class="card-text pb-2">By <a href="<?php echo $router->generate('instructor.details', ['id' => $course->getInstructorId()]); ?>">Jose Portilla</a></p>
                 <h5 class="card-title pb-1"><a href="course-details.html">Ultimate Adobe Photoshop Training: From Beginner to Pro</a></h5>
                 <div class="d-flex align-items-center pb-1">
                     <h6 class="ribbon fs-14 mr-2">Bestseller</h6>
@@ -84,7 +84,7 @@
     <div id="tooltip_content_3">
         <div class="card card-item">
             <div class="card-body">
-                <p class="card-text pb-2">By <a href="teacher-detail.html">Jose Portilla</a></p>
+                <p class="card-text pb-2">By <a href="<?php echo $router->generate('instructor.details', ['id' => $course->getInstructorId()]); ?>">Jose Portilla</a></p>
                 <h5 class="card-title pb-1"><a href="course-details.html">The Complete WordPress Website Business Course</a></h5>
                 <div class="d-flex align-items-center pb-1">
                     <h6 class="ribbon fs-14 mr-2">Bestseller</h6>

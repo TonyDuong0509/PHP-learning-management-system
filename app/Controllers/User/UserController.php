@@ -75,4 +75,9 @@ class UserController
         header("Location: /");
         exit;
     }
+
+    public function dashboard()
+    {
+        require ABSPATH . 'resources/user/dashboard/index.php';
+    }
 }

@@ -41,7 +41,7 @@ $colors = [
                 <?php foreach ($categoriesArea as $index => $categoryArea): ?>
                     <div class="col-lg-3 responsive-column-half">
                         <div class="category-item category-item-layout-2">
-                            <a href="#" class="category-content">
+                            <a href="<?php echo $router->generate('course.category', ['id' => $categoryArea->getId(), 'slug' => $categoryArea->getSlug()]); ?>" class="category-content">
                                 <div class="icon-element icon-element-md shadow-sm <?php echo $colors[$index % count($colors)]; ?>">
                                     <i class="<?php echo $icons[$index % count($icons)]; ?>"></i>
                                 </div>
@@ -52,9 +52,6 @@ $colors = [
                 <?php endforeach; ?>
             <?php endif; ?>
 
-        </div><!-- end row -->
-        <div class="text-center pt-2">
-            <a href="categories.html" class="btn theme-btn theme-btn-sm lh-26">View all Category<i class="la la-arrow-right icon ml-1"></i></a>
         </div>
-    </div><!-- end container -->
+    </div>
 </section>

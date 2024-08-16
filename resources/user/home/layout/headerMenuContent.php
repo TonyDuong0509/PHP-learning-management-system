@@ -116,5 +116,15 @@
                 </div><!-- end col-lg-10 -->
             </div><!-- end row -->
         </div>
+        <style>
+            .alert-container {
+                position: fixed;
+                top: 21%;
+                right: 2%;
+                z-index: 1050;
+                width: 300px;
+            }
+        </style>
+        <div id="alert-container" class="alert-container"></div>
     </div><!-- end container-fluid -->
 </div>

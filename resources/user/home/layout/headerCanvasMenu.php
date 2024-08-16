@@ -36,6 +36,7 @@
                 <li><a href="student-quiz-result-details-2.html">quiz details 2</a></li>
                 <li><a href="student-path.html">path details</a></li>
                 <li><a href="student-path-assessment.html">Skill Assessment</a></li>
+
                 <li><a href="student-path-assessment-result.html">Skill result</a></li>
             </ul>
         </li>

@@ -34,7 +34,7 @@
                         <span class="student-total pl-2">540,815 students</span>
                     </div>
                 </div><!-- end d-flex -->
-                <p class="pt-2 pb-1">Created by <a href="teacher-detail.html" class="text-color hover-underline"><?php echo $user->getName(); ?></a></p>
+                <p class="pt-2 pb-1">Created by <a href="<?php echo $router->generate('instructor.details', ['id' => $course->getInstructorId()]); ?>" class="text-color hover-underline"><?php echo $user->getName(); ?></a></p>
                 <div class="d-flex flex-wrap align-items-center">
                     <p class="pr-3 d-flex align-items-center">
                         <svg class="svg-icon-color-gray mr-1" width="16px" viewBox="0 0 24 24">
@@ -173,7 +173,7 @@
                         <div class="instructor-wrap">
                             <div class="media media-card">
                                 <div class="instructor-img">
-                                    <a href="teacher-detail.html" class="media-img d-block">
+                                    <a href="<?php echo $router->generate('instructor.details', ['id' => $course->getInstructorId()]); ?>" class="media-img d-block">
                                         <img class="lazy" src="<?php echo $user->getPhoto() ?? '/public/upload/no_image.png'; ?>" data-src="images/small-avatar-1.jpg" alt="Avatar image">
                                     </a>
                                     <ul class="generic-list-item pt-3">
@@ -181,7 +181,7 @@
                                         <li><i class="la la-user mr-2 text-color-3"></i> 45,786 Students</li>
                                         <li><i class="la la-comment-o mr-2 text-color-3"></i> 2,533 Reviews</li>
                                         <li><i class="la la-play-circle-o mr-2 text-color-3"></i> <?php echo count($course->getCoursesOfInstructor()); ?> Courses</li>
-                                        <li><a href="teacher-detail.html">View all Courses</a></li>
+                                        <li><a href="<?php echo $router->generate('instructor.details', ['id' => $course->getInstructorId()]); ?>">View all Courses</a></li>
                                     </ul>
                                 </div><!-- end instructor-img -->
                                 <style>
@@ -201,7 +201,7 @@
                                     }
                                 </style>
                                 <div class="media-body">
-                                    <h5><a href="teacher-detail.html"><?php echo $user->getName(); ?></a></h5>
+                                    <h5><a href="<?php echo $router->generate('instructor.details', ['id' => $course->getInstructorId()]); ?>"><?php echo $user->getName(); ?></a></h5>
                                     <span class="d-block lh-18 pt-2 pb-3">Joined <?php echo $user->getCreatedAt(); ?></span>
                                     <p class="text-black lh-18 pb-3"><?php echo $user->getEmail(); ?></p>
                                     <p class="pb-3">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
@@ -591,7 +591,7 @@
 <section class="related-course-area bg-gray pt-60px pb-60px">
     <div class="container">
         <div class="related-course-wrap">
-            <h3 class="fs-28 font-weight-semi-bold pb-35px">More Courses by <a href="teacher-detail.html" class="text-color hover-underline"><?php echo $course->getInstructorName(); ?></a></h3>
+            <h3 class="fs-28 font-weight-semi-bold pb-35px">More Courses by <a href="<?php echo $router->generate('instructor.details', ['id' => $course->getInstructorId()]); ?>" class="text-color hover-underline"><?php echo $course->getInstructorName(); ?></a></h3>
             <div class="view-more-carousel-2 owl-action-styled">
 
                 <?php if (!empty($coursesSameInstructorId)): ?>
@@ -622,7 +622,7 @@
                             <div class="card-body">
                                 <h6 class="ribbon ribbon-blue-bg fs-14 mb-3"><?php echo $course->getLabel(); ?></h6>
                                 <h5 class="card-title"><a href="course-details.html"><?php echo $course->getName(); ?></a></h5>
-                                <p class="card-text"><a href="teacher-detail.html"><?php echo $course->getInstructorName(); ?></a></p>
+                                <p class="card-text"><a href="<?php echo $router->generate('instructor.details', ['id' => $course->getInstructorId()]); ?>"><?php echo $course->getInstructorName(); ?></a></p>
                                 <div class="rating-wrap d-flex align-items-center py-2">
                                     <div class="review-stars">
                                         <span class="rating-number">4.4</span>
@@ -703,7 +703,7 @@
     <div id="tooltip_content_1">
         <div class="card card-item">
             <div class="card-body">
-                <p class="card-text pb-2">By <a href="teacher-detail.html">Jose Portilla</a></p>
+                <p class="card-text pb-2">By <a href="<?php echo $router->generate('instructor.details', ['id' => $course->getInstructorId()]); ?>">Jose Portilla</a></p>
                 <h5 class="card-title pb-1"><a href="course-details.html">The Business Intelligence Analyst Course 2021</a></h5>
                 <div class="d-flex align-items-center pb-1">
                     <h6 class="ribbon fs-14 mr-2">Bestseller</h6>
@@ -742,7 +742,7 @@
                 <div class="copy-to-clipboard">
                     <span class="success-message">Copied!</span>
                     <div class="input-group">
-                        <input type="text" class="form-control form--control copy-input pl-3" value="<?php echo 'aduca.com' . $router->generate('course.details', ['id' => $course->getId()]); ?>">
+                        <input type="text" class="form-control form--control copy-input pl-3" value="<?php echo 'aduca.com' . $router->generate('course.details', ['id' => $course->getId(), 'slug' => $course->getSlug()]); ?>">
                         <div class="input-group-append">
                             <button class="btn theme-btn theme-btn-sm copy-btn shadow-none"><i class="la la-copy mr-1"></i> Copy</button>
                         </div>

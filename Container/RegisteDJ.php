@@ -27,3 +27,6 @@ $serviceContainer->add(App\Services\CourseSectionsService::class, new App\Servic
 
 $serviceContainer->add(App\Repositories\Interfaces\CourseLecturesRepositoryInterface::class, new App\Repositories\CourseLecturesRepository());
 $serviceContainer->add(App\Services\CourseLecturesService::class, new App\Services\CourseLecturesService($serviceContainer->resolve(App\Repositories\Interfaces\CourseLecturesRepositoryInterface::class)));
+
+$serviceContainer->add(App\Repositories\Interfaces\WishListRepositoryInterface::class, new App\Repositories\WishListRepository());
+$serviceContainer->add(App\Services\WishListService::class, new App\Services\WishListService($serviceContainer->resolve(App\Repositories\Interfaces\WishListRepositoryInterface::class)));

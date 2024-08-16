@@ -288,7 +288,7 @@
                             <div class="col-lg-6 responsive-column-half">
                                 <div class="card card-item card-preview" data-tooltip-content="#tooltip_content_1">
                                     <div class="card-image">
-                                        <a href="<?php echo $router->generate('course.details', ['id' => $course->getId()]); ?>" class="d-block">
+                                        <a href="<?php echo $router->generate('course.details', ['id' => $course->getId(), 'slug' => $course->getSlug()]); ?>" class="d-block">
                                             <img style="width: 100%; height: 250px; object-fit: cover;" class="card-img-top" src="../<?php echo $course->getImage(); ?>" alt="Card image cap">
                                         </a>
                                         <div class="course-badge-labels">
@@ -311,8 +311,8 @@
                                     </div><!-- end card-image -->
                                     <div class="card-body">
                                         <h6 class="ribbon ribbon-blue-bg fs-14 mb-3"><?php echo $course->getLabel(); ?></h6>
-                                        <h5 class="card-title"><a href="<?php echo $router->generate('course.details', ['id' => $course->getId()]); ?>"><?php echo $course->getName(); ?></a></h5>
-                                        <p class="card-text"><a href="teacher-detail.html"><?php echo $course->getInstructorName(); ?></a></p>
+                                        <h5 class="card-title"><a href="<?php echo $router->generate('course.details', ['id' => $course->getId(), 'slug' => $course->getSlug()]); ?>"><?php echo $course->getName(); ?></a></h5>
+                                        <p class="card-text"><a href="<?php echo $router->generate('instructor.details', ['id' => $course->getInstructorId()]); ?>"><?php echo $course->getInstructorName(); ?></a></p>
                                         <div class="rating-wrap d-flex align-items-center py-2">
                                             <div class="review-stars">
                                                 <span class="rating-number">4.4</span>
@@ -382,7 +382,7 @@
     <div id="tooltip_content_1">
         <div class="card card-item">
             <div class="card-body">
-                <p class="card-text pb-2">By <a href="teacher-detail.html">Jose Portilla</a></p>
+                <p class="card-text pb-2">By <a href="<?php echo $router->generate('instructor.details', ['id' => $course->getInstructorId()]); ?>">Jose Portilla</a></p>
                 <h5 class="card-title pb-1"><a href="course-details.html">The Business Intelligence Analyst Course 2021</a></h5>
                 <div class="d-flex align-items-center pb-1">
                     <h6 class="ribbon fs-14 mr-2">Bestseller</h6>

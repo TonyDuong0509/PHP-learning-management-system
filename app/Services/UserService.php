@@ -42,4 +42,9 @@ class UserService
     {
         return $this->userRepository->update($user);
     }
+
+    public function authCheck($email)
+    {
+        return $this->userRepository->checkExist($email);
+    }
 }
