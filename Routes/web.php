@@ -57,6 +57,41 @@ $router->map('GET', '/logout', function () use ($serviceContainer) {
     $controller->logout();
 }, 'logout');
 
+// Cart routes
+$router->map('POST', '/cart/data/store/[i:id]', function ($id) use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\User\CartController::class);
+    $controller->addToCart($id);
+});
+
+$router->map('GET', '/cart/data/', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\User\CartController::class);
+    $controller->cartData();
+});
+
+$router->map('GET', '/course/mini/cart', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\User\CartController::class);
+    $controller->addMiniCart();
+});
+
+$router->map('GET', '/minicart/course/remove/[i:id]', function ($id) use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\User\CartController::class);
+    $controller->removeMiniCart($id);
+});
+
+$router->map('GET', '/mycart', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\User\CartController::class);
+    $controller->myCart();
+}, 'mycart');
+
+$router->map('GET', '/get-cart-course', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\User\CartController::class);
+    $controller->getCartCourse();
+});
+
+$router->map('GET', '/cart-remove/[i:id]', function ($id) use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\User\CartController::class);
+    $controller->cartRemove($id);
+});
 
 
 // Instructor routes

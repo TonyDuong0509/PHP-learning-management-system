@@ -99,7 +99,7 @@ class UserRepository implements UserRepositoryInterface
         $status = $user->getStatus();
 
         $sql = "UPDATE users
-                SET name = '$name', username = '$username', password = '$password', 
+                SET name = '$name', username = '$username', password = '$password',
                     photo = '$photo', role = '$role', status = '$status'
                 WHERE id = '$id'";
 
