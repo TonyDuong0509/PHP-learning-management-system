@@ -41,7 +41,6 @@ class CourseService
         return $this->courseRepository->fetchAll($condition);
     }
 
-
     public function getById($id)
     {
         return $this->courseRepository->getById($id);

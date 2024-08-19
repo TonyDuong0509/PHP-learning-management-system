@@ -877,9 +877,6 @@
 
 
 <?php require ABSPATH . 'resources/user/layout/footerScript.php'; ?>
-<script>
-    var player = new Plyr('#player');
-</script>
 </body>
 
 </html>

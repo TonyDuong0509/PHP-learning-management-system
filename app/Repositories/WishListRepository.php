@@ -60,9 +60,9 @@ class WishListRepository implements WishListRepositoryInterface
         global $conn;
         $courses = array();
         $sql = "SELECT courses.*, wishlists.id as wishlist_id
-                FROM wishlists 
-                RIGHT JOIN courses 
-                ON wishlists.course_id = courses.id 
+                FROM wishlists
+                RIGHT JOIN courses
+                ON wishlists.course_id = courses.id
                 WHERE wishlists.user_id = '$user_id'
                 ORDER BY courses.created_at DESC";
 

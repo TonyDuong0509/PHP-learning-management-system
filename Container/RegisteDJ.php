@@ -30,3 +30,9 @@ $serviceContainer->add(App\Services\CourseLecturesService::class, new App\Servic
 
 $serviceContainer->add(App\Repositories\Interfaces\WishListRepositoryInterface::class, new App\Repositories\WishListRepository());
 $serviceContainer->add(App\Services\WishListService::class, new App\Services\WishListService($serviceContainer->resolve(App\Repositories\Interfaces\WishListRepositoryInterface::class)));
+
+$serviceContainer->add(App\Repositories\Interfaces\OrdersRepositoryInterface::class, new App\Repositories\OrdersRepository());
+$serviceContainer->add(App\Services\OrdersService::class, new App\Services\OrdersService($serviceContainer->resolve(App\Repositories\Interfaces\OrdersRepositoryInterface::class)));
+
+$serviceContainer->add(App\Repositories\Interfaces\CartRepositoryInterface::class, new App\Repositories\CartRepository());
+$serviceContainer->add(App\Services\CartService::class, new App\Services\CartService($serviceContainer->resolve(App\Repositories\Interfaces\CartRepositoryInterface::class)));

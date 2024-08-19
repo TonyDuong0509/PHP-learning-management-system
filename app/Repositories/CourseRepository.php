@@ -83,9 +83,9 @@ class CourseRepository implements CourseRepositoryInterface
         $status = 1;
         $type_id = $data['type_id'];
 
-        $sql = "INSERT INTO courses (category_id, subcategory_id, instructor_id, 
-                                name, title, slug, certificate ,description, duration, selling_price, 
-                                discount_price, prerequisuites, bestseller, featured, highestrated, 
+        $sql = "INSERT INTO courses (category_id, subcategory_id, instructor_id,
+                                name, title, slug, certificate ,description, duration, selling_price,
+                                discount_price, prerequisuites, bestseller, featured, highestrated,
                                 status, created_at, image, video, label, resources, type_id)
                 VALUES ('$category_id', '$subcategory_id', '$instructor_id', '$name', '$title',
                         '$slug', '$certificate', '$description', '$duration', '$selling_price',
@@ -126,7 +126,7 @@ class CourseRepository implements CourseRepositoryInterface
         $type_id = $course->getTypeId();
 
         $sql = "UPDATE courses
-                SET category_id = '$category_id', subcategory_id = '$subcategory_id', title = '$title', 
+                SET category_id = '$category_id', subcategory_id = '$subcategory_id', title = '$title',
                     name = '$name', slug = '$slug', description = '$description', duration = '$duration',
                     selling_price = '$selling_price', discount_price = '$discount_price', prerequisuites = '$prerequisuites',
                     bestseller = '$bestseller', featured = '$featured', highestrated = '$highestrated', certificate = '$certificate',

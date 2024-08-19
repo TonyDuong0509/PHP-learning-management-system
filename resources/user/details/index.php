@@ -452,7 +452,7 @@
                         <div class="card-body">
                             <div class="preview-course-video">
                                 <a href="javascript:void(0)" data-toggle="modal" data-target="#previewModal">
-                                    <img src="<?php echo $course->getImage(); ?>" data-src="<?php echo $course->getImage(); ?>" alt="course-img" class="w-100 rounded lazy">
+                                    <img src="../<?php echo $course->getImage(); ?>" data-src="../<?php echo $course->getImage(); ?>" alt="course-img" class="w-100 rounded lazy">
                                     <div class="preview-course-video-content">
                                         <div class="overlay"></div>
                                         <div class="play-button">
@@ -487,7 +487,7 @@
                                     <?php if ($course->getDiscountPrice() != 0): ?>
                                         <span class="fs-35 font-weight-semi-bold text-black">$<?php echo $amount; ?></span>
                                         <span class="before-price mx-1">$<?php echo number_format($course->getSellingPrice(), 2); ?></span>
-                                        <span class="price-discount"><?php echo $discount; ?>% off</span>
+                                        <span class="price-discount"><?php echo round($discount); ?>% off</span>
                                     <?php else: ?>
                                         <span class="fs-35 font-weight-semi-bold text-black">$<?php echo number_format($course->getSellingPrice(), 2); ?></span>
                                     <?php endif; ?>
@@ -496,7 +496,7 @@
                                     <span class="text-color-3">4 days</span> left at this price!
                                 </p>
                                 <div class="buy-course-btn-box">
-                                    <button type="button" class="btn theme-btn w-100 mb-2"><i class="la la-shopping-cart fs-18 mr-1"></i> Add to cart</button>
+                                    <button type="submit" class="btn theme-btn w-100 mb-2" onclick="addToCart(<?php echo $course->getId(); ?>, '<?php echo $course->getName(); ?>', '<?php echo $course->getInstructorId(); ?>', '<?php echo $course->getSlug(); ?>')"><i class="la la-shopping-cart fs-18 mr-1"></i> Add to cart</button>
                                     <button type="button" class="btn theme-btn w-100 theme-btn-white mb-2"><i class="la la-shopping-bag mr-1"></i> Buy this course</button>
                                 </div>
                                 <p class="fs-14 text-center pb-4">30-Day Money-Back Guarantee</p>
@@ -559,7 +559,7 @@
                                 <?php foreach ($coursesSameCid as $course): ?>
                                     <div class="media media-card border-bottom border-bottom-gray pb-4 mb-4">
                                         <a href="course-details.html" class="media-img">
-                                            <img class="mr-3 lazy" src="<?php echo $course->getImage(); ?>" data-src="images/small-img-2.jpg" alt="Related course image">
+                                            <img class="mr-3 lazy" src="../<?php echo $course->getImage(); ?>" data-src="images/small-img-2.jpg" alt="Related course image">
                                         </a>
                                         <div class="media-body">
                                             <h5 class="fs-15"><a href="course-details.html"><?php echo $course->getName(); ?></a></h5>
@@ -599,7 +599,7 @@
                         <div class="card card-item">
                             <div class="card-image">
                                 <a href="course-details.html" class="d-block">
-                                    <img style="width: 100%; height: 250px; object-fit: cover;" class="card-img-top" src="<?php echo $course->getImage(); ?>" alt="Card image cap">
+                                    <img style="width: 100%; height: 250px; object-fit: cover;" class="card-img-top" src="../<?php echo $course->getImage(); ?>" alt="Card image cap">
                                 </a>
                                 <div class="course-badge-labels">
                                     <?php
@@ -774,7 +774,7 @@
                 </button>
             </div><!-- end modal-header -->
             <div class="modal-body">
-                <video controls crossorigin playsinline poster="<?php echo $course->getImage(); ?>" id="player">
+                <video controls crossorigin playsinline poster="../<?php echo $course->getImage(); ?>" id="player">
                     <!-- Video files -->
                     <source src="<?php echo $course->getVideo(); ?>" type="video/mp4" />
                 </video>
@@ -833,9 +833,6 @@
 
 
 <?php require ABSPATH . 'resources/user/layout/footerScript.php'; ?>
-<script>
-    var player = new Plyr('#player');
-</script>
 </body>
 
 </html>

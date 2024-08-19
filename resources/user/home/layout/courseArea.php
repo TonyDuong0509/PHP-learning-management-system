@@ -105,6 +105,7 @@
                                                         <?php else: ?>
                                                             <p class="card-price text-black font-weight-bold">$<?php echo number_format($course->getSellingPrice(), 2); ?></p>
                                                         <?php endif; ?>
+                                                        <button type="submit" class="btn theme-btn mr-3" onclick="addToCart(<?php echo $course->getId() ?>, '<?php echo $course->getName() ?>', '<?php echo $course->getInstructorId() ?>', '<?php echo $course->getSlug() ?>');"><i class="la la-shopping-cart mr-1 fs-18"></i>Add to Cart</button>
                                                         <div class="icon-element icon-element-sm shadow-sm cursor-pointer" title="Add to Wishlist" id="<?php echo $course->getId(); ?>" onclick="addToWishList(this.id);"><i class="la la-heart-o"></i></div>
                                                     </div>
                                                 </div><!-- end card-body -->
