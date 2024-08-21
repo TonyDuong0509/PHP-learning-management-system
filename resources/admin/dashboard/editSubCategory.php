@@ -51,7 +51,7 @@
                 }
                 ?>
                 <?php $subCategory = $subCategory; ?>
-                <form method="POST" action="?c=dashboard&a=updateSubCategory" class="row g-3" enctype="multipart/form-data">
+                <form method="POST" action="<?php echo $router->generate('admin.update.subcategory'); ?>" class="row g-3" enctype="multipart/form-data">
                     <input type="hidden" name="subCid" value="<?php echo $subCategory->getId(); ?>">
                     <div class="form-group col-md-6">
                         <label for="input1" class="form-label">SubCategory Name</label>
@@ -75,7 +75,7 @@
                     </div>
                     <div class="col-md-12">
                         <div class="d-md-flex d-grid align-items-center gap-3">
-                            <a href="?c=dashboard&a=manageSubCategory" class="btn btn-warning">Back Manage Category</a>
+                            <a href="/admin/manage-subcategory" class="btn btn-warning">Back Manage Category</a>
                             <button type="submit" class="btn btn-primary px-4">Save Changes</button>
                         </div>
                     </div>

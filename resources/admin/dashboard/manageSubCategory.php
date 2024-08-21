@@ -49,8 +49,8 @@
                                             <?php echo $subCategory->getCreatedAt(); ?>
                                         </td>
                                         <td>
-                                            <a class="btn btn-warning" href="?c=dashboard&a=editSubCategory&subCid=<?php echo $subCategory->getId(); ?>">Edit</a>
-                                            <a class="btn btn-danger" href="?c=dashboard&a=destroySubCategory&subCid=<?php echo $subCategory->getId(); ?>" onclick="return confirmDelete()">Delete</a>
+                                            <a class="btn btn-warning" href="/admin/edit-subcategory/<?php echo $subCategory->getId(); ?>">Edit</a>
+                                            <a class="btn btn-danger" href="<?php echo $router->generate('admin.destroy.subcategory', ['subCid' => $subCategory->getId()]); ?>" onclick="return confirmDelete()">Delete</a>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>

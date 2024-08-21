@@ -1,54 +1,57 @@
-
 function addToWishList(course_id) {
-        $.ajax({
-            type: "POST",
-            dataType: "json",
-            url: "/add-to-wishlist/" + course_id,
-            success: function(response) {
-                if (response.success) {
-                    showAlert('success', response.success);
-                } else if (response.error) {
-                    showAlert('danger', response.error);
-                }
-            },
-            error: function(error) {
-                showAlert('danger', 'An error occurred while processing your request.');
-            }
-        });
-    }
+  $.ajax({
+    type: "POST",
+    dataType: "json",
+    url: "/add-to-wishlist/" + course_id,
+    success: function (response) {
+      if (response.success) {
+        showAlert("success", response.success);
+      } else if (response.error) {
+        showAlert("danger", response.error);
+      }
+    },
+    error: function (error) {
+      showAlert("danger", "An error occurred while processing your request.");
+      console.error(error);
+    },
+  });
+}
 
 function showAlert(type, message) {
-        var alertHtml = `
+  var alertHtml = `
         <div class="alert alert-${type} alert-dismissible fade show" role="alert">
             ${message}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     `;
-        $('#alert-container').html(alertHtml);
+  $("#alert-container").html(alertHtml);
 
-        setTimeout(function() {
-            $('.alert').alert('close');
-        }, 3000);
-    }
+  setTimeout(function () {
+    $(".alert").alert("close");
+  }, 3000);
+}
 
 function wishList() {
-        $.ajax({
-            type: "GET",
-            url: "/get-wishlist-course",
-            dataType: "json",
-            success: function(response) {
+  $.ajax({
+    type: "GET",
+    url: "/get-wishlist-course",
+    dataType: "json",
+    success: function (response) {
+      $("#wishQty").text(response.wishQty);
 
-                $('#wishQty').text(response.wishQty);
-
-                var rows = "";
-                $.each(response.wishlist, function(key, value) {
-                    console.log(value);
-                    rows += `
+      var rows = "";
+      $.each(response.wishlist, function (key, value) {
+        console.log(value);
+        rows += `
                         <div class="col-lg-4 responsive-column-half">
                         <div class="card card-item">
                             <div class="card-image">
-                                <a href="/course-details/${value.course_id}/${value.slug}.html" class="d-block">
-                                    <img style="width:100%; height: 250px; object-fit:cover;" class="card-img-top" src="${value.image}" alt="Card image cap">
+                                <a href="/course-details/${value.course_id}/${
+          value.slug
+        }.html" class="d-block">
+                                    <img style="width:100%; height: 250px; object-fit:cover;" class="card-img-top" src="${
+                                      value.image
+                                    }" alt="Card image cap">
                                 </a>
                             </div>
                             <style>
@@ -68,85 +71,90 @@ function wishList() {
                                 }
                             </style>
                             <div class="card-body">
-                                <h6 class="ribbon ribbon-blue-bg fs-14 mb-3">${value.label}</h6>
-                                <h5 class="card-title"><a href="/course-details/${value.course_id}/${value.slug}.html">${value.name}</a></h5>
+                                <h6 class="ribbon ribbon-blue-bg fs-14 mb-3">${
+                                  value.label
+                                }</h6>
+                                <h5 class="card-title"><a href="/course-details/${
+                                  value.course_id
+                                }/${value.slug}.html">${value.name}</a></h5>
 
                                 <div class="d-flex justify-content-between align-items-center">
-                            ${value.discount_price == 0
-                                    ? `<p class="card-price text-black font-weight-bold">$${value.selling_price}</p>`
-                                    : `<p class="card-price text-black font-weight-bold">$${value.discount_price} <span class="before-price font-weight-medium">$${value.selling_price}</span></p>`
-                                    }
-                                    <div class="icon-element icon-element-sm shadow-sm cursor-pointer" data-toggle="tooltip" data-placement="top" title="Remove from Wishlist" id="${value.wishlist_id}" onclick="removeWishList(this.id)"><i class="la la-heart"></i></div>
+                            ${
+                              value.discount_price == 0
+                                ? `<p class="card-price text-black font-weight-bold">$${value.selling_price}</p>`
+                                : `<p class="card-price text-black font-weight-bold">$${value.discount_price} <span class="before-price font-weight-medium">$${value.selling_price}</span></p>`
+                            }
+                                    <div class="icon-element icon-element-sm shadow-sm cursor-pointer" data-toggle="tooltip" data-placement="top" title="Remove from Wishlist" id="${
+                                      value.wishlist_id
+                                    }" onclick="removeWishList(this.id)"><i class="la la-heart"></i></div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     `;
-                });
-                $('#wishlist').html(rows);
-            }
-        });
-    }
-    wishList();
+      });
+      $("#wishlist").html(rows);
+    },
+  });
+}
+wishList();
 
 function removeWishList(id) {
-        $.ajax({
-            type: "GET",
-            url: "/remove-wishlist/" + id,
-            dataType: "json",
-            success: function(response) {
-                wishList();
+  $.ajax({
+    type: "GET",
+    url: "/remove-wishlist/" + id,
+    dataType: "json",
+    success: function (response) {
+      wishList();
 
-                if (response.success) {
-                    showAlert('success', response.success);
-                } else if (response.error) {
-                    showAlert('danger', response.error);
-                }
-            },
-            error: function(error) {
-                showAlert('danger', 'An error occurred while processing your request.');
-            }
-        });
-    }
+      if (response.success) {
+        showAlert("success", response.success);
+      } else if (response.error) {
+        showAlert("danger", response.error);
+      }
+    },
+    error: function (error) {
+      showAlert("danger", "An error occurred while processing your request.");
+    },
+  });
+}
 
 function addToCart(courseId, courseName, instructorId, slug) {
-        $.ajax({
-            type: "POST",
-            url: "/cart/data/store/" + courseId,
-            data: {
-                name: courseName,
-                slug: slug,
-                instructorId: instructorId,
-            },
-            dataType: "json",
-            success: function(response) {
-                miniCart();
-                if (response.success) {
-                    showAlert('success', response.success);
-                } else if (response.error) {
-                    showAlert('danger', response.error);
-                }
-            },
-            error: function(error) {
-                showAlert('danger', 'An error occurred while processing your request.');
-            }
-        });
-    }
-
-
+  $.ajax({
+    type: "POST",
+    url: "/cart/data/store/" + courseId,
+    data: {
+      name: courseName,
+      slug: slug,
+      instructorId: instructorId,
+    },
+    dataType: "json",
+    success: function (response) {
+      miniCart();
+      if (response.success) {
+        showAlert("success", response.success);
+      } else if (response.error) {
+        showAlert("danger", response.error);
+      }
+    },
+    error: function (error) {
+      showAlert("danger", "An error occurred while processing your request.");
+    },
+  });
+}
 
 function miniCart() {
-        $.ajax({
-            type: "GET",
-            url: "/course/mini/cart",
-            dataType: "json",
-            success: function(response) {
-                $('span[id="cartSubTotal"]').text(response.cartTotal);
-                $('#cartQty').text(response.cartQty);
-                var miniCart = "";
+  $.ajax({
+    type: "GET",
+    url: "/course/mini/cart",
+    dataType: "json",
+    success: function (response) {
+      $('span[id="cartSubTotal"]').text(response.cartTotal);
+      $("#cartQty").text(response.cartQty);
+      var miniCart = "";
 
-                $.each(response.carts, function(key, value) {
-                    miniCart += `
+      $.each(response.carts, function (key, value) {
+        miniCart += `
                         <li class="media media-card">
                             <a href="shopping-cart.html" class="media-img">
                                 <img src="/${value.options.image}" alt="Cart image">
@@ -154,51 +162,29 @@ function miniCart() {
                             <div class="media-body">
                                 <h5><a href="/course-details/${value.course_id}/${value.options.slug}.html"> ${value.name}</a></h5>
                                  <span class="d-block fs-14">$${value.price}</span>
-                                <a type="submit" id="${value.course_id}" style="color: red; font-size: 18px; font-weight: 500;" onclick="removeMiniCart(this.id)"><i class="la la-times"></i> </a>
+                                <a type="submit" id="${value.course_id}" style="color: red; font-size: 18px; font-weight: 500;" onclick="cartRemove(this.id)"><i class="la la-times"></i> </a>
                             </div>
                         </li>
                     `;
-                });
-                $('#miniCart').html(miniCart);
-            }
-        });
-    }
+      });
+      $("#miniCart").html(miniCart);
+    },
+  });
+}
 
-    miniCart();
-
-function removeMiniCart(id) {
-        $.ajax({
-            type: "GET",
-            url: "/minicart/course/remove/" + id,
-            dataType: "json",
-            success: function(data) {
-                miniCart();
-
-                if (data.success) {
-                    showAlert('success', data.success);
-                } else if (data.error) {
-                    showAlert('danger', data.error);
-                }
-            },
-            error: function(error) {
-                showAlert('danger', 'An error occurred while processing your request.');
-            }
-        });
-    }
-
-
+miniCart();
 
 function myCart() {
-        $.ajax({
-            type: "GET",
-            url: "/get-cart-course",
-            dataType: "json",
-            success: function(response) {
-                $('span[id="cartSubTotal"]').text(response.cartTotal);
+  $.ajax({
+    type: "GET",
+    url: "/get-cart-course",
+    dataType: "json",
+    success: function (response) {
+      $('span[id="cartSubTotal"]').text(response.cartTotal);
 
-                var rows = ""
-                $.each(response.carts, function(key, value) {
-                    rows += `
+      var rows = "";
+      $.each(response.carts, function (key, value) {
+        rows += `
                     <tr>
                     <th scope="row">
                         <div class="media media-card">
@@ -224,31 +210,143 @@ function myCart() {
                         </button>
                     </td>
                 </tr>
-                `
-                });
-                $('#cartPage').html(rows);
-            }
-        })
-    }
-    myCart();
+                `;
+      });
+      $("#cartPage").html(rows);
+    },
+  });
+}
+myCart();
 
-    function cartRemove(id) {
-        $.ajax({
-            type: "GET",
-            url: "/cart-remove/" + id,
-            dataType: "json",
-            success: function(data) {
-                miniCart();
-                myCart();
+function cartRemove(id) {
+  $.ajax({
+    type: "GET",
+    url: "/cart-remove/" + id,
+    dataType: "json",
+    success: function (data) {
+      miniCart();
+      myCart();
+      couponCalculation();
 
-                if (data.success) {
-                    showAlert('success', data.success);
-                } else if (data.error) {
-                    showAlert('danger', data.error);
-                }
-            },
-            error: function(error) {
-                showAlert('danger', 'An error occurred while processing your request.');
-            }
-        });
-    }
+      if (data.success) {
+        showAlert("success", data.success);
+      } else if (data.error) {
+        showAlert("danger", data.error);
+      }
+    },
+    error: function (error) {
+      showAlert("danger", "An error occurred while processing your request.");
+      console.error(error);
+    },
+  });
+}
+
+function applyCoupon() {
+  var coupon_name = $("#coupon_name").val();
+
+  $.ajax({
+    type: "POST",
+    url: "/coupon-apply",
+    data: JSON.stringify({
+      coupon_name: coupon_name,
+    }),
+    contentType: "application/json",
+    dataType: "json",
+    success: function (response) {
+      if (response.validity == true) {
+        $("#couponField").hide();
+      }
+      if (response.success) {
+        showAlert("success", response.success);
+      } else if (response.error) {
+        showAlert("danger", response.error);
+      }
+    },
+    error: function (error) {
+      showAlert("danger", "An error occurred while processing your request.");
+      console.error(error);
+    },
+  });
+}
+
+function couponCalculation() {
+  $.ajax({
+    type: "GET",
+    url: "/coupon-calculation",
+    dataType: "json",
+    success: function (data) {
+      couponCalculation();
+      if (data.total) {
+        $("#couponCalField").html(
+          `
+             <h3 class="fs-18 font-weight-bold pb-3">Cart Totals</h3>
+                <div class="divider"><span></span></div>
+                <ul class="generic-list-item pb-4">
+                    <li class="d-flex align-items-center justify-content-between font-weight-semi-bold">
+                        <span class="text-black">Subtotal: $</span>
+                        <span>$${data.total}</span>
+                    </li>
+                    <li class="d-flex align-items-center justify-content-between font-weight-semi-bold">
+                        <span class="text-black">Total: $</span>
+                        <span>$${data.total}</span>
+                    </li>
+                </ul>
+          `
+        );
+      } else {
+        $("#couponCalField").html(
+          `
+            <h3 class="fs-18 font-weight-bold pb-3">Cart Totals</h3>
+                <div class="divider"><span></span></div>
+                <ul class="generic-list-item pb-4">
+                    <li class="d-flex align-items-center justify-content-between font-weight-semi-bold">
+                        <span class="text-black">Subtotal: </span>
+                        <span>$${data.subtotal} </span>
+                    </li>
+                    <li class="d-flex align-items-center justify-content-between font-weight-semi-bold">
+                        <span class="text-black">Coupon Name : </span>
+                        <span>${data.coupon_name} 
+                          <button type="button" class="icon-element icon-element-xs shadow-sm border-0" data-toggle="tooltip" data-placement="top" onclick="couponRemove()">
+                             <i class="la la-times" style="color: red;"></i>
+                          </button>
+                        </span>
+                    </li>
+                    <li class="d-flex align-items-center justify-content-between font-weight-semi-bold">
+                        <span class="text-black">Coupon Discount:</span>
+                        <span> $${data.discount_amount}</span>
+                    </li>
+                    <li class="d-flex align-items-center justify-content-between font-weight-semi-bold">
+                        <span class="text-black">Grand Total:</span>
+                        <span> $${data.total_amount}</span>
+                    </li> 
+                </ul>
+          `
+        );
+      }
+    },
+  });
+}
+
+couponCalculation();
+
+function couponRemove() {
+  $.ajax({
+    type: "GET",
+    url: "/coupon-remove",
+    dataType: "json",
+    success: function (data) {
+      couponCalculation();
+      $("#couponField").show();
+
+      if (data.success) {
+        showAlert("success", data.success);
+      } else if (data.error) {
+        showAlert("danger", data.error);
+      }
+    },
+    error: function (error) {
+      showAlert("danger", "An error occurred while processing your request.");
+      console.error(error);
+    },
+  });
+}

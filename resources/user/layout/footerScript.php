@@ -14,5 +14,3 @@
 <script src="<?php ABSPATH ?>/public/frontend/js/jquery.lazy.min.js"></script>
 <script src="<?php ABSPATH ?>/public/frontend/js/main.js"></script>
 <script src="<?php ABSPATH ?>/public/frontend/js/script.js"></script>
-
-<?php include ABSPATH . 'resources/script.php'; ?>

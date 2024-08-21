@@ -1,33 +1,34 @@
 <?php
-
-use Container\ServiceContainer;
+require '../vendor/autoload.php';
 
 session_start();
 
-require '../vendor/autoload.php';
-require '../config.php';
-require '../connectDB.php';
-include '../bootstrap.php';
+require  '../config.php';
+require  '../connectDB.php';
+include  '../bootstrap.php';
 
-$c = isset($_GET['c']) ? $_GET['c'] : 'dashboard';
-$a = isset($_GET['a']) ? $_GET['a'] : 'index';
+require '../Container/RegisteDJ.php';
 
-$publicActions = [
-    'auth' => ['login', 'register'],
-];
+require '../Routes/web.php';
 
-if (!isset($_SESSION['emailAdmin']) && !(isset($publicActions[$c]) && in_array($a, $publicActions[$c]))) {
-    header("Location: login.php");
-    exit;
+if (is_array($match) && is_callable($match['target'])) {
+    call_user_func_array($match['target'], $match['params']);
+} else {
+    $c = $_GET['c'] ?? 'dashboard';
+    $a = $_GET['a'] ?? 'index';
+
+    $publicActions = [
+        'auth' => ['login', 'register'],
+    ];
+
+    if (!isset($_SESSION['emailAdmin']) && !(isset($publicActions[$c]) && in_array($a, $publicActions[$c]))) {
+        header("Location: /admin/login.php");
+        exit;
+    }
+
+    $strController = ucfirst($c) . 'Controller';
+    $controllerClass = "App\\Controllers\Admin\\$strController";
+
+    $controller = $serviceContainer->resolve($controllerClass);
+    $controller->$a();
 }
-
-$strController = ucfirst($c) . 'Controller';
-$controllerClass = "App\\Controllers\\Admin\\$strController";
-
-$serviceContainer = new ServiceContainer();
-
-$serviceContainer->add(App\Repositories\Interfaces\UserRepositoryInterface::class, new App\Repositories\UserRepository());
-$serviceContainer->add(App\Services\UserService::class, new App\Services\UserService($serviceContainer->resolve(App\Repositories\Interfaces\UserRepositoryInterface::class)));
-
-$controller = $serviceContainer->resolve($controllerClass);
-$controller->$a();

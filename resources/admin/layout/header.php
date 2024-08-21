@@ -329,7 +329,7 @@
             <div class="user-box dropdown px-3">
                 <a class="d-flex align-items-center nav-link dropdown-toggle gap-3 dropdown-toggle-nocaret" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <?php if (is_object($admin)): ?>
-                        <img src="<?php echo $admin->getPhoto() ?? '/upload/no_image.png'; ?>" class="user-img" alt="user avatar">
+                        <img src="/<?php echo $admin->getPhoto() ?? '/upload/no_image.png'; ?>" class="user-img" alt="user avatar">
                     <?php endif; ?>
                     <div class="user-info">
                         <p class="user-name mb-0">
@@ -348,10 +348,20 @@
                     <li>
                         <div class="dropdown-divider mb-0"></div>
                     </li>
-                    <li><a class="dropdown-item d-flex align-items-center" href="?c=auth&a=logout"><i class="bx bx-log-out-circle"></i><span>Logout</span></a>
+                    <li><a class="dropdown-item d-flex align-items-center" href="/admin/logout"><i class="bx bx-log-out-circle"></i><span>Logout</span></a>
                     </li>
                 </ul>
             </div>
         </nav>
+        <style>
+            .alert-container {
+                position: fixed;
+                top: 12%;
+                right: 2%;
+                z-index: 1050;
+                width: 300px;
+            }
+        </style>
+        <div id="alert-container" class="alert-container"></div>
     </div>
 </header>
