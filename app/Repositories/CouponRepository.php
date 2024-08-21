@@ -56,6 +56,14 @@ class CouponRepository implements CouponRepositoryInterface
         return $coupon;
     }
 
+    public function getCouponNameAndCheckExpire($coupon_name)
+    {
+        $condition = "coupon_name = '$coupon_name' AND coupon_validity > " . date('Y-m-d') . " LIMIT 1";
+        $coupons = $this->fetchAll($condition);
+        $coupon = current($coupons);
+        return $coupon;
+    }
+
     public function update($coupon)
     {
         global $conn;

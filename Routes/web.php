@@ -147,6 +147,28 @@ $router->map('GET', '/admin/destroy/coupon/[i:id]', function ($id) use ($service
     $controller->destroyCoupon($id);
 });
 
+$router->map('POST', '/coupon-apply', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\User\CartController::class);
+    $controller->applyCoupon();
+});
+
+$router->map('GET', '/coupon-calculation', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\User\CartController::class);
+    $controller->couponCalculation();
+});
+
+$router->map('GET', '/coupon-remove', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\User\CartController::class);
+    $controller->couponRemove();
+});
+
+
+// Checkout route
+$router->map('GET', '/checkout', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\User\CartController::class);
+    $controller->checkoutCreate();
+}, 'checkout');
+
 
 // User routes
 $router->map('GET', '/', function () use ($serviceContainer) {
@@ -214,11 +236,6 @@ $router->map('GET', '/cart/data/', function () use ($serviceContainer) {
 $router->map('GET', '/course/mini/cart', function () use ($serviceContainer) {
     $controller = $serviceContainer->resolve(App\Controllers\User\CartController::class);
     $controller->addMiniCart();
-});
-
-$router->map('GET', '/minicart/course/remove/[i:id]', function ($id) use ($serviceContainer) {
-    $controller = $serviceContainer->resolve(App\Controllers\User\CartController::class);
-    $controller->removeMiniCart($id);
 });
 
 $router->map('GET', '/mycart', function () use ($serviceContainer) {

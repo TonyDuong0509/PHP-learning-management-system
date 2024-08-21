@@ -38,4 +38,9 @@ class CouponService
     {
         return $this->couponRepository->delete($id);
     }
+
+    public function getCouponNameAndCheckExpire($coupon_name)
+    {
+        return $this->couponRepository->getCouponNameAndCheckExpire($coupon_name);
+    }
 }

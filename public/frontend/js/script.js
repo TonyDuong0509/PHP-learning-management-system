@@ -12,6 +12,7 @@ function addToWishList(course_id) {
     },
     error: function (error) {
       showAlert("danger", "An error occurred while processing your request.");
+      console.error(error);
     },
   });
 }
@@ -161,7 +162,7 @@ function miniCart() {
                             <div class="media-body">
                                 <h5><a href="/course-details/${value.course_id}/${value.options.slug}.html"> ${value.name}</a></h5>
                                  <span class="d-block fs-14">$${value.price}</span>
-                                <a type="submit" id="${value.course_id}" style="color: red; font-size: 18px; font-weight: 500;" onclick="removeMiniCart(this.id)"><i class="la la-times"></i> </a>
+                                <a type="submit" id="${value.course_id}" style="color: red; font-size: 18px; font-weight: 500;" onclick="cartRemove(this.id)"><i class="la la-times"></i> </a>
                             </div>
                         </li>
                     `;
@@ -172,26 +173,6 @@ function miniCart() {
 }
 
 miniCart();
-
-function removeMiniCart(id) {
-  $.ajax({
-    type: "GET",
-    url: "/minicart/course/remove/" + id,
-    dataType: "json",
-    success: function (data) {
-      miniCart();
-
-      if (data.success) {
-        showAlert("success", data.success);
-      } else if (data.error) {
-        showAlert("danger", data.error);
-      }
-    },
-    error: function (error) {
-      showAlert("danger", "An error occurred while processing your request.");
-    },
-  });
-}
 
 function myCart() {
   $.ajax({
@@ -245,6 +226,7 @@ function cartRemove(id) {
     success: function (data) {
       miniCart();
       myCart();
+      couponCalculation();
 
       if (data.success) {
         showAlert("success", data.success);
@@ -254,6 +236,117 @@ function cartRemove(id) {
     },
     error: function (error) {
       showAlert("danger", "An error occurred while processing your request.");
+      console.error(error);
+    },
+  });
+}
+
+function applyCoupon() {
+  var coupon_name = $("#coupon_name").val();
+
+  $.ajax({
+    type: "POST",
+    url: "/coupon-apply",
+    data: JSON.stringify({
+      coupon_name: coupon_name,
+    }),
+    contentType: "application/json",
+    dataType: "json",
+    success: function (response) {
+      if (response.validity == true) {
+        $("#couponField").hide();
+      }
+      if (response.success) {
+        showAlert("success", response.success);
+      } else if (response.error) {
+        showAlert("danger", response.error);
+      }
+    },
+    error: function (error) {
+      showAlert("danger", "An error occurred while processing your request.");
+      console.error(error);
+    },
+  });
+}
+
+function couponCalculation() {
+  $.ajax({
+    type: "GET",
+    url: "/coupon-calculation",
+    dataType: "json",
+    success: function (data) {
+      couponCalculation();
+      if (data.total) {
+        $("#couponCalField").html(
+          `
+             <h3 class="fs-18 font-weight-bold pb-3">Cart Totals</h3>
+                <div class="divider"><span></span></div>
+                <ul class="generic-list-item pb-4">
+                    <li class="d-flex align-items-center justify-content-between font-weight-semi-bold">
+                        <span class="text-black">Subtotal: $</span>
+                        <span>$${data.total}</span>
+                    </li>
+                    <li class="d-flex align-items-center justify-content-between font-weight-semi-bold">
+                        <span class="text-black">Total: $</span>
+                        <span>$${data.total}</span>
+                    </li>
+                </ul>
+          `
+        );
+      } else {
+        $("#couponCalField").html(
+          `
+            <h3 class="fs-18 font-weight-bold pb-3">Cart Totals</h3>
+                <div class="divider"><span></span></div>
+                <ul class="generic-list-item pb-4">
+                    <li class="d-flex align-items-center justify-content-between font-weight-semi-bold">
+                        <span class="text-black">Subtotal: </span>
+                        <span>$${data.subtotal} </span>
+                    </li>
+                    <li class="d-flex align-items-center justify-content-between font-weight-semi-bold">
+                        <span class="text-black">Coupon Name : </span>
+                        <span>${data.coupon_name} 
+                          <button type="button" class="icon-element icon-element-xs shadow-sm border-0" data-toggle="tooltip" data-placement="top" onclick="couponRemove()">
+                             <i class="la la-times" style="color: red;"></i>
+                          </button>
+                        </span>
+                    </li>
+                    <li class="d-flex align-items-center justify-content-between font-weight-semi-bold">
+                        <span class="text-black">Coupon Discount:</span>
+                        <span> $${data.discount_amount}</span>
+                    </li>
+                    <li class="d-flex align-items-center justify-content-between font-weight-semi-bold">
+                        <span class="text-black">Grand Total:</span>
+                        <span> $${data.total_amount}</span>
+                    </li> 
+                </ul>
+          `
+        );
+      }
+    },
+  });
+}
+
+couponCalculation();
+
+function couponRemove() {
+  $.ajax({
+    type: "GET",
+    url: "/coupon-remove",
+    dataType: "json",
+    success: function (data) {
+      couponCalculation();
+      $("#couponField").show();
+
+      if (data.success) {
+        showAlert("success", data.success);
+      } else if (data.error) {
+        showAlert("danger", data.error);
+      }
+    },
+    error: function (error) {
+      showAlert("danger", "An error occurred while processing your request.");
+      console.error(error);
     },
   });
 }

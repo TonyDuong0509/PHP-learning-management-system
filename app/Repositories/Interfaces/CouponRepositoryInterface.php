@@ -9,4 +9,5 @@ interface CouponRepositoryInterface
     public function update($coupon);
     public function delete($id);
     public function getById($id);
+    public function getCouponNameAndCheckExpire($coupon_name);
 }
