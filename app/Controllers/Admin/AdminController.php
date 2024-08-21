@@ -2,14 +2,16 @@
 
 namespace App\Controllers\Admin;
 
+use App\Services\CourseService;
 use App\Services\UserService;
 
 class AdminController
 {
     private $userService;
 
-    public function __construct(UserService $userService)
-    {
+    public function __construct(
+        UserService $userService,
+    ) {
         $this->userService = $userService;
     }
 

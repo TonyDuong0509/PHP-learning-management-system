@@ -120,7 +120,7 @@ class CourseController
             }
         }
 
-        header("Location: /instructor/courses.html?success=1");
+        header("Location: /instructor/courses?success=1");
         exit;
     }
 
@@ -180,7 +180,7 @@ class CourseController
         }
 
         if ($this->courseService->updateCourse($course) === true) {
-            header("Location: /instructor/edit-course/$id.html?success=1");
+            header("Location: /instructor/edit-course/$id?success=1");
             exit;
         }
     }
@@ -202,7 +202,7 @@ class CourseController
         }
 
         if ($this->courseService->updateCourse($course) === true) {
-            header("Location: /instructor/edit-course/$id.html?success=2");
+            header("Location: /instructor/edit-course/$id?success=2");
             exit;
         }
     }
@@ -224,7 +224,7 @@ class CourseController
         }
 
         if ($this->courseService->updateCourse($course) === true) {
-            header("Location: /instructor/edit-course/$id.html?success=3");
+            header("Location: /instructor/edit-course/$id?success=3");
             exit;
         }
     }
@@ -235,7 +235,7 @@ class CourseController
         $goals = $_POST['course_goals'] ?? '';
 
         if ($goals == null) {
-            header("Location: /instructor/edit-course/$id.html");
+            header("Location: /instructor/edit-course/$id");
             exit;
         } else {
             $this->courseGoalsService->deleteCourseGoals($id);
@@ -250,7 +250,7 @@ class CourseController
                 $this->courseGoalsService->saveCourseGoals($params);
             }
 
-            header("Location: /instructor/edit-course/$id.html?success=4");
+            header("Location: /instructor/edit-course/$id?success=4");
             exit;
         }
     }
@@ -265,7 +265,7 @@ class CourseController
         $this->courseService->deleteCourse($id);
         $this->courseGoalsService->deleteCourseGoals($id);
 
-        header("Location: /instructor/courses.html?success=2");
+        header("Location: /instructor/courses?success=2");
         exit;
     }
 
@@ -291,7 +291,7 @@ class CourseController
 
         $this->courseSectionsService->saveCourseSections($params);
 
-        header("Location: /instructor/add-course-lecture/$id.html?success=1");
+        header("Location: /instructor/add-course-lecture/$id?success=1");
         exit;
     }
 
@@ -347,7 +347,7 @@ class CourseController
         $lecture->setContent($content);
 
         if ($this->courseLecturesService->updateLecture($lecture)) {
-            header("Location: /instructor/edit-course-lecture/{$lecture->getSectionId()}.html?success=1");
+            header("Location: /instructor/edit-course-lecture/{$lecture->getSectionId()}?success=1");
             exit;
         }
     }
@@ -358,7 +358,7 @@ class CourseController
         $lecture = $this->courseLecturesService->getLectureBySectionId($id);
 
         if ($this->courseLecturesService->deleteLecture($lecture->getId())) {
-            header("Location: /instructor/add-course-lecture/{$lecture->getCourseId()}.html?success=2");
+            header("Location: /instructor/add-course-lecture/{$lecture->getCourseId()}?success=2");
             exit;
         }
     }
@@ -369,7 +369,7 @@ class CourseController
         $section = $this->courseSectionsService->getById($id);
         $course = $this->courseSectionsService->getCourseById($section->getCourseId());
         if ($this->courseSectionsService->deleteSection($id)) {
-            header("Location: /instructor/add-course-lecture/{$course->getCourseId()}.html?success=3");
+            header("Location: /instructor/add-course-lecture/{$course->getCourseId()}?success=3");
             exit;
         }
     }

@@ -40,7 +40,7 @@
                     }
                 }
                 ?>
-                <form method="POST" action="?c=dashboard&a=storeCategory" class="row g-3" enctype="multipart/form-data">
+                <form method="POST" action="<?php echo $router->generate('admin.store.category'); ?>" class="row g-3" enctype="multipart/form-data">
                     <div class="form-group col-md-6">
                         <label for="input1" class="form-label">Category Name</label>
                         <input type="text" name="category_name" class="form-control" id="input1" required>

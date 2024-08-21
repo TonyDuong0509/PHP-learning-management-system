@@ -49,8 +49,8 @@
                                             <?php echo $category->getCreatedAt(); ?>
                                         </td>
                                         <td>
-                                            <a class="btn btn-warning" href="?c=dashboard&a=edit&cid=<?php echo $category->getId(); ?>">Edit</a>
-                                            <a class="btn btn-danger" href="?c=dashboard&a=destroy&cid=<?php echo $category->getId(); ?>" onclick="return confirmDelete()">Delete</a>
+                                            <a class="btn btn-warning" href="<?php echo $router->generate('admin.edit.category', ['cid' => $category->getId()]); ?>">Edit</a>
+                                            <a class="btn btn-danger" href="/admin/destroy-category/<?php echo $category->getId(); ?>" onclick="return confirmDelete()">Delete</a>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>

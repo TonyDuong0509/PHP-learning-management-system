@@ -41,7 +41,6 @@
                         </div>
                     </div>
                 </form>
-                <a href="#" class="btn theme-btn mb-2">Update Cart</a>
             </div>
         </div>
         <div class="col-lg-4 ml-auto">

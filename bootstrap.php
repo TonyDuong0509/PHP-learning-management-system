@@ -10,6 +10,7 @@ require_once ABSPATH . "app/Repositories/Interfaces/CourseTypesRepositoryInterfa
 require_once ABSPATH . "app/Repositories/Interfaces/WishListRepositoryInterface.php";
 require_once ABSPATH . "app/Repositories/Interfaces/OrdersRepositoryInterface.php";
 require_once ABSPATH . "app/Repositories/Interfaces/CartRepositoryInterface.php";
+require_once ABSPATH . "app/Repositories/Interfaces/CouponRepositoryInterface.php";
 
 require_once ABSPATH . "app/Models/Category.php";
 require_once ABSPATH . "app/Repositories/CategoryRepository.php";
@@ -33,6 +34,8 @@ require_once ABSPATH . "app/Models/Orders.php";
 require_once ABSPATH . "app/Repositories/OrdersRepository.php";
 require_once ABSPATH . "app/Models/Cart.php";
 require_once ABSPATH . "app/Repositories/CartRepository.php";
+require_once ABSPATH . "app/Models/Coupon.php";
+require_once ABSPATH . "app/Repositories/CouponRepository.php";
 
 require_once ABSPATH . "Container/ServiceContainer.php";
 
@@ -46,6 +49,7 @@ require_once ABSPATH . "app/Services/CourseLecturesService.php";
 require_once ABSPATH . "app/Services/CourseTypesService.php";
 require_once ABSPATH . "app/Services/OrdersService.php";
 require_once ABSPATH . "app/Services/CartService.php";
+require_once ABSPATH . "app/Services/CouponService.php";
 
 
 //aduca.com

@@ -51,7 +51,7 @@
                 }
                 ?>
                 <?php $category = $category; ?>
-                <form method="POST" action="?c=dashboard&a=updateCategory" class="row g-3" enctype="multipart/form-data">
+                <form method="POST" action="<?php echo $router->generate('admin.update.category'); ?>" class="row g-3" enctype="multipart/form-data">
                     <input type="hidden" name="old_image" value="<?php echo $category->getImage(); ?>">
                     <input type="hidden" name="cid" value="<?php echo $category->getId(); ?>">
                     <div class="form-group col-md-6">
@@ -68,11 +68,11 @@
                     </div>
 
                     <div class="col-md-6">
-                        <img id="showImage" src="<?php echo $category->getImage() ?? '/upload/no_image.png' ?>" alt="Category image" class="rounded-circle p-1 bg-primary" width="80">
+                        <img id="showImage" src="<?php echo $category->getImage() ?? '/upload/no_image.png' ?>" alt="Category image" class="rounded-circle p-1 bg-primary" width="80"></img>
                     </div>
                     <div class="col-md-12">
                         <div class="d-md-flex d-grid align-items-center gap-3">
-                            <a href="?c=dashboard&a=manageCategory" class="btn btn-warning">Back Manage Category</a>
+                            <a href="/admin/manage-category" class="btn btn-warning">Back Manage Category</a>
                             <button type="submit" class="btn btn-primary px-4">Save Changes</button>
                         </div>
                     </div>

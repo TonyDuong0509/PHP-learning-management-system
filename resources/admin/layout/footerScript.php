@@ -12,3 +12,4 @@
 <script src="<?php ABSPATH ?>/public/backend/js/index.js"></script>
 <!--app JS-->
 <script src="<?php ABSPATH ?>/public/backend/js/app.js"></script>
+<script src="<?php ABSPATH ?>/public/backend/js/script.js"></script>

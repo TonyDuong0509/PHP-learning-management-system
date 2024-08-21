@@ -15,7 +15,7 @@ class CourseService
 
     public function getAllCourses()
     {
-        $condition = "status = '1' ORDER BY id DESC";
+        $condition = "id != '' ORDER BY id DESC";
 
         return $this->courseRepository->fetchAll();
     }

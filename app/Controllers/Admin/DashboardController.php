@@ -3,6 +3,7 @@
 namespace App\Controllers\Admin;
 
 use App\Services\CategoryService;
+use App\Services\CourseService;
 use App\Services\SubCategoryService;
 use App\Services\UserService;
 
@@ -11,15 +12,18 @@ class DashboardController
     private $userService;
     private $categoryService;
     private $subCategoryService;
+    private $courseService;
 
     public function __construct(
         UserService $userService,
         CategoryService $categoryService,
-        SubCategoryService $subCategoryService
+        SubCategoryService $subCategoryService,
+        CourseService $courseService
     ) {
         $this->userService = $userService;
         $this->categoryService = $categoryService;
         $this->subCategoryService = $subCategoryService;
+        $this->courseService = $courseService;
     }
 
     private function getInfoHeader()
@@ -83,11 +87,11 @@ class DashboardController
             'created_at' => date('Y-m-d'),
         ];
 
-        $params['image'] =  $this->categoryService->handleImageFile('category_image', 'image', 'dashboard', 'addCategory');
+        $params['image'] =  $this->categoryService->handleImageFile('category_image', 'image');
 
         $this->categoryService->saveCategory($params);
 
-        header("Location: ?c=dashboard&a=manageCategory");
+        header("Location: /admin/manage-category");
         exit;
     }
 
@@ -102,23 +106,21 @@ class DashboardController
 
         $this->subCategoryService->saveSubCategory($params);
 
-        header("Location: ?c=dashboard&a=manageSubCategory");
+        header("Location: /admin/manage-subcategory");
         exit;
     }
 
-    public function edit()
+    public function edit($cid)
     {
         $admin = $this->getInfoHeader();
-        $cid = $_GET['cid'] ?? '';
         $category = $this->categoryService->getById($cid);
 
         require ABSPATH . 'resources/admin/dashboard/editCategory.php';
     }
 
-    public function editSubCategory()
+    public function editSubCategory($subCid)
     {
         $admin = $this->getInfoHeader();
-        $subCid = $_GET['subCid'] ?? '';
         $categories = $this->categoryService->getAllCategories();
         $subCategory = $this->subCategoryService->getById($subCid);
 
@@ -131,7 +133,7 @@ class DashboardController
         $old_image = $_POST['old_image'];
         $category_name = $_POST['category_name'];
         $category_slug = strtolower(str_replace(' ', '-', $_POST['category_name']));
-        $image = $this->categoryService->handleImageFile('category_image', 'image', 'dashboard', 'edit', $old_image);
+        $image = $this->categoryService->handleImageFile('category_image', 'image', 'edit-category', $cid, $old_image);
 
         $category = $this->categoryService->getById($cid);
 
@@ -141,7 +143,7 @@ class DashboardController
 
         $this->categoryService->updateCategory($category);
 
-        header("Location: ?c=dashboard&a=edit&cid=$cid&success=1");
+        header("Location: /admin/edit-category/$cid?success=1");
         exit;
     }
 
@@ -160,31 +162,61 @@ class DashboardController
 
         $this->subCategoryService->updateSubCategory($subCategory);
 
-        header("Location: ?c=dashboard&a=editSubCategory&subCid=$subCid&success=1");
+        header("Location: /admin/edit-subcategory/$subCid?success=1");
         exit;
     }
 
-    public function destroy()
+    public function destroy($cid)
     {
-        $cid = $_GET['cid'];
-
         $category = $this->categoryService->getById($cid);
         if (!empty($category->getImage())) {
             unlink($category->getImage());
         }
         $this->categoryService->deleteCategory($cid);
 
-        header("Location: ?c=dashboard&a=manageCategory&success=1");
+        header("Location: /admin/manage-category?success=1");
         exit;
     }
 
-    public function destroySubCategory()
+    public function destroySubCategory($subCid)
     {
-        $subCid = $_GET['subCid'];
-
         $this->subCategoryService->deleteSubCategory($subCid);
 
-        header("Location: ?c=dashboard&a=manageSubCategory&success=1");
+        header("Location: /admin/manage-subcategory?success=1");
         exit;
+    }
+
+    public function manageCourse()
+    {
+        $admin = $this->getInfoHeader();
+        $courses = $this->courseService->getAllCourses();
+        require ABSPATH . 'resources/admin/course/allCourse.php';
+    }
+
+    public function updateCourseStatus()
+    {
+        $jsonData = file_get_contents('php://input');
+        $data = json_decode($jsonData, true);
+
+        $courseId = $data['course_id'] ?? '';
+        $isChecked = $data['is_checked'] ?? '';
+        $params = [];
+        $course = $this->courseService->getById($courseId);
+        if ($course) {
+            $course->setStatus($isChecked);
+            $this->courseService->updateCourse($course);
+            echo json_encode(['success' => 'Change status successfully']);
+            exit;
+        }
+        echo json_encode(['error' => 'Something went wrong, please try again']);
+        exit;
+    }
+
+    public function courseDetails($id)
+    {
+        $admin = $this->getInfoHeader();
+        $course = $this->courseService->getById($id);
+
+        require ABSPATH . 'resources/admin/course/details.php';
     }
 }

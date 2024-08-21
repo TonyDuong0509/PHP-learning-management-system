@@ -121,6 +121,7 @@ class CourseRepository implements CourseRepositoryInterface
         $bestseller = $course->getBestseller();
         $featured = $course->getFeatured();
         $highestrated = $course->getHighestrated();
+        $status = $course->getStatus();
         $image = $course->getImage();
         $video = $course->getVideo();
         $type_id = $course->getTypeId();
@@ -129,7 +130,7 @@ class CourseRepository implements CourseRepositoryInterface
                 SET category_id = '$category_id', subcategory_id = '$subcategory_id', title = '$title',
                     name = '$name', slug = '$slug', description = '$description', duration = '$duration',
                     selling_price = '$selling_price', discount_price = '$discount_price', prerequisuites = '$prerequisuites',
-                    bestseller = '$bestseller', featured = '$featured', highestrated = '$highestrated', certificate = '$certificate',
+                    bestseller = '$bestseller', featured = '$featured', highestrated = '$highestrated', status = '$status',certificate = '$certificate',
                     resources = '$resources', label = '$label', image = '$image', video = '$video', type_id = '$type_id'
                 WHERE id = '$id'";
 

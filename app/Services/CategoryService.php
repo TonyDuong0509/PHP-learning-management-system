@@ -50,7 +50,7 @@ class CategoryService
         return $this->categoryRepository->delete($id);
     }
 
-    public function handleImageFile($path, $fileName, $controller, $action, $old_image = null)
+    public function handleImageFile($path, $fileName, $route = null, $param = null, $old_image = null)
     {
         if (!empty($old_image)) {
             unlink($old_image);
@@ -66,11 +66,11 @@ class CategoryService
             if (move_uploaded_file($_FILES[$fileName]['tmp_name'], $targetFile)) {
                 return $targetFile;
             } else {
-                header("Location: ?c=$controller&a=$action&error=1");
+                header("Location: /admin/$route/$param?error=1");
                 exit;
             }
         } else {
-            header("Location: ?c=$controller&a=$action&error=2");
+            header("Location: /admin/$route/$param?error=2");
             exit;
         }
     }

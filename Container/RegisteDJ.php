@@ -36,3 +36,6 @@ $serviceContainer->add(App\Services\OrdersService::class, new App\Services\Order
 
 $serviceContainer->add(App\Repositories\Interfaces\CartRepositoryInterface::class, new App\Repositories\CartRepository());
 $serviceContainer->add(App\Services\CartService::class, new App\Services\CartService($serviceContainer->resolve(App\Repositories\Interfaces\CartRepositoryInterface::class)));
+
+$serviceContainer->add(App\Repositories\Interfaces\CouponRepositoryInterface::class, new App\Repositories\CouponRepository());
+$serviceContainer->add(App\Services\CouponService::class, new App\Services\CouponService($serviceContainer->resolve(App\Repositories\Interfaces\CouponRepositoryInterface::class)));
