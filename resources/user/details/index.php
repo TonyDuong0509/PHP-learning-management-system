@@ -78,10 +78,6 @@
                         </ul>
                     </div><!-- end course-overview-card -->
 
-                    <!-- <div class="course-overview-card bg-gray p-4 rounded">
-                        <h3 class="fs-16 font-weight-semi-bold">Curated for the <a href="for-business.html" class="text-color hover-underline">Aduca for Business</a> collection</h3>
-                    </div> -->
-
                     <div class="course-overview-card">
                         <h3 class="fs-24 font-weight-semi-bold pb-3">Requirements</h3>
                         <ul class="generic-list-item generic-list-item-bullet fs-15">
@@ -142,7 +138,7 @@
                                                     <span class="fs-15 text-gray font-weight-medium"><?php echo count($section->getLectures()); ?> lectures</span>
                                                 </button>
                                             </div><!-- end card-header -->
-                                            <div id="collapse<?php echo $section->getId(); ?>" class="collapse show" aria-labelledby="heading<?php echo $section->getId(); ?>" data-parent="#accordion">
+                                            <div id="collapse<?php echo $section->getId(); ?>" class="collapse" aria-labelledby="heading<?php echo $section->getId(); ?>" data-parent="#accordion">
                                                 <div class="card-body">
                                                     <ul class="generic-list-item">
                                                         <?php if (!empty($section->getLectures())): ?>
@@ -497,7 +493,6 @@
                                 </p>
                                 <div class="buy-course-btn-box">
                                     <button type="submit" class="btn theme-btn w-100 mb-2" onclick="addToCart(<?php echo $course->getId(); ?>, '<?php echo $course->getName(); ?>', '<?php echo $course->getInstructorId(); ?>', '<?php echo $course->getSlug(); ?>')"><i class="la la-shopping-cart fs-18 mr-1"></i> Add to cart</button>
-                                    <button type="button" class="btn theme-btn w-100 theme-btn-white mb-2"><i class="la la-shopping-bag mr-1"></i> Buy this course</button>
                                 </div>
                                 <p class="fs-14 text-center pb-4">30-Day Money-Back Guarantee</p>
                                 <div class="preview-course-incentives">

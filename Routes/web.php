@@ -169,6 +169,10 @@ $router->map('GET', '/checkout', function () use ($serviceContainer) {
     $controller->checkoutCreate();
 }, 'checkout');
 
+$router->map('POST', '/payment', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\User\CartController::class);
+    $controller->payment();
+}, 'payment');
 
 // User routes
 $router->map('GET', '/', function () use ($serviceContainer) {
