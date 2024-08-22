@@ -6,6 +6,9 @@ use App\Services\CartService;
 use App\Services\CategoryService;
 use App\Services\CouponService;
 use App\Services\CourseService;
+use App\Services\EmailService;
+use App\Services\OrdersService;
+use App\Services\PaymentsService;
 use App\Services\SubCategoryService;
 use App\Services\UserService;
 
@@ -17,6 +20,9 @@ class CartController
     private $subCategoryService;
     private $couponService;
     private $userService;
+    private $paymentService;
+    private $orderService;
+    private $emailService;
 
     public function __construct(
         CourseService $courseService,
@@ -25,6 +31,9 @@ class CartController
         SubCategoryService $subCategoryService,
         CouponService $couponService,
         UserService $userService,
+        PaymentsService $paymentService,
+        OrdersService $orderService,
+        EmailService $emailService,
     ) {
         $this->courseService = $courseService;
         $this->cartService = $cartService;
@@ -32,6 +41,9 @@ class CartController
         $this->subCategoryService = $subCategoryService;
         $this->couponService = $couponService;
         $this->userService = $userService;
+        $this->paymentService = $paymentService;
+        $this->orderService = $orderService;
+        $this->emailService = $emailService;
     }
 
     public function addToCart($id)
@@ -212,6 +224,78 @@ class CartController
         } else {
             header("Location: /mycart?error=2");
             exit;
+        }
+    }
+
+    public function payment()
+    {
+        if (isset($_SESSION['coupon']) || !empty($_SESSION['coupon'])) {
+            $total_amount = $_SESSION['coupon']['total_amount'];
+        } else {
+            $total_amount = $this->cartService->total();
+        }
+
+        $paramsPayment = [
+            'name' => $_POST['name'],
+            'email' => $_POST['email'],
+            'cash_delivery' => $_POST['cash_delivery'],
+            'total_amount' => $total_amount,
+            'payment_type' => 'Direct Payment',
+            'invoice_no' => 'EOS' . mt_rand(10000000, 99999999),
+            'order_date' => date_create('now')->format('d F Y'),
+            'order_month' => date_create('now')->format('F'),
+            'order_year' => date_create('now')->format('Y'),
+            'status' => 'pending',
+            'created_at' => date('Y-m-d H:i:s'),
+        ];
+
+        $paymentId = $this->paymentService->savePayment($paramsPayment);
+        $payment = $this->paymentService->getById($paymentId);
+        $email = $_SESSION['emailUser'] ?? '';
+        $user = $this->userService->getByEmail($email);
+
+        foreach ($_POST['course_name'] as $key => $course_name) {
+            $existingOrder = $this->orderService->checkExist($user->getId(), $_POST['course_id'][$key]);
+
+            if ($existingOrder) {
+                header("location: /checkout?error=1");
+                exit;
+            }
+
+            $paramsOrder = [
+                'payment_id' => $payment->getId(),
+                'user_id' => $user->getId(),
+                'instructor_id' => $_POST['instructorId'][$key],
+                'course_id' => $_POST['course_id'][$key],
+                'course_title' => $course_name,
+                'price' => $_POST['price'][$key],
+                'created_at' => date('Y-m-d H:i:s'),
+            ];
+
+            $this->orderService->saveOrder($paramsOrder);
+            unset($_SESSION['cart']);
+
+            $to = $_POST['email'];
+            $subject = "Aduca - Payment successfully !";
+            $name = $_POST['name'];
+            $website = get_domain();
+            $content = "
+            Hello $name, <br>
+            This email from Aduca - E-Learning system. <br>
+            We want to say thank you very much because your support to us. <br>
+            If have some problem with our courses. Please send back email for us. We will support you. <br>
+            Thank you very much !
+            -----------------------<br>
+            Email from $website
+            ";
+
+            if ($_POST['cash_delivery'] == 'stripe') {
+                echo "Stripe";
+            } else {
+                $this->emailService->send($to, $subject, $content);
+                header("location: /checkout?success=1");
+                exit;
+            }
         }
     }
 }

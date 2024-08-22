@@ -18,13 +18,33 @@
 
 <section class="cart-area section--padding">
     <div class="container">
+        <?php if (isset($_GET['success'])) {
+            if ($_GET['success'] == 1) {
+                echo "
+                                        <div class='alert alert-success'>
+                                            Cash Payment submit successfully.
+                                        </div>
+                                        ";
+            }
+        }
+        ?>
+        <?php if (isset($_GET['error'])) {
+            if ($_GET['error'] == 1) {
+                echo "
+                                        <div class='alert alert-danger'>
+                                            You Have already enrolled in this course.
+                                        </div>
+                                        ";
+            }
+        }
+        ?>
         <div class="row">
             <div class="col-lg-7">
                 <div class="card card-item">
                     <div class="card-body">
                         <h3 class="card-title fs-22 pb-3">Billing Details</h3>
                         <div class="divider"><span></span></div>
-                        <form method="post" class="row">
+                        <form method="POST" action="<?php echo $router->generate('payment'); ?>" class="row" enctype="multipart/form-data">
                             <div class="input-box col-lg-6">
                                 <label class="label-text">Full Name</label>
                                 <div class="form-group">
@@ -39,7 +59,6 @@
                                     <span class="la la-user input-icon"></span>
                                 </div>
                             </div><!-- end input-box -->
-                        </form>
                     </div>
                 </div>
                 <div class="card card-item">
@@ -69,6 +88,13 @@
                         <div class="order-details-lists">
                             <?php if (!empty($carts)): ?>
                                 <?php foreach ($carts as $cart): ?>
+
+                                    <input type="hidden" name="slug[]" value="<?php echo $cart['options']['slug']; ?>">
+                                    <input type="hidden" name="course_id[]" value="<?php echo $cart['course_id']; ?>">
+                                    <input type="hidden" name="course_name[]" value="<?php echo $cart['name']; ?>">
+                                    <input type="hidden" name="price[]" value="<?php echo $cart['price']; ?>">
+                                    <input type="hidden" name="instructorId[]" value="<?php echo $cart['options']['instructorId']; ?>">
+
                                     <div class="media media-card border-bottom border-bottom-gray pb-3 mb-3">
                                         <a href="/course-details/<?php echo $cart['course_id']; ?>/<?php echo $cart['options']['slug']; ?>" class="media-img">
                                             <img src="/<?php echo $cart['options']['image'] ?? '/public/upload/no_image.png'; ?>" alt="Cart image">
@@ -115,24 +141,31 @@
                                     </span>
                                 </li>
                             </ul>
+
+                            <input type="hidden" name="total" value="<?php echo $cartTotal; ?>">
+
                         <?php else: ?>
-                            <li class="d-flex align-items-center justify-content-between font-weight-bold">
-                                <span class="text-black">Total:</span>
-                                <span>
-                                    $<?php echo $cartTotal; ?>
-                                </span>
-                            </li>
+                            <ul class="generic-list-item generic-list-item-flash fs-15">
+                                <li class="d-flex align-items-center justify-content-between font-weight-bold">
+                                    <span class="text-black">Total:</span>
+                                    <span>$<?php echo $cartTotal; ?></span>
+                                </li>
+
+                                <input type="hidden" name="total" value="<?php echo $cartTotal; ?>">
+
+                            </ul>
                         <?php endif; ?>
                         <div class="btn-box border-top border-top-gray pt-3">
                             <p class="fs-14 lh-22 mb-2">Aduca is required by law to collect applicable transaction taxes for purchases made in certain tax jurisdictions.</p>
                             <p class="fs-14 lh-22 mb-3">By completing your purchase you agree to these <a href="#" class="text-color hover-underline">Terms of Service.</a></p>
-                            <a href="checkout.html" class="btn theme-btn w-100">Proceed <i class="la la-arrow-right icon ml-1"></i></a>
+                            <button type="submit" class="btn theme-btn w-100">Proceed <i class="la la-arrow-right icon ml-1"></i></button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    </form>
 </section>
 
 <?php require ABSPATH . 'resources/user/layout/footer.php'; ?>
