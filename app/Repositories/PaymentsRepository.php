@@ -34,6 +34,21 @@ class PaymentsRepository implements PaymentsRepositoryInterface
         return false;
     }
 
+    public function updateStatus($payment)
+    {
+        global $conn;
+
+        $id = $payment->getId();
+        $sql = "UPDATE payments
+                SET status = 'confirm'
+                WHERE id = '$id'";
+        if ($conn->query($sql) === true) {
+            return true;
+        }
+        echo "Error: " . $sql . PHP_EOL;
+        return false;
+    }
+
     public function fetchAll($condition = null)
     {
         global $conn;
