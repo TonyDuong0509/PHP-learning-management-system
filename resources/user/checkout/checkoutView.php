@@ -32,7 +32,7 @@
             if ($_GET['error'] == 1) {
                 echo "
                                         <div class='alert alert-danger'>
-                                            You Have already enrolled in this course.
+                                            You Have already enrolled in this course, please remove it from cart.
                                         </div>
                                         ";
             }

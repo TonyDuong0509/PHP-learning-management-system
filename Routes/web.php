@@ -17,12 +17,42 @@ $router->map('GET', '/admin/logout', function () use ($serviceContainer) {
     $controller->logout();
 });
 
+$router->map('GET', '/admin/pending/order', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\OrderController::class);
+    $controller->adminPendingOrder();
+}, 'admin.pending.order');
+
+$router->map('GET', '/admin/order/details/[i:id]', function ($id) use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\OrderController::class);
+    $controller->adminOrderDetails($id);
+}, 'admin.order.details');
+
+$router->map('GET', '/pending-confirm/[i:id]', function ($id) use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\OrderController::class);
+    $controller->pendingConfirm($id);
+}, 'pending-confirm');
+
+$router->map('GET', '/admin/confirm/order', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\OrderController::class);
+    $controller->adminConfirmOrder();
+}, 'admin.confirm.order');
+
 
 // Instructor
 $router->map('GET', '/admin/manage-instructor', function () use ($serviceContainer) {
     $controller = $serviceContainer->resolve(App\Controllers\Admin\DashboardController::class);
     $controller->manageInstructor();
 });
+
+$router->map('GET', '/instructor/all/order', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\OrderController::class);
+    $controller->instructorAllOrder();
+});
+
+$router->map('GET', '/instructor/order/details/[i:payment_id]', function ($payment_id) use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\OrderController::class);
+    $controller->instructorOrderDetails($payment_id);
+}, 'instructor.order.details');
 
 
 // Category

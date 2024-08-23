@@ -111,16 +111,14 @@ global $router;
                 </li>
                 <li>
                     <a class="has-arrow" href="javascript:;">
-                        <div class="parent-icon"> <i class="bx bx-donate-blood"></i>
+                        <div class="parent-icon"><i class="bx bx-donate-blood"></i>
                         </div>
-                        <div class="menu-title">Icons</div>
+                        <div class="menu-title">Manage Orders</div>
                     </a>
                     <ul>
-                        <li> <a href="icons-line-icons"><i class='bx bx-radio-circle'></i>Line Icons</a>
+                        <li> <a href="/admin/pending/order"><i class='bx bx-radio-circle'></i>Pending Orders</a>
                         </li>
-                        <li> <a href="icons-boxicons"><i class='bx bx-radio-circle'></i>Boxicons</a>
-                        </li>
-                        <li> <a href="icons-feather-icons"><i class='bx bx-radio-circle'></i>Feather Icons</a>
+                        <li> <a href="/admin/confirm/order"><i class='bx bx-radio-circle'></i>Confirm Orders</a>
                         </li>
                     </ul>
                 </li>

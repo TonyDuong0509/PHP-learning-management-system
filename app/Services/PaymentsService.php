@@ -23,8 +23,20 @@ class PaymentsService
         return $this->paymentRepository->fetchAll();
     }
 
+    public function getStatusPayment($status)
+    {
+        $condition = "status = '$status' ORDER BY id DESC";
+
+        return $this->paymentRepository->fetchAll($condition);
+    }
+
     public function getById($id)
     {
         return $this->paymentRepository->getById($id);
+    }
+
+    public function updateStatus($payment)
+    {
+        return $this->paymentRepository->updateStatus($payment);
     }
 }

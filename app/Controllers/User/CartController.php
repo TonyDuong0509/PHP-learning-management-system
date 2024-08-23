@@ -256,7 +256,6 @@ class CartController
 
         foreach ($_POST['course_name'] as $key => $course_name) {
             $existingOrder = $this->orderService->checkExist($user->getId(), $_POST['course_id'][$key]);
-
             if ($existingOrder) {
                 header("location: /checkout?error=1");
                 exit;
@@ -273,13 +272,14 @@ class CartController
             ];
 
             $this->orderService->saveOrder($paramsOrder);
-            unset($_SESSION['cart']);
+        }
+        unset($_SESSION['cart']);
 
-            $to = $_POST['email'];
-            $subject = "Aduca - Payment successfully !";
-            $name = $_POST['name'];
-            $website = get_domain();
-            $content = "
+        $to = $_POST['email'];
+        $subject = "Aduca - Payment successfully !";
+        $name = $_POST['name'];
+        $website = get_domain();
+        $content = "
             Hello $name, <br>
             This email from Aduca - E-Learning system. <br>
             We want to say thank you very much because your support to us. <br>
@@ -289,13 +289,12 @@ class CartController
             Email from $website
             ";
 
-            if ($_POST['cash_delivery'] == 'stripe') {
-                echo "Stripe";
-            } else {
-                $this->emailService->send($to, $subject, $content);
-                header("location: /checkout?success=1");
-                exit;
-            }
+        if ($_POST['cash_delivery'] == 'stripe') {
+            echo "Stripe";
+        } else {
+            $this->emailService->send($to, $subject, $content);
+            header("location: /checkout?success=1");
+            exit;
         }
     }
 }
