@@ -18,16 +18,6 @@
 
 <section class="cart-area section--padding">
     <div class="container">
-        <?php if (isset($_GET['success'])) {
-            if ($_GET['success'] == 1) {
-                echo "
-                                        <div class='alert alert-success'>
-                                            Cash Payment submit successfully.
-                                        </div>
-                                        ";
-            }
-        }
-        ?>
         <?php if (isset($_GET['error'])) {
             if ($_GET['error'] == 1) {
                 echo "

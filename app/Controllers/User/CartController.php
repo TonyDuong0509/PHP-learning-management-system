@@ -133,7 +133,7 @@ class CartController
 
     public function cartRemove($id)
     {
-        $result = $this->cartService->delete($id);
+        $result = $this->cartService->deleteByCourseId($id);
 
         if (isset($_SESSION['coupon']) || !empty($_SESSION['coupon'])) {
             $coupon_name =  $_SESSION['coupon']['coupon_name'];
@@ -273,7 +273,7 @@ class CartController
 
             $this->orderService->saveOrder($paramsOrder);
         }
-        unset($_SESSION['cart']);
+        $this->cartService->deleteAll();
 
         $to = $_POST['email'];
         $subject = "Aduca - Payment successfully !";
@@ -293,7 +293,7 @@ class CartController
             echo "Stripe";
         } else {
             $this->emailService->send($to, $subject, $content);
-            header("location: /checkout?success=1");
+            header("location: /?success=1");
             exit;
         }
     }

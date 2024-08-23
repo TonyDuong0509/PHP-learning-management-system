@@ -24,9 +24,14 @@ class OrdersService
         return $this->orderRepository->fetchAll($condition);
     }
 
-    public function getAllLatestByInstructorId($instructor_id)
+    public function getOrdersLatestByPaymentIdAndInstructorId($instructor_id)
     {
-        return $this->orderRepository->fetchAllLatestByInstructorId($instructor_id);
+        return $this->orderRepository->fetchOrdersLatestByPaymentIdAndInstructorId($instructor_id);
+    }
+
+    public function getOrdersLatestByCourseIdAndUserId($user_id)
+    {
+        return $this->orderRepository->fetchOrdersLatestByCourseIdAndUserId($user_id);
     }
 
     public function checkExist($user_id, $course_id)

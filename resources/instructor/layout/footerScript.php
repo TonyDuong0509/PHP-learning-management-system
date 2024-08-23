@@ -12,3 +12,4 @@
 <script src="<?php ABSPATH ?>/public/backend/js/index.js"></script>
 <!--app JS-->
 <script src="<?php ABSPATH ?>/public/backend/js/app.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

@@ -8,5 +8,5 @@ interface CartRepositoryInterface
     public function fetchAll($condition = null);
     public function checkExistCourse($id);
     public function total();
-    public function delete($id);
+    public function delete($condition = null, $course_id = null);
 }

@@ -76,7 +76,7 @@ class OrderController
     public function instructorAllOrder()
     {
         $instructor = $this->getInstructorInSidebar();
-        $orderItem = $this->orderService->getAllLatestByInstructorId($instructor->getId());
+        $orderItem = $this->orderService->getOrdersLatestByPaymentIdAndInstructorId($instructor->getId());
         require ABSPATH . 'resources/instructor/order/allOrder.php';
     }
 
@@ -86,5 +86,14 @@ class OrderController
         $payment = $this->paymentsService->getById($payment_id);
         $orderItem = $this->orderService->getAllByPaymentId($payment_id);
         require ABSPATH . 'resources/instructor/order/orderDetails.php';
+    }
+
+    public function myCourse()
+    {
+        $email = $_SESSION['emailUser'];
+        $user = $this->userService->getByEmail($email);
+        $orderItem = $this->orderService->getOrdersLatestByCourseIdAndUserId($user->getId());
+
+        require ABSPATH . 'resources/user/dashboard/myAllCourse.php';
     }
 }

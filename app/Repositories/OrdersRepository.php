@@ -35,7 +35,7 @@ class OrdersRepository implements OrdersRepositoryInterface
         return $orders;
     }
 
-    public function fetchAllLatestByInstructorId($instructor_id)
+    public function fetchOrdersLatestByPaymentIdAndInstructorId($instructor_id)
     {
         global $conn;
         $orders = array();
@@ -44,6 +44,41 @@ class OrdersRepository implements OrdersRepositoryInterface
                     FROM orders
                     WHERE instructor_id = '$instructor_id'
                     GROUP BY payment_id";
+
+        $sql = "SELECT orders.*
+                FROM orders
+                INNER JOIN ($subquery) AS latest_order
+                ON orders.id = latest_order.max_id
+                ORDER BY latest_order.max_id DESC";
+
+        $result = $conn->query($sql);
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $order = new Orders(
+                    $row['id'],
+                    $row['payment_id'],
+                    $row['user_id'],
+                    $row['instructor_id'],
+                    $row['course_id'],
+                    $row['course_title'],
+                    $row['price'],
+                    $row['created_at']
+                );
+                $orders[] = $order;
+            }
+        }
+        return $orders;
+    }
+
+    public function fetchOrdersLatestByCourseIdAndUserId($user_id)
+    {
+        global $conn;
+        $orders = array();
+
+        $subquery = "SELECT course_id, MAX(id) as max_id
+                    FROM orders
+                    WHERE user_id = '$user_id'
+                    GROUP BY course_id";
 
         $sql = "SELECT orders.*
                 FROM orders

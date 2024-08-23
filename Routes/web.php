@@ -38,23 +38,6 @@ $router->map('GET', '/admin/confirm/order', function () use ($serviceContainer) 
 }, 'admin.confirm.order');
 
 
-// Instructor
-$router->map('GET', '/admin/manage-instructor', function () use ($serviceContainer) {
-    $controller = $serviceContainer->resolve(App\Controllers\Admin\DashboardController::class);
-    $controller->manageInstructor();
-});
-
-$router->map('GET', '/instructor/all/order', function () use ($serviceContainer) {
-    $controller = $serviceContainer->resolve(App\Controllers\Admin\OrderController::class);
-    $controller->instructorAllOrder();
-});
-
-$router->map('GET', '/instructor/order/details/[i:payment_id]', function ($payment_id) use ($serviceContainer) {
-    $controller = $serviceContainer->resolve(App\Controllers\Admin\OrderController::class);
-    $controller->instructorOrderDetails($payment_id);
-}, 'instructor.order.details');
-
-
 // Category
 $router->map('GET', '/admin/manage-category', function () use ($serviceContainer) {
     $controller = $serviceContainer->resolve(App\Controllers\Admin\DashboardController::class);
@@ -255,6 +238,11 @@ $router->map('GET', '/logout', function () use ($serviceContainer) {
     $controller->logout();
 }, 'logout');
 
+$router->map('GET', '/my/course', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\OrderController::class);
+    $controller->myCourse();
+}, 'my.course');
+
 
 // Cart routes
 $router->map('POST', '/cart/data/store/[i:id]', function ($id) use ($serviceContainer) {
@@ -324,6 +312,21 @@ $router->map('GET', '/instructor/logout', function () use ($serviceContainer) {
     $controller->logout();
 }, 'instructor.logout');
 
+$router->map('GET', '/admin/manage-instructor', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\DashboardController::class);
+    $controller->manageInstructor();
+});
+
+$router->map('GET', '/instructor/all/order', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\OrderController::class);
+    $controller->instructorAllOrder();
+});
+
+$router->map('GET', '/instructor/order/details/[i:payment_id]', function ($payment_id) use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\OrderController::class);
+    $controller->instructorOrderDetails($payment_id);
+}, 'instructor.order.details');
+
 
 // WishLists routes
 $router->map('GET', '/user/wishlist', function () use ($serviceContainer) {
@@ -340,6 +343,7 @@ $router->map('GET', '/remove-wishlist/[i:id]', function ($id) use ($serviceConta
     $controller = $serviceContainer->resolve(App\Controllers\User\WishListController::class);
     $controller->removeWishList($id);
 });
+
 
 $match = $router->match();
 $routeName = is_array($match) ? ($match['name'] ?? null) : null;
