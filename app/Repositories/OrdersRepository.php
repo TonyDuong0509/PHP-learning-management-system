@@ -35,6 +35,41 @@ class OrdersRepository implements OrdersRepositoryInterface
         return $orders;
     }
 
+    public function fetchAllLatestByInstructorId($instructor_id)
+    {
+        global $conn;
+        $orders = array();
+
+        $subquery = "SELECT payment_id, MAX(id) as max_id
+                    FROM orders
+                    WHERE instructor_id = '$instructor_id'
+                    GROUP BY payment_id";
+
+        $sql = "SELECT orders.*
+                FROM orders
+                INNER JOIN ($subquery) AS latest_order
+                ON orders.id = latest_order.max_id
+                ORDER BY latest_order.max_id DESC";
+
+        $result = $conn->query($sql);
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $order = new Orders(
+                    $row['id'],
+                    $row['payment_id'],
+                    $row['user_id'],
+                    $row['instructor_id'],
+                    $row['course_id'],
+                    $row['course_title'],
+                    $row['price'],
+                    $row['created_at']
+                );
+                $orders[] = $order;
+            }
+        }
+        return $orders;
+    }
+
     public function checkExist($user_id, $course_id)
     {
         $condition = "user_id = '$user_id' AND course_id = '$course_id' LIMIT 1";

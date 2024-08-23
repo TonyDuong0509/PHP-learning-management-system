@@ -1,6 +1,10 @@
-<?php require ABSPATH . 'resources/admin/layout/sidebar.php'; ?>
+<?php require ABSPATH . 'resources/instructor/layout/sidebar.php'; ?>
 
-<?php require ABSPATH . 'resources/admin/layout/header.php'; ?>
+<?php require ABSPATH . 'resources/instructor/layout/header.php'; ?>
+
+<?php
+$router = $router;
+?>
 
 <div class="page-wrapper">
     <div class="page-content">
@@ -23,11 +27,13 @@
             <div class="main-body">
                 <div class="row">
                     <div class="col-lg-6">
+
                         <div class="card">
+
                             <div class="card-body">
                                 <div class="row mb-3">
                                     <div class="col-sm-3">
-                                        <h6 class="mb-0">Full Name</h6>
+                                        <h6 class="mb-0">Name</h6>
                                     </div>
                                     <div class="col-sm-9 text-secondary">
                                         <strong><?php echo $payment->getName(); ?></strong>
@@ -41,32 +47,33 @@
                                         <strong><?php echo $payment->getEmail(); ?></strong>
                                     </div>
                                 </div>
+
+
                                 <div class="row mb-3">
                                     <div class="col-sm-3">
                                         <h6 class="mb-0">Cash Delivery</h6>
                                     </div>
                                     <div class="col-sm-9 text-secondary">
-                                        <strong><strong><?php echo $payment->getCashDelivery(); ?></strong></strong>
+                                        <strong><?php echo $payment->getCashDelivery(); ?></strong>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
                     <div class="col-lg-6">
                         <div class="card">
                             <div class="card-body">
                                 <div class="row mb-3">
                                     <div class="col-sm-3">
-                                        <h6 class="mb-0">Total Amount</h6>
+                                        <h6 class="mb-0">Total Amount </h6>
                                     </div>
                                     <div class="col-sm-9 text-secondary">
-                                        <strong><?php echo $payment->getTotalAmount(); ?></strong>
+                                        <strong>$<?php echo $payment->getTotalAmount(); ?></strong>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col-sm-3">
-                                        <h6 class="mb-0">Payment Type</h6>
+                                        <h6 class="mb-0">Payment Type </h6>
                                     </div>
                                     <div class="col-sm-9 text-secondary">
                                         <strong><?php echo $payment->getPaymentType(); ?></strong>
@@ -74,7 +81,7 @@
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col-sm-3">
-                                        <h6 class="mb-0">Invoice No</h6>
+                                        <h6 class="mb-0">Invoice Number </h6>
                                     </div>
                                     <div class="col-sm-9 text-secondary">
                                         <strong><?php echo $payment->getInvoiceNo(); ?></strong>
@@ -82,7 +89,7 @@
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col-sm-3">
-                                        <h6 class="mb-0">Order Date</h6>
+                                        <h6 class="mb-0">Order Date </h6>
                                     </div>
                                     <div class="col-sm-9 text-secondary">
                                         <strong><?php echo $payment->getOrderDate(); ?></strong>
@@ -175,31 +182,15 @@
     </div>
 </div>
 
-<div class="overlay toggle-icon"></div>
-<a href="javaScript:;" class="back-to-top"><i class='bx bxs-up-arrow-alt'></i></a>
-<?php require ABSPATH . 'resources/admin/layout/footer.php'; ?>
+<?php require ABSPATH . 'resources/instructor/layout/footer.php'; ?>
+
 </div>
 
-<?php require ABSPATH . 'resources/admin/layout/footerScript.php'; ?>
-
+<?php require ABSPATH . 'resources/instructor/layout/footerScript.php'; ?>
+<script src="<?php ABSPATH ?>/instructor/public/js/app.js"></script>
 <script>
-    $(document).ready(function() {
-        $('#example').DataTable();
-    });
+    new PerfectScrollbar(".app-container")
 </script>
-<script>
-    $(document).ready(function() {
-        var table = $('#example2').DataTable({
-            lengthChange: false,
-            buttons: ['copy', 'excel', 'pdf', 'print']
-        });
-
-        table.buttons().container()
-            .appendTo('#example2_wrapper .col-md-6:eq(0)');
-    });
-</script>
-<script src="public/js/app.js"></script>
-
 </body>
 
 </html>

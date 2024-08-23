@@ -44,6 +44,16 @@ $router->map('GET', '/admin/manage-instructor', function () use ($serviceContain
     $controller->manageInstructor();
 });
 
+$router->map('GET', '/instructor/all/order', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\OrderController::class);
+    $controller->instructorAllOrder();
+});
+
+$router->map('GET', '/instructor/order/details/[i:payment_id]', function ($payment_id) use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\OrderController::class);
+    $controller->instructorOrderDetails($payment_id);
+}, 'instructor.order.details');
+
 
 // Category
 $router->map('GET', '/admin/manage-category', function () use ($serviceContainer) {

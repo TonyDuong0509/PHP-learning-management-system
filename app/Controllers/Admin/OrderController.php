@@ -66,4 +66,25 @@ class OrderController
 
         require ABSPATH . 'resources/admin/orders/confirmOrders.php';
     }
+
+    private function getInstructorInSidebar()
+    {
+        $email = $_SESSION['emailInstructor'];
+        return $this->userService->getByEmail($email);
+    }
+
+    public function instructorAllOrder()
+    {
+        $instructor = $this->getInstructorInSidebar();
+        $orderItem = $this->orderService->getAllLatestByInstructorId($instructor->getId());
+        require ABSPATH . 'resources/instructor/order/allOrder.php';
+    }
+
+    public function instructorOrderDetails($payment_id)
+    {
+        $instructor = $this->getInstructorInSidebar();
+        $payment = $this->paymentsService->getById($payment_id);
+        $orderItem = $this->orderService->getAllByPaymentId($payment_id);
+        require ABSPATH . 'resources/instructor/order/orderDetails.php';
+    }
 }
