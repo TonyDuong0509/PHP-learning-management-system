@@ -243,6 +243,11 @@ $router->map('GET', '/my/course', function () use ($serviceContainer) {
     $controller->myCourse();
 }, 'my.course');
 
+$router->map('GET', '/course/view/[i:course_id]', function ($course_id) use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\OrderController::class);
+    $controller->courseView($course_id);
+}, 'course.view');
+
 
 // Cart routes
 $router->map('POST', '/cart/data/store/[i:id]', function ($id) use ($serviceContainer) {
