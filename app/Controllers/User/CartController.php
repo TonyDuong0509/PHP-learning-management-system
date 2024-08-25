@@ -133,7 +133,7 @@ class CartController
 
     public function cartRemove($id)
     {
-        $result = $this->cartService->delete($id);
+        $result = $this->cartService->deleteByCourseId($id);
 
         if (isset($_SESSION['coupon']) || !empty($_SESSION['coupon'])) {
             $coupon_name =  $_SESSION['coupon']['coupon_name'];
@@ -218,11 +218,19 @@ class CartController
 
                 require ABSPATH . 'resources/user/checkout/checkoutView.php';
             } else {
-                header("Location: /mycart?error=1");
+                $_SESSION['notification'] = [
+                    'message' => 'You have to at least 1 course to checkout.',
+                    'alert-type' => 'error',
+                ];
+                header("Location: /mycart");
                 exit;
             }
         } else {
-            header("Location: /mycart?error=2");
+            $_SESSION['notification'] = [
+                'message' => "You have to login before checkouting, click <a style='font-size=20px;' href='/login'>HERE</a> to login",
+                'alert-type' => 'error',
+            ];
+            header("Location: /mycart");
             exit;
         }
     }
@@ -273,7 +281,7 @@ class CartController
 
             $this->orderService->saveOrder($paramsOrder);
         }
-        unset($_SESSION['cart']);
+        $this->cartService->deleteAll();
 
         $to = $_POST['email'];
         $subject = "Aduca - Payment successfully !";
@@ -293,7 +301,13 @@ class CartController
             echo "Stripe";
         } else {
             $this->emailService->send($to, $subject, $content);
-            header("location: /checkout?success=1");
+
+            $_SESSION['notification'] = [
+                'message' => 'Payment Successfully. Thank you very much !',
+                'alert-type' => 'success',
+            ];
+
+            header("location: /");
             exit;
         }
     }

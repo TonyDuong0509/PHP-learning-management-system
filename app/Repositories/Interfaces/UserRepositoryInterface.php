@@ -12,4 +12,5 @@ interface UserRepositoryInterface
     public function update($category);
     public function delete($id);
     public function checkExist($email);
+    public function activeInstructor($id);
 }

@@ -32,25 +32,8 @@ $lecture = $lecture;
 
                 <div class="card">
                     <div class="card-body p-4">
-                        <?php if (isset($_GET['success'])) {
-                            if ($_GET['success'] == 1) {
-                                echo "
-                                        <div class='alert alert-success'>
-                                            Updated course lecture successfully !
-                                        </div>
-                                    ";
-                            }
-                            if ($_GET['success'] == 2) {
-                                echo "
-                                        <div class='alert alert-success'>
-                                            Deleted course lecture successfully !
-                                        </div>
-                                    ";
-                            }
-                        }
-                        ?>
                         <h5 class="mb-4">Edit Lecture</h5>
-                        <form action="?c=course&a=updateCourseLecture" method="POST" class="row g-3" enctype="multipart/form-data">
+                        <form action="<?php echo $router->generate('update.course.lecture'); ?>" method="POST" class="row g-3" enctype="multipart/form-data">
                             <input type="hidden" name="id" value="<?php echo $lecture->getId(); ?>">
                             <div class="form-group col-md-6">
                                 <label for="input1" class="form-label">Lecture Title</label>

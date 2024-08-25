@@ -12,6 +12,7 @@ require_once ABSPATH . "app/Repositories/Interfaces/OrdersRepositoryInterface.ph
 require_once ABSPATH . "app/Repositories/Interfaces/CartRepositoryInterface.php";
 require_once ABSPATH . "app/Repositories/Interfaces/CouponRepositoryInterface.php";
 require_once ABSPATH . "app/Repositories/Interfaces/PaymentsRepositoryInterface.php";
+require_once ABSPATH . "app/Repositories/Interfaces/QuestionsRepositoryInterface.php";
 
 require_once ABSPATH . "app/Models/Category.php";
 require_once ABSPATH . "app/Repositories/CategoryRepository.php";
@@ -39,6 +40,8 @@ require_once ABSPATH . "app/Models/Coupon.php";
 require_once ABSPATH . "app/Repositories/CouponRepository.php";
 require_once ABSPATH . "app/Models/Payments.php";
 require_once ABSPATH . "app/Repositories/PaymentsRepository.php";
+require_once ABSPATH . "app/Models/Questions.php";
+require_once ABSPATH . "app/Repositories/QuestionsRepository.php";
 
 require_once ABSPATH . "Container/ServiceContainer.php";
 
@@ -54,6 +57,7 @@ require_once ABSPATH . "app/Services/OrdersService.php";
 require_once ABSPATH . "app/Services/CartService.php";
 require_once ABSPATH . "app/Services/CouponService.php";
 require_once ABSPATH . "app/Services/PaymentsService.php";
+require_once ABSPATH . "app/Services/QuestionsService.php";
 
 
 //aduca.com

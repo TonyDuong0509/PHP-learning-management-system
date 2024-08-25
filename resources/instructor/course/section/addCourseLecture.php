@@ -10,35 +10,11 @@ $router = $router;
 
     <div class="page-content">
         <div class="row">
-            <?php if (isset($_GET['success'])) {
-                if ($_GET['success'] == 1) {
-                    echo "
-                                    <div class='alert alert-success'>
-                                        Added section successfully !
-                                    </div>
-                                ";
-                }
-                if ($_GET['success'] == 2) {
-                    echo "
-                                    <div class='alert alert-success'>
-                                        Deleted lecture successfully !
-                                    </div>
-                                ";
-                }
-                if ($_GET['success'] == 3) {
-                    echo "
-                                    <div class='alert alert-success'>
-                                        Deleted section successfully !
-                                    </div>
-                                ";
-                }
-            }
-            ?>
             <div class="col-12">
                 <div class="card radius-10">
                     <div class="card-body">
                         <div class="d-flex align-items-center">
-                            <img src="../../../<?php echo $course->getImage(); ?>" class="rounded-circle p-1 border" width="90" height="90" alt="...">
+                            <img src="/<?php echo $course->getImage(); ?>" class="rounded-circle p-1 border" width="90" height="90" alt="...">
                             <div class="flex-grow-1 ms-3">
                                 <h5 class="mt-0"><?php echo $course->getName(); ?></h5>
                                 <p class="mb-0"><?php echo $course->getTitle(); ?></p>
@@ -58,8 +34,8 @@ $router = $router;
                                             <div class="card-body p-4 d-flex justify-content-between">
                                                 <h6><?php echo $item->getSectionTitle(); ?></h6>
                                                 <div class="d-flex justify-content-between align-items-center">
-                                                    <form action="?c=course&a=deleteSection&id=<?php echo $item->getId(); ?>" method="POST">
-                                                        <button type="submit" class="btn btn-danger px-2 ms-auto">
+                                                    <form action="<?php echo $router->generate('delete.course.section', ['id' => $item->getId()]); ?>" method="POST">
+                                                        <button type="submit" onclick="return confirmDelete()" class="btn btn-danger px-2 ms-auto">
                                                             Delete Section
                                                         </button> &nbsp;
                                                     </form>
@@ -78,7 +54,7 @@ $router = $router;
                                                             </div>
                                                             <div class="btn-group">
                                                                 <a href="<?php echo $router->generate('edit.course.lecture', ['id' => $item->getId()]); ?>" class="btn btn-sm btn-primary">Edit</a> &nbsp;
-                                                                <form action="?c=course&a=deleteLecture&id=<?php echo $item->getId(); ?>" method="POST">
+                                                                <form action="<?php echo $router->generate('delete.course.lecture', ['id' => $item->getId()]); ?>" method="POST">
                                                                     <button type="submit" onclick="return confirmDelete()" class="btn btn-sm btn-danger">Delete</button>
                                                                 </form>
                                                             </div>
@@ -109,7 +85,7 @@ $router = $router;
                 </div>
                 <div class="modal-body">
 
-                    <form action="?c=course&a=storeSection" method="POST">
+                    <form action="<?php echo $router->generate('store.course.section'); ?>" method="POST">
                         <input type="hidden" name="id" value="<?php echo $course->getId(); ?>">
                         <div class="form-group mb-3">
                             <label for="input1" class="form-label">Course Section</label>
@@ -183,7 +159,7 @@ $router = $router;
         const lectureContent = lectureContainer.querySelector('textarea').value;
         const lectureUrl = lectureContainer.querySelector('input[name="url"]').value;
 
-        fetch('/instructor/?c=course&a=storeLecture', {
+        fetch('/instructor/store-course-lecture', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

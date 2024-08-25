@@ -74,11 +74,14 @@ class CartRepository implements CartRepositoryInterface
         return $cart;
     }
 
-    public function delete($course_id)
+    public function delete($condition = null, $course_id = null)
     {
         global $conn;
-        $sql = "DELETE FROM cart
-                WHERE course_id = '$course_id'";
+
+        $sql = "DELETE FROM cart";
+        if ($condition) {
+            $sql .= " WHERE $condition";
+        }
         if ($conn->query($sql) === true) {
             return true;
         }

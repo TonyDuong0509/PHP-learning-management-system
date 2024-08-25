@@ -12,10 +12,20 @@ $router->map('GET', '/admin/dashboard', function () use ($serviceContainer) {
     $controller->index();
 });
 
+$router->map('GET', '/admin/login/form', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\AdminController::class);
+    $controller->loginForm();
+}, 'admin.login.form');
+
+$router->map('POST', '/admin/login', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\AdminController::class);
+    $controller->login();
+}, 'admin.login');
+
 $router->map('GET', '/admin/logout', function () use ($serviceContainer) {
-    $controller = $serviceContainer->resolve(App\Controllers\Admin\AuthController::class);
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\AdminController::class);
     $controller->logout();
-});
+}, 'admin.logout');
 
 $router->map('GET', '/admin/pending/order', function () use ($serviceContainer) {
     $controller = $serviceContainer->resolve(App\Controllers\Admin\OrderController::class);
@@ -37,22 +47,30 @@ $router->map('GET', '/admin/confirm/order', function () use ($serviceContainer) 
     $controller->adminConfirmOrder();
 }, 'admin.confirm.order');
 
+$router->map('GET', '/admin/profile/[i:id]', function ($id) use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\AdminController::class);
+    $controller->profile($id);
+}, 'admin.profile');
 
-// Instructor
-$router->map('GET', '/admin/manage-instructor', function () use ($serviceContainer) {
+$router->map('POST', '/admin/store/profile', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\AdminController::class);
+    $controller->storeProfile();
+}, 'admin.store.profile');
+
+$router->map('GET', '/admin/change/password/[i:id]', function ($id) use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\AdminController::class);
+    $controller->changePassword($id);
+}, 'admin.change.password');
+
+$router->map('POST', '/admin/update/password', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\AdminController::class);
+    $controller->updatePassword();
+}, 'admin.update.password');
+
+$router->map('POST', '/admin/active/instructor/[i:id]', function ($id) use ($serviceContainer) {
     $controller = $serviceContainer->resolve(App\Controllers\Admin\DashboardController::class);
-    $controller->manageInstructor();
-});
-
-$router->map('GET', '/instructor/all/order', function () use ($serviceContainer) {
-    $controller = $serviceContainer->resolve(App\Controllers\Admin\OrderController::class);
-    $controller->instructorAllOrder();
-});
-
-$router->map('GET', '/instructor/order/details/[i:payment_id]', function ($payment_id) use ($serviceContainer) {
-    $controller = $serviceContainer->resolve(App\Controllers\Admin\OrderController::class);
-    $controller->instructorOrderDetails($payment_id);
-}, 'instructor.order.details');
+    $controller->activeInstructor($id);
+}, 'admin.active.instructor');
 
 
 // Category
@@ -255,6 +273,53 @@ $router->map('GET', '/logout', function () use ($serviceContainer) {
     $controller->logout();
 }, 'logout');
 
+$router->map('GET', '/my/course', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\OrderController::class);
+    $controller->myCourse();
+}, 'my.course');
+
+$router->map('GET', '/course/view/[i:course_id]', function ($course_id) use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\OrderController::class);
+    $controller->courseView($course_id);
+}, 'course.view');
+
+$router->map('POST', '/user/question', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\User\QuestionController::class);
+    $controller->userQuestion();
+}, 'user.question');
+
+$router->map('GET', '/user/profile/[i:id]', function ($id) use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\User\UserController::class);
+    $controller->profile($id);
+}, 'user.profile');
+
+$router->map('POST', '/user/change/profile', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\User\UserController::class);
+    $controller->changeProfile();
+}, 'user.change.profile');
+
+$router->map('POST', '/user/change/password', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\User\UserController::class);
+    $controller->changePassword();
+}, 'user.change.password');
+
+$router->map('POST', '/user/delete/account/[i:id]', function ($id) use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\User\UserController::class);
+    $controller->deleteUserAccountBySelf($id);
+}, 'user.delete.account');
+
+
+// Question routes
+$router->map('GET', '/quest/details/[i:id]', function ($id) use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\User\QuestionController::class);
+    $controller->questionDetails($id);
+}, 'question.details');
+
+$router->map('POST', '/instructor/reply', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\User\QuestionController::class);
+    $controller->instructorReply();
+}, 'instructor.reply');
+
 
 // Cart routes
 $router->map('POST', '/cart/data/store/[i:id]', function ($id) use ($serviceContainer) {
@@ -294,20 +359,100 @@ $router->map('GET', '/instructor/dashboard', function () use ($serviceContainer)
     $controller->dashboard();
 }, 'dashboard');
 
+$router->map('GET', '/instructor/register/form', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Instructor\InstructorController::class);
+    $controller->registerForm();
+}, 'instructor.register.form');
+
+$router->map('POST', '/instructor/register', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Instructor\InstructorController::class);
+    $controller->register();
+});
+
+$router->map('GET', '/instructor/login/form', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Instructor\InstructorController::class);
+    $controller->loginForm();
+}, 'instructor.login.form');
+
+$router->map('POST', '/instructor/login', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Instructor\InstructorController::class);
+    $controller->login();
+}, 'instructor.login');
+
 $router->map('GET', '/instructor/courses', function () use ($serviceContainer) {
     $controller = $serviceContainer->resolve(App\Controllers\Instructor\CourseController::class);
     $controller->manageCourse();
 }, 'all.course');
+
+$router->map('GET', '/instructor/category-subcategory/[i:cid]', function ($cid) use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Instructor\CourseController::class);
+    $controller->subCategoryAjax($cid);
+});
 
 $router->map('GET', '/instructor/add-course', function () use ($serviceContainer) {
     $controller = $serviceContainer->resolve(App\Controllers\Instructor\CourseController::class);
     $controller->addCourse();
 }, 'add.course');
 
+$router->map('POST', '/instructor/store-course', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Instructor\CourseController::class);
+    $controller->storeCourse();
+}, 'store.course');
+
 $router->map('GET', '/instructor/edit-course/[i:id]', function ($id) use ($serviceContainer) {
     $controller = $serviceContainer->resolve(App\Controllers\Instructor\CourseController::class);
     $controller->editCourse($id);
 }, 'edit.course');
+
+$router->map('POST', '/instructor/update-course', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Instructor\CourseController::class);
+    $controller->updateCourse();
+}, 'update.course');
+
+$router->map('POST', '/instructor/update-course-image', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Instructor\CourseController::class);
+    $controller->updateCourseImage();
+}, 'update.course.image');
+
+$router->map('POST', '/instructor/update-course-video', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Instructor\CourseController::class);
+    $controller->updateCourseVideo();
+}, 'update.course.video');
+
+$router->map('POST', '/instructor/update-course-goals', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Instructor\CourseController::class);
+    $controller->updateCourseGoals();
+}, 'update.course.goals');
+
+$router->map('GET', '/instructor/delete-course/[i:id]', function ($id) use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Instructor\CourseController::class);
+    $controller->deleteCourse($id);
+}, 'delete.course');
+
+$router->map('POST', '/instructor/store-course-lecture', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Instructor\CourseController::class);
+    $controller->storeLecture();
+}, 'store.course.lecture');
+
+$router->map('POST', '/instructor/update-course-lecture', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Instructor\CourseController::class);
+    $controller->updateCourseLecture();
+}, 'update.course.lecture');
+
+$router->map('POST', '/instructor/delete-course-lecture/[i:id]', function ($id) use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Instructor\CourseController::class);
+    $controller->deleteLecture($id);
+}, 'delete.course.lecture');
+
+$router->map('POST', '/instructor/store-course-section', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Instructor\CourseController::class);
+    $controller->storeSection();
+}, 'store.course.section');
+
+$router->map('POST', '/instructor/delete-course-section/[i:id]', function ($id) use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Instructor\CourseController::class);
+    $controller->deleteSection($id);
+}, 'delete.course.section');
 
 $router->map('GET', '/instructor/add-course-lecture/[i:id]', function ($id) use ($serviceContainer) {
     $controller = $serviceContainer->resolve(App\Controllers\Instructor\CourseController::class);
@@ -323,6 +468,41 @@ $router->map('GET', '/instructor/logout', function () use ($serviceContainer) {
     $controller = $serviceContainer->resolve(App\Controllers\Instructor\InstructorController::class);
     $controller->logout();
 }, 'instructor.logout');
+
+$router->map('GET', '/admin/manage-instructor', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\DashboardController::class);
+    $controller->manageInstructor();
+});
+
+$router->map('GET', '/instructor/all/order', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\OrderController::class);
+    $controller->instructorAllOrder();
+});
+
+$router->map('GET', '/instructor/order/details/[i:payment_id]', function ($payment_id) use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\OrderController::class);
+    $controller->instructorOrderDetails($payment_id);
+}, 'instructor.order.details');
+
+$router->map('GET', '/instructor/profile/[i:id]', function ($id) use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Instructor\InstructorController::class);
+    $controller->instructorProfile($id);
+}, 'instructor.profile');
+
+$router->map('POST', '/instructor/update/profile', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Instructor\InstructorController::class);
+    $controller->updateProfile();
+}, 'instructor.update.profile');
+
+$router->map('GET', '/instructor/edit/password/[i:id]', function ($id) use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Instructor\InstructorController::class);
+    $controller->editPassword($id);
+}, 'instructor.edit.password');
+
+$router->map('POST', '/instructor/change/password', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Instructor\InstructorController::class);
+    $controller->changePassword();
+}, 'instructor.change.password');
 
 
 // WishLists routes
@@ -340,6 +520,7 @@ $router->map('GET', '/remove-wishlist/[i:id]', function ($id) use ($serviceConta
     $controller = $serviceContainer->resolve(App\Controllers\User\WishListController::class);
     $controller->removeWishList($id);
 });
+
 
 $match = $router->match();
 $routeName = is_array($match) ? ($match['name'] ?? null) : null;

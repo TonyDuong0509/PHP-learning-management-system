@@ -24,39 +24,7 @@
         <div class="card">
             <div class="card-body p-4">
                 <h5 class="mb-4">Edit Course</h5>
-                <?php if (isset($_GET['success'])) {
-                    if ($_GET['success'] == 1) {
-                        echo "
-                                    <div class='alert alert-success'>
-                                        Updated course successfully !
-                                    </div>
-                                    ";
-                    }
-                    if ($_GET['success'] == 2) {
-                        echo "
-                                    <div class='alert alert-success'>
-                                        Updated course image successfully !
-                                    </div>
-                                    ";
-                    }
-                    if ($_GET['success'] == 3) {
-                        echo "
-                                    <div class='alert alert-success'>
-                                        Updated course video successfully !
-                                    </div>
-                                    ";
-                    }
-                    if ($_GET['success'] == 4) {
-                        echo "
-                                    <div class='alert alert-success'>
-                                        Updated course goals successfully !
-                                    </div>
-                                    ";
-                    }
-                }
-                ?>
-
-                <form action="?c=course&a=updateCourse" method="POST" class="row g-3" enctype="multipart/form-data">
+                <form action="<?php echo $router->generate('update.course'); ?>" method="POST" class="row g-3" enctype="multipart/form-data">
 
                     <input type="hidden" name="course_id" value="<?php echo $course->getId(); ?>">
 
@@ -204,7 +172,7 @@
     <div class="page-content">
         <div class="card">
             <div class="card-body">
-                <form action="?c=course&a=updateCourseImage" method="POST" enctype="multipart/form-data">
+                <form action="<?php echo $router->generate('update.course.image'); ?>" method="POST" enctype="multipart/form-data">
 
                     <input type="hidden" name="course_id" value="<?php echo $course->getId(); ?>">
                     <input type="hidden" name="old_img" value="<?php echo $course->getImage(); ?>">
@@ -233,7 +201,7 @@
     <div class="page-content">
         <div class="card">
             <div class="card-body">
-                <form action="?c=course&a=updateCourseVideo" method="POST" enctype="multipart/form-data">
+                <form action="<?php echo $router->generate('update.course.video'); ?>" method="POST" enctype="multipart/form-data">
                     <input type="hidden" name="course_id" value="<?php echo $course->getId(); ?>">
                     <input type="hidden" name="old_video" value="<?php echo $course->getVideo(); ?>">
 
@@ -262,7 +230,7 @@
     <div class="page-content">
         <div class="card">
             <div class="card-body">
-                <form action="?c=course&a=updateCourseGoals" method="POST" enctype="multipart/form-data">
+                <form action="<?php echo $router->generate('update.course.goals'); ?>" method="POST" enctype="multipart/form-data">
                     <input type="hidden" name="course_id" value="<?php echo $course->getId(); ?>">
                     <?php if (isset($courseGoals)): ?>
                         <?php foreach ($courseGoals as $goal): ?>
@@ -370,7 +338,7 @@
             if (category_id) {
                 $.ajax({
                     type: "GET",
-                    url: "/instructor/?c=course&a=subCategoryAjax&cid=" + category_id,
+                    url: "/instructor/category-subcategory/" + category_id,
                     dataType: "json",
                     success: function(data) {
                         console.log(data);

@@ -90,7 +90,10 @@ class DashboardController
         $params['image'] =  $this->categoryService->handleImageFile('category_image', 'image');
 
         $this->categoryService->saveCategory($params);
-
+        $_SESSION['notification'] = [
+            'message' => "Added Category successfully",
+            'alert-type' => 'success'
+        ];
         header("Location: /admin/manage-category");
         exit;
     }
@@ -105,7 +108,10 @@ class DashboardController
         ];
 
         $this->subCategoryService->saveSubCategory($params);
-
+        $_SESSION['notification'] = [
+            'message' => "Added Sub Category successfully",
+            'alert-type' => 'success'
+        ];
         header("Location: /admin/manage-subcategory");
         exit;
     }
@@ -133,7 +139,7 @@ class DashboardController
         $old_image = $_POST['old_image'];
         $category_name = $_POST['category_name'];
         $category_slug = strtolower(str_replace(' ', '-', $_POST['category_name']));
-        $image = $this->categoryService->handleImageFile('category_image', 'image', 'edit-category', $cid, $old_image);
+        $image = $this->categoryService->handleImageFile('category_image', 'image', $cid, $old_image);
 
         $category = $this->categoryService->getById($cid);
 
@@ -143,7 +149,11 @@ class DashboardController
 
         $this->categoryService->updateCategory($category);
 
-        header("Location: /admin/edit-category/$cid?success=1");
+        $_SESSION['notification'] = [
+            'message' => "Updated Category successfully",
+            'alert-type' => 'success'
+        ];
+        header("Location: /admin/edit-category/$cid");
         exit;
     }
 
@@ -162,7 +172,11 @@ class DashboardController
 
         $this->subCategoryService->updateSubCategory($subCategory);
 
-        header("Location: /admin/edit-subcategory/$subCid?success=1");
+        $_SESSION['notification'] = [
+            'message' => "Updated Sub Category successfully",
+            'alert-type' => 'success'
+        ];
+        header("Location: /admin/edit-subcategory/$subCid");
         exit;
     }
 
@@ -174,7 +188,11 @@ class DashboardController
         }
         $this->categoryService->deleteCategory($cid);
 
-        header("Location: /admin/manage-category?success=1");
+        $_SESSION['notification'] = [
+            'message' => "Deleted Category successfully",
+            'alert-type' => 'success'
+        ];
+        header("Location: /admin/manage-category");
         exit;
     }
 
@@ -182,7 +200,11 @@ class DashboardController
     {
         $this->subCategoryService->deleteSubCategory($subCid);
 
-        header("Location: /admin/manage-subcategory?success=1");
+        $_SESSION['notification'] = [
+            'message' => "Deleted Sub Category successfully",
+            'alert-type' => 'success'
+        ];
+        header("Location: /admin/manage-subcategory");
         exit;
     }
 
@@ -218,5 +240,18 @@ class DashboardController
         $course = $this->courseService->getById($id);
 
         require ABSPATH . 'resources/admin/course/details.php';
+    }
+
+    public function activeInstructor($id)
+    {
+        $this->userService->activeInstructor($id);
+
+        $_SESSION['notification'] = [
+            'message' => 'Active instructor successfully',
+            'alert-type' => 'success',
+        ];
+
+        header("Location: /admin/manage-instructor");
+        exit;
     }
 }

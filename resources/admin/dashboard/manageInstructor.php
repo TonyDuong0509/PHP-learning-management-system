@@ -43,15 +43,20 @@
                                         <td>
                                             <?php
                                             if ($instructor->getStatus() == 1) {
-                                                echo 'Đã kích hoạt';
+                                                echo "
+                                                    <span class='badge bg-success'>Actived</span>
+                                                ";
                                             } else {
-                                                echo "Chưa kích hoạt";
+                                                echo "
+                                                    <span class='badge bg-danger'>Inactive</span>
+                                                ";
                                             }
                                             ?>
                                         </td>
                                         <td>
-                                            <a class="btn btn-warning" href="">Edit</a>
-                                            <a class="btn btn-danger" href="">Delete</a>
+                                            <form action="<?php echo $router->generate('admin.active.instructor', ['id' => $instructor->getId()]); ?>" method="POST">
+                                                <button type="submit" class="btn btn-primary">Active Instructor</button>
+                                            </form>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>

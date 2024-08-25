@@ -332,7 +332,7 @@ $router = $router;
             </div>
             <div class="user-box dropdown px-3">
                 <a class="d-flex align-items-center nav-link dropdown-toggle gap-3 dropdown-toggle-nocaret" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="../../public/upload/no_image.png" class="user-img" alt="user avatar">
+                    <img src="/<?php echo $instructor->getPhoto() ?? 'public/upload/no_image.png'; ?>" class="user-img" alt="user avatar">
                     <div class="user-info">
                         <p class="user-name mb-0">
                             <?php echo isset($_SESSION['nameInstructor']) ? $_SESSION['nameInstructor'] : '' ?>
@@ -343,9 +343,9 @@ $router = $router;
                     </div>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
-                    <li><a class="dropdown-item d-flex align-items-center" href="javascript:;"><i class="bx bx-user fs-5"></i><span>Profile</span></a>
+                    <li><a class="dropdown-item d-flex align-items-center" href="<?php echo $router->generate('instructor.profile', ['id' => $instructor->getId()]); ?>"><i class="bx bx-user fs-5"></i><span>Profile</span></a>
                     </li>
-                    <li><a class="dropdown-item d-flex align-items-center" href="javascript:;"><i class="bx bx-cog fs-5"></i><span>Change Password</span></a>
+                    <li><a class="dropdown-item d-flex align-items-center" href="<?php echo $router->generate('instructor.edit.password', ['id' => $instructor->getId()]); ?>"><i class="bx bx-cog fs-5"></i><span>Change Password</span></a>
                     <li><a class="dropdown-item d-flex align-items-center" href="<?php echo $router->generate('instructor.logout'); ?>"><i class="bx bx-log-out-circle"></i><span>Logout</span></a>
                     </li>
                 </ul>

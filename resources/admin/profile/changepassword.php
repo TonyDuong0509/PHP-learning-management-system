@@ -30,11 +30,11 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="d-flex flex-column align-items-center text-center">
-                                    <img src="<?php echo $admin->getPhoto() ?? '/upload/no_image.png'; ?>" alt="Admin" class="rounded-circle p-1 bg-primary" width="110">
+                                    <img src="/<?php echo $admin->getPhoto() ?? '/upload/no_image.png'; ?>" alt="Admin" class="rounded-circle p-1 bg-primary" width="110">
                                     <div class="mt-3">
                                         <h4></h4>
-                                        <p class="text-secondary mb-1"></p>
-                                        <p class="text-muted font-size-sm"></p>
+                                        <p class="text-secondary mb-1"><?php echo $admin->getName(); ?></p>
+                                        <p class="text-muted font-size-sm"><?php echo $admin->getEmail(); ?></p>
                                         <button class="btn btn-primary">Follow</button>
                                         <button class="btn btn-outline-primary">Message</button>
                                     </div>
@@ -54,27 +54,7 @@
                     </div>
                     <div class="col-lg-8">
                         <div class="card">
-                            <form action="?c=admin&a=updatePassword" method="POST" enctype="multipart/form-data">
-                                <?php if (isset($_GET['error'])) {
-                                    if ($_GET['error'] == 1) {
-                                        echo "
-                                    <div class='alert alert-danger'>
-                                        Old password incorrect, please try again !
-                                    </div>
-                                ";
-                                    }
-                                }
-                                ?>
-                                <?php if (isset($_GET['success'])) {
-                                    if ($_GET['success'] == 1) {
-                                        echo "
-                                    <div class='alert alert-success'>
-                                        Change password successfully !
-                                    </div>
-                                ";
-                                    }
-                                }
-                                ?>
+                            <form action="<?php echo $router->generate('admin.update.password'); ?>" method="POST" enctype="multipart/form-data">
                                 <input type="hidden" name="id" value="<?php echo $admin->getId(); ?>">
                                 <div class="card-body">
                                     <div class="row mb-3">
@@ -116,7 +96,6 @@
             </div>
         </div>
     </div>
-
 </div>
 <!--end page wrapper -->
 <!--start overlay-->

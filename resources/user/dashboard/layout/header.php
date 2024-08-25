@@ -24,12 +24,11 @@
     <link rel="stylesheet" href="<?php ABSPATH ?>/public/frontend/css/bootstrap-select.min.css">
     <link rel="stylesheet" href="<?php ABSPATH ?>/public/frontend/css/fancybox.css">
     <link rel="stylesheet" href="<?php ABSPATH ?>/public/frontend/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <!-- end inject -->
 </head>
 
 <?php
-global $c;
-global $a;
 global $router;
 ?>
 
@@ -71,47 +70,6 @@ global $router;
                                 </form>
                                 <div class="nav-right-button d-flex align-items-center">
                                     <div class="user-action-wrap d-flex align-items-center">
-                                        <div class="shop-cart course-cart pr-3 mr-3 border-right border-right-gray">
-                                            <ul>
-                                                <li>
-                                                    <p class="shop-cart-btn d-flex align-items-center fs-16">
-                                                        My Courses
-                                                        <span class="la la-angle-down fs-13 ml-1"></span>
-                                                    </p>
-                                                    <ul class="cart-dropdown-menu after-none">
-                                                        <li class="media media-card">
-                                                            <a href="lesson-details.html" class="media-img">
-                                                                <img class="mr-3" src="<?php ABSPATH ?>/public/frontend/images/small-img-3.jpg" alt="Course thumbnail image">
-                                                            </a>
-                                                            <div class="media-body">
-                                                                <h5><a href="lesson-details.html">The Complete JavaScript Course 2021: From Zero to Expert!</a></h5>
-                                                                <div class="skillbar-box pt-3">
-                                                                    <div class="skillbar skillbar-skillbar" data-percent="36%">
-                                                                        <div class="skillbar-bar skillbar--bar bg-1"></div>
-                                                                    </div><!-- End Skill Bar -->
-                                                                </div><!-- End skillbar-box -->
-                                                            </div>
-                                                        </li>
-                                                        <li class="media media-card">
-                                                            <a href="lesson-details.html" class="media-img">
-                                                                <img class="mr-3" src="<?php ABSPATH ?>/public/frontend/images/small-img-4.jpg" alt="Course thumbnail image">
-                                                            </a>
-                                                            <div class="media-body">
-                                                                <h5><a href="lesson-details.html">The Complete JavaScript Course 2021: From Zero to Expert!</a></h5>
-                                                                <div class="skillbar-box pt-3">
-                                                                    <div class="skillbar skillbar-skillbar" data-percent="77%">
-                                                                        <div class="skillbar-bar skillbar--bar bg-1"></div>
-                                                                    </div><!-- End Skill Bar -->
-                                                                </div><!-- End skillbar-box -->
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <a href="my-courses.html" class="btn theme-btn w-100">Got to my course <i class="la la-arrow-right icon ml-1"></i></a>
-                                                        </li>
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                        </div><!-- end course-cart -->
                                         <div class="shop-cart pr-3 mr-3 border-right border-right-gray">
                                             <ul>
                                                 <li>
@@ -248,18 +206,18 @@ global $router;
                                                 <li>
                                                     <div class="shop-cart-btn">
                                                         <div class="avatar-xs">
-                                                            <img class="rounded-full img-fluid" src="<?php ABSPATH ?>/public/frontend/images/small-avatar-1.jpg" alt="Avatar image">
+                                                            <img class="rounded-full img-fluid" src="/<?php echo $user->getPhoto(); ?>" alt="Avatar image">
                                                         </div>
                                                         <span class="dot-status bg-1"></span>
                                                     </div>
                                                     <ul class="cart-dropdown-menu after-none p-0 notification-dropdown-menu">
                                                         <li class="menu-heading-block d-flex align-items-center">
                                                             <a href="teacher-detail.html" class="avatar-sm flex-shrink-0 d-block">
-                                                                <img class="rounded-full img-fluid" src="<?php ABSPATH ?>/public/frontend/images/small-avatar-1.jpg" alt="Avatar image">
+                                                                <img class="rounded-full img-fluid" src="/<?php echo $user->getPhoto(); ?>" alt="Avatar image">
                                                             </a>
                                                             <div class="ml-2">
-                                                                <h4><a href="teacher-detail.html" class="text-black">Alex Smith</a></h4>
-                                                                <span class="d-block fs-14 lh-20">alexsmith@example.com</span>
+                                                                <h4><a href="teacher-detail.html" class="text-black"><?php echo $user->getName(); ?></a></h4>
+                                                                <span class="d-block fs-14 lh-20"><?php echo $user->getEmail(); ?></span>
                                                             </div>
                                                         </li>
                                                         <li>
@@ -348,26 +306,12 @@ global $router;
                                                                     <div class="section-block"></div>
                                                                 </li>
                                                                 <li>
-                                                                    <a href="#">
-                                                                        <i class="la la-question mr-1"></i> Help
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="index.html">
+                                                                    <a href="/logout">
                                                                         <i class="la la-power-off mr-1"></i> Logout
                                                                     </a>
                                                                 </li>
                                                                 <li>
                                                                     <div class="section-block"></div>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#" class="position-relative">
-                                                                        <span class="fs-17 font-weight-semi-bold d-block">Aduca for Business</span>
-                                                                        <span class="lh-20 d-block fs-14 text-gray">Bring learning to your company</span>
-                                                                        <span class="position-absolute top-0 right-0 mt-3 mr-3 fs-18 text-gray">
-                                                                            <i class="la la-external-link"></i>
-                                                                        </span>
-                                                                    </a>
                                                                 </li>
                                                             </ul>
                                                         </li>

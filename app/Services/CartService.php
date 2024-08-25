@@ -37,8 +37,15 @@ class CartService
         return $this->cartRepository->total();
     }
 
-    public function delete($course_id)
+    public function deleteByCourseId($course_id)
     {
-        return $this->cartRepository->delete($course_id);
+        $condition = "course_id = '$course_id'";
+
+        return $this->cartRepository->delete($condition, $course_id);
+    }
+
+    public function deleteAll()
+    {
+        return $this->cartRepository->delete();
     }
 }

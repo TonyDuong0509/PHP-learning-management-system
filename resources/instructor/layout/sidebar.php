@@ -26,12 +26,11 @@
     <link rel="stylesheet" href="<?php ABSPATH ?>/public/backend/css/dark-theme.css" />
     <link rel="stylesheet" href="<?php ABSPATH ?>/public/backend/css/semi-dark.css" />
     <link rel="stylesheet" href="<?php ABSPATH ?>/public/backend/css/header-colors.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <title>Aduca - Admin</title>
 </head>
 
 <?php
-global $c;
-global $a;
 global $router;
 ?>
 
@@ -78,6 +77,17 @@ global $router;
                         </a>
                         <ul>
                             <li> <a href="/instructor/all/order"><i class='bx bx-radio-circle'></i>All Orders</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript:;" class="has-arrow">
+                            <div class="parent-icon"><i class='bx bx-cart'></i>
+                            </div>
+                            <div class="menu-title">Manage Questions</div>
+                        </a>
+                        <ul>
+                            <li> <a href="/instructor/all/question"><i class='bx bx-radio-circle'></i>All Questions</a>
                             </li>
                         </ul>
                     </li>

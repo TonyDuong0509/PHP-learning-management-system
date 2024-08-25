@@ -65,10 +65,8 @@ class CourseController
         require ABSPATH . 'resources/instructor/course/addCourse.php';
     }
 
-    public function subCategoryAjax()
+    public function subCategoryAjax($cid)
     {
-        $cid = $_GET['cid'];
-
         $subCategories = $this->subCategoryService->getByCategoryId($cid);
 
         $subCategoryArray = array_map(function ($subcategory) {
@@ -76,6 +74,7 @@ class CourseController
         }, $subCategories);
 
         echo json_encode($subCategoryArray);
+        exit;
     }
 
     public function storeCourse()
@@ -120,7 +119,11 @@ class CourseController
             }
         }
 
-        header("Location: /instructor/courses?success=1");
+        $_SESSION['notification'] = [
+            'message' => "Added Course successfully",
+            'alert-type' => 'success',
+        ];
+        header("Location: /instructor/courses");
         exit;
     }
 
@@ -180,7 +183,12 @@ class CourseController
         }
 
         if ($this->courseService->updateCourse($course) === true) {
-            header("Location: /instructor/edit-course/$id?success=1");
+
+            $_SESSION['notification'] = [
+                'message' => "Updated Course successfully",
+                'alert-type' => 'success',
+            ];
+            header("Location: /instructor/edit-course/$id");
             exit;
         }
     }
@@ -202,7 +210,12 @@ class CourseController
         }
 
         if ($this->courseService->updateCourse($course) === true) {
-            header("Location: /instructor/edit-course/$id?success=2");
+
+            $_SESSION['notification'] = [
+                'message' => "Updated Image Course successfully",
+                'alert-type' => 'success',
+            ];
+            header("Location: /instructor/edit-course/$id");
             exit;
         }
     }
@@ -224,7 +237,12 @@ class CourseController
         }
 
         if ($this->courseService->updateCourse($course) === true) {
-            header("Location: /instructor/edit-course/$id?success=3");
+
+            $_SESSION['notification'] = [
+                'message' => "Updated Video Course successfully",
+                'alert-type' => 'success',
+            ];
+            header("Location: /instructor/edit-course/$id");
             exit;
         }
     }
@@ -250,14 +268,17 @@ class CourseController
                 $this->courseGoalsService->saveCourseGoals($params);
             }
 
-            header("Location: /instructor/edit-course/$id?success=4");
+            $_SESSION['notification'] = [
+                'message' => "Updatec Goals of Course successfully",
+                'alert-type' => 'success',
+            ];
+            header("Location: /instructor/edit-course/$id");
             exit;
         }
     }
 
-    public function deleteCourse()
+    public function deleteCourse($id)
     {
-        $id = $_GET['id'] ?? '';
         $course = $this->courseService->getById($id);
 
         unlink($course->getImage());
@@ -265,7 +286,11 @@ class CourseController
         $this->courseService->deleteCourse($id);
         $this->courseGoalsService->deleteCourseGoals($id);
 
-        header("Location: /instructor/courses?success=2");
+        $_SESSION['notification'] = [
+            'message' => "Deleted Course successfully",
+            'alert-type' => 'success',
+        ];
+        header("Location: /instructor/courses");
         exit;
     }
 
@@ -291,7 +316,11 @@ class CourseController
 
         $this->courseSectionsService->saveCourseSections($params);
 
-        header("Location: /instructor/add-course-lecture/$id?success=1");
+        $_SESSION['notification'] = [
+            'message' => "Added Section successfully",
+            'alert-type' => 'success',
+        ];
+        header("Location: /instructor/add-course-lecture/$id");
         exit;
     }
 
@@ -347,29 +376,42 @@ class CourseController
         $lecture->setContent($content);
 
         if ($this->courseLecturesService->updateLecture($lecture)) {
-            header("Location: /instructor/edit-course-lecture/{$lecture->getSectionId()}?success=1");
+
+            $_SESSION['notification'] = [
+                'message' => "Updated Lectures of Course successfully",
+                'alert-type' => 'success',
+            ];
+            header("Location: /instructor/edit-course-lecture/{$lecture->getSectionId()}");
             exit;
         }
     }
 
-    public function deleteLecture()
+    public function deleteLecture($id)
     {
-        $id = $_GET['id'];
         $lecture = $this->courseLecturesService->getLectureBySectionId($id);
 
         if ($this->courseLecturesService->deleteLecture($lecture->getId())) {
-            header("Location: /instructor/add-course-lecture/{$lecture->getCourseId()}?success=2");
+
+            $_SESSION['notification'] = [
+                'message' => "Deleted Lectures successfully",
+                'alert-type' => 'success',
+            ];
+            header("Location: /instructor/add-course-lecture/{$lecture->getCourseId()}");
             exit;
         }
     }
 
-    public function deleteSection()
+    public function deleteSection($id)
     {
-        $id = $_GET['id'];
         $section = $this->courseSectionsService->getById($id);
         $course = $this->courseSectionsService->getCourseById($section->getCourseId());
         if ($this->courseSectionsService->deleteSection($id)) {
-            header("Location: /instructor/add-course-lecture/{$course->getCourseId()}?success=3");
+
+            $_SESSION['notification'] = [
+                'message' => "Deleted Section successfully",
+                'alert-type' => 'success',
+            ];
+            header("Location: /instructor/add-course-lecture/{$course->getCourseId()}");
             exit;
         }
     }

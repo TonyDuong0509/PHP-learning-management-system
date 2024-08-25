@@ -2,8 +2,11 @@
 
 namespace App\Controllers\Admin;
 
+use App\Services\CourseLecturesService;
+use App\Services\CourseSectionsService;
 use App\Services\OrdersService;
 use App\Services\PaymentsService;
+use App\Services\QuestionsService;
 use App\Services\UserService;
 
 class OrderController
@@ -11,15 +14,24 @@ class OrderController
     private $userService;
     private $paymentsService;
     private $orderService;
+    private $courseSectionService;
+    private $courseLecturesService;
+    private $questionsService;
 
     public function __construct(
         UserService $userService,
         PaymentsService $paymentsService,
         OrdersService $orderService,
+        CourseSectionsService $courseSectionService,
+        CourseLecturesService $courseLecturesService,
+        QuestionsService $questionsService,
     ) {
         $this->userService = $userService;
         $this->paymentsService = $paymentsService;
         $this->orderService = $orderService;
+        $this->courseSectionService = $courseSectionService;
+        $this->courseLecturesService = $courseLecturesService;
+        $this->questionsService = $questionsService;
     }
 
     private function getInfoHeader()
@@ -76,7 +88,7 @@ class OrderController
     public function instructorAllOrder()
     {
         $instructor = $this->getInstructorInSidebar();
-        $orderItem = $this->orderService->getAllLatestByInstructorId($instructor->getId());
+        $orderItem = $this->orderService->getOrdersLatestByPaymentIdAndInstructorId($instructor->getId());
         require ABSPATH . 'resources/instructor/order/allOrder.php';
     }
 
@@ -86,5 +98,29 @@ class OrderController
         $payment = $this->paymentsService->getById($payment_id);
         $orderItem = $this->orderService->getAllByPaymentId($payment_id);
         require ABSPATH . 'resources/instructor/order/orderDetails.php';
+    }
+
+    public function myCourse()
+    {
+        $email = $_SESSION['emailUser'];
+        $user = $this->userService->getByEmail($email);
+        $myCourse = $this->orderService->getOrdersLatestByCourseIdAndUserId($user->getId());
+
+        require ABSPATH . 'resources/user/dashboard/mycourse/myAllCourse.php';
+    }
+
+    public function courseView($course_id)
+    {
+        $email = $_SESSION['emailUser'];
+        $user = $this->userService->getByEmail($email);
+        $course = $this->orderService->getCourseInOrderByUserIdAndCourseId($course_id, $user->getId());
+        $sections = $this->courseSectionService->getSectionsByCourseId($course_id);
+        $lectures = $this->courseLecturesService->getLecturesBySectionId($sections[0]->getId());
+        $questionsOfCourse = $this->questionsService->getAllForOneCourseQAndA($user->getId(), $course_id);
+        foreach ($questionsOfCourse as $question) {
+            $replies = $this->questionsService->replayByParentId($question->getId(), $course_id);
+        }
+
+        require ABSPATH . 'resources/user/dashboard/mycourse/courseView.php';
     }
 }

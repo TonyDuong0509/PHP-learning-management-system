@@ -6,27 +6,23 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--favicon-->
-    <link rel="icon" href="../public/backend/images/favicon-32x32.png" type="image/png" />
+    <link rel="icon" href="<?php ABSPATH ?>/public/backend/images/favicon-32x32.png" type="image/png" />
     <!--plugins-->
-    <link href="../public/backend/plugins/simplebar/css/simplebar.css" rel="stylesheet" />
-    <link href="../public/backend/plugins/perfect-scrollbar/css/perfect-scrollbar.css" rel="stylesheet" />
-    <link href="../public/backend/plugins/metismenu/css/metisMenu.min.css" rel="stylesheet" />
+    <link href="<?php ABSPATH ?>/public/backend/plugins/simplebar/css/simplebar.css" rel="stylesheet" />
+    <link href="<?php ABSPATH ?>/public/backend/plugins/perfect-scrollbar/css/perfect-scrollbar.css" rel="stylesheet" />
+    <link href="<?php ABSPATH ?>/public/backend/plugins/metismenu/css/metisMenu.min.css" rel="stylesheet" />
     <!-- loader-->
-    <link href="../public/backend/css/pace.min.css" rel="stylesheet" />
-    <script src="../public/backend/js/pace.min.js"></script>
+    <link href="<?php ABSPATH ?>/public/backend/css/pace.min.css" rel="stylesheet" />
+    <script src="<?php ABSPATH ?>/public/backend/js/pace.min.js"></script>
     <!-- Bootstrap CSS -->
-    <link href="../public/backend/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../public/backend/css/bootstrap-extended.css" rel="stylesheet">
+    <link href="<?php ABSPATH ?>/public/backend/css/bootstrap.min.css" rel="stylesheet">
+    <link href="<?php ABSPATH ?>/public/backend/css/bootstrap-extended.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
-    <link href="../public/backend/css/app.css" rel="stylesheet">
-    <link href="../public/backend/css/icons.css" rel="stylesheet">
+    <link href="<?php ABSPATH ?>/public/backend/css/app.css" rel="stylesheet">
+    <link href="<?php ABSPATH ?>/public/backend/css/icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <title>Instructor Register</title>
 </head>
-
-<?php
-global $c;
-global $a;
-?>
 
 <body class="">
     <!--wrapper-->
@@ -46,14 +42,6 @@ global $a;
                                         <p class="mb-0">Please fill the below details to create your account</p>
                                     </div>
                                     <div class="form-body">
-                                        <?php if (isset($_GET['error'])) {
-                                            if ($_GET['error'] == 1) {
-                                                echo "
-                                                    <div class='alert alert-danger'>Sign up is error, please again !</div>
-                                                ";
-                                            }
-                                        }
-                                        ?>
                                         <form action="?c=instructor&a=register" method="POST" class="row g-3">
                                             <div class="col-12">
                                                 <label for="inputName" class="form-label">Full Name</label>
@@ -110,12 +98,13 @@ global $a;
     </div>
     <!--end wrapper-->
     <!-- Bootstrap JS -->
-    <script src="../public/backend/js/bootstrap.bundle.min.js"></script>
+    <script src="<?php ABSPATH ?>/public/backend/js/bootstrap.bundle.min.js"></script>
     <!--plugins-->
-    <script src="../public/backend/js/jquery.min.js"></script>
-    <script src="../public/backend/plugins/simplebar/js/simplebar.min.js"></script>
-    <script src="../public/backend/plugins/metismenu/js/metisMenu.min.js"></script>
-    <script src="../public/backend/plugins/perfect-scrollbar/js/perfect-scrollbar.js"></script>
+    <script src="<?php ABSPATH ?>/public/backend/js/jquery.min.js"></script>
+    <script src="<?php ABSPATH ?>/public/backend/plugins/simplebar/js/simplebar.min.js"></script>
+    <script src="<?php ABSPATH ?>/public/backend/plugins/metismenu/js/metisMenu.min.js"></script>
+    <script src="<?php ABSPATH ?>/public/backend/plugins/perfect-scrollbar/js/perfect-scrollbar.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <!--Password show & hide js -->
     <script>
         $(document).ready(function() {
@@ -135,6 +124,7 @@ global $a;
     </script>
     <!--app JS-->
     <script src="../public/backend/js/app.js"></script>
+    <?php include ABSPATH . 'resources/script.php'; ?>
 </body>
 
 </html>

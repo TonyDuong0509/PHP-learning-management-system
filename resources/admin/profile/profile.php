@@ -30,11 +30,11 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="d-flex flex-column align-items-center text-center">
-                                    <img src="<?php echo $admin->getPhoto() ?? '../public/upload/no_image.png' ?>" alt="Admin" class="rounded-circle p-1 bg-primary" width="110">
+                                    <img src="/<?php echo $admin->getPhoto() ?? '/public/upload/no_image.png' ?>" alt="Admin" class="rounded-circle p-1 bg-primary" width="110">
                                     <div class="mt-3">
                                         <h4></h4>
-                                        <p class="text-secondary mb-1"></p>
-                                        <p class="text-muted font-size-sm"></p>
+                                        <p class="text-secondary mb-1"><?php echo $admin->getName(); ?></p>
+                                        <p class="text-muted font-size-sm"><?php echo $admin->getEmail(); ?></p>
                                         <button class="btn btn-primary">Follow</button>
                                         <button class="btn btn-outline-primary">Message</button>
                                     </div>
@@ -54,36 +54,9 @@
                     </div>
                     <div class="col-lg-8">
                         <div class="card">
-                            <form action="?c=admin&a=storeProfile" method="POST" enctype="multipart/form-data">
+                            <form action="<?php echo $router->generate('admin.store.profile'); ?>" method="POST" enctype="multipart/form-data">
                                 <input type="hidden" name="id" value="<?php echo $admin->getId(); ?>">
                                 <input type="hidden" name="old_photo" value="<?php echo $admin->getPhoto(); ?>">
-                                <?php if (isset($_GET['error'])) {
-                                    if ($_GET['error'] == 1) {
-                                        echo "
-                                    <div class='alert alert-danger'>
-                                        Upload image failure, please try again !
-                                    </div>
-                                ";
-                                    }
-                                    if ($_GET['error'] == 2) {
-                                        echo "
-                                    <div class='alert alert-danger'>
-                                        Image must be JPG, JPEG, PNG please !
-                                    </div>
-                                ";
-                                    }
-                                }
-                                ?>
-                                <?php if (isset($_GET['success'])) {
-                                    if ($_GET['success'] == 1) {
-                                        echo "
-                                    <div class='alert alert-success'>
-                                        Profile updated successfully !
-                                    </div>
-                                ";
-                                    }
-                                }
-                                ?>
                                 <div class="card-body">
                                     <div class="row mb-3">
                                         <div class="col-sm-3">
@@ -122,7 +95,7 @@
                                             <h6 class="mb-0"></h6>
                                         </div>
                                         <div class="col-sm-9 text-secondary">
-                                            <img id="showImage" src="<?php echo $admin->getPhoto() ?? '../public/upload/no_image.png' ?>" alt="Admin" class="rounded-circle p-1 bg-primary" width="80">
+                                            <img id="showImage" src="/<?php echo $admin->getPhoto() ?? '/public/upload/no_image.png' ?>" alt="Admin" class="rounded-circle p-1 bg-primary" width="80">
                                         </div>
                                     </div>
                                     <div class="row">

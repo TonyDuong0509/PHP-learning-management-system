@@ -21,38 +21,8 @@
 
         <div class="card">
             <div class="card-body p-4">
-                <?php if (isset($_GET['error'])) {
-                    if ($_GET['error'] == 1) {
-                        echo "
-                                    <div class='alert alert-danger'>
-                                        Upload image failure, please try again !
-                                    </div>
-                                ";
-                    }
-                    if ($_GET['error'] == 2) {
-                        echo "
-                                    <div class='alert alert-danger'>
-                                        Image must be JPG, JPEG, PNG !
-                                    </div>
-                                ";
-                    }
-                    if ($_GET['error'] == 3) {
-                        echo "
-                                    <div class='alert alert-danger'>
-                                        Upload video failure, please try again !
-                                    </div>
-                                ";
-                    }
-                    if ($_GET['error'] == 4) {
-                        echo "
-                                    <div class='alert alert-danger'>
-                                        Video must be MP4, AVI, MOV, MKV !
-                                    </div>
-                                ";
-                    }
-                } ?>
                 <h5 class="mb-4">Add Course</h5>
-                <form action="?c=course&a=storeCourse" method="POST" class="row g-3" enctype="multipart/form-data">
+                <form action="<?php echo $router->generate('store.course'); ?>" method="POST" class="row g-3" enctype="multipart/form-data">
                     <div class="form-group col-md-6">
                         <label for="input1" class="form-label">Course Name</label>
                         <input type="text" name="course_name" class="form-control" id="input1" required>
@@ -295,10 +265,9 @@
             if (category_id) {
                 $.ajax({
                     type: "GET",
-                    url: "/instructor/?c=course&a=subCategoryAjax&cid=" + category_id,
+                    url: "/instructor/category-subcategory/" + category_id,
                     dataType: "json",
                     success: function(data) {
-                        console.log(data);
                         $('select[name="subcategory_id"]').html('');
                         var d = $('select[name="subcategory_id"]').empty();
 

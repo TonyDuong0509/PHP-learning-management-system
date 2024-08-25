@@ -23,23 +23,6 @@
         <div class="card">
             <div class="card-body p-4">
                 <h5 class="mb-4">Add Category</h5>
-                <?php if (isset($_GET['error'])) {
-                    if ($_GET['error'] == 1) {
-                        echo "
-                                    <div class='alert alert-danger'>
-                                        Upload image failure, please try again !
-                                    </div>
-                                ";
-                    }
-                    if ($_GET['error'] == 2) {
-                        echo "
-                                    <div class='alert alert-danger'>
-                                        Image must be JPG, JPEG, PNG please !
-                                    </div>
-                                ";
-                    }
-                }
-                ?>
                 <form method="POST" action="<?php echo $router->generate('admin.store.category'); ?>" class="row g-3" enctype="multipart/form-data">
                     <div class="form-group col-md-6">
                         <label for="input1" class="form-label">Category Name</label>

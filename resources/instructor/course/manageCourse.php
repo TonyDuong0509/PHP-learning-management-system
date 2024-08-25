@@ -84,7 +84,7 @@ $router = $router;
                                         </td>
                                         <td>
                                             <a href="<?php echo $router->generate('edit.course', ['id' => $course->getId()]) ?>" class="btn btn-info" title="Edit"><i class="lni lni-eraser"></i> </a>
-                                            <a href="/instructor/?c=course&a=deleteCourse&id=<?php echo $course->getId(); ?>" onclick="return confirmDelete()" class="btn btn-danger" title="delete"><i class="lni lni-trash"></i> </a>
+                                            <a href="<?php echo $router->generate('delete.course', ['id' => $course->getId()]); ?>" onclick="return confirmDelete()" class="btn btn-danger" title="delete"><i class="lni lni-trash"></i> </a>
                                             <a href="<?php echo $router->generate('add.course.lecture', ['id' => $course->getId()]) ?>" class="btn btn-warning" title="Lecture"><i class="lni lni-list"></i> </a>
                                         </td>
                                     </tr>

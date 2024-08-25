@@ -2,7 +2,6 @@
 
 namespace App\Controllers\Admin;
 
-use App\Services\CourseService;
 use App\Services\UserService;
 
 class AdminController
@@ -21,9 +20,57 @@ class AdminController
         return $this->userService->getByEmail($email);
     }
 
-    public function profile()
+    public function loginForm()
     {
-        $admin = $this->getInfoHeader();
+        require ABSPATH . 'admin/login.php';
+    }
+
+    public function login()
+    {
+        $email = $_POST['email'] ?? '';
+        $password = $_POST['password'] ?? '';
+
+        $user = $this->userService->getByEmail($email);
+
+        if (!$user) {
+            $_SESSION['notification'] = [
+                'message' => 'Admin not exist, please try again !',
+                'alert-type' => 'error',
+            ];
+            header("Location: /admin/login/form");
+            exit;
+        }
+
+        if (!password_verify($password, $user->getPassword())) {
+            $_SESSION['notification'] = [
+                'message' => 'Password is incorrect, please try again !',
+                'alert-type' => 'error',
+            ];
+            header("Location: /admin/login/form");
+            exit;
+        }
+
+        $_SESSION['emailAdmin'] = $user->getEmail();
+        $_SESSION['nameAdmin'] = $user->getName();
+
+        $_SESSION['notification'] = [
+            'message' => 'Sign in successfully !',
+            'alert-type' => 'success',
+        ];
+        header("Location: /admin/dashboard");
+        exit;
+    }
+
+    public function logout()
+    {
+        unset($_SESSION['emailAdmin']);
+        header("Location: /admin/login/form");
+        exit;
+    }
+
+    public function profile($id)
+    {
+        $admin = $this->userService->getById($id);
 
         require ABSPATH . 'resources/admin/profile/profile.php';
     }
@@ -34,28 +81,7 @@ class AdminController
         $name = $_POST['name'];
         $username = $_POST['username'];
         $old_photo = $_POST['old_photo'];
-
-        if (!empty($old_photo)) {
-            unlink($old_photo);
-        }
-
-        $targetDir = '../public/upload/admin_image/';
-        $imageFileName = 'admin' . bin2hex(random_bytes(16)) . '.' . strtolower(pathinfo($_FILES['photo']['name'], PATHINFO_EXTENSION));
-        $extension = strtolower(pathinfo($imageFileName, PATHINFO_EXTENSION));
-        $targetFile = $targetDir . $imageFileName;
-        $allowedExtensions = array('jpg', 'jpeg', 'png');
-
-        if (in_array($extension, $allowedExtensions)) {
-            if (move_uploaded_file($_FILES['photo']['tmp_name'], $targetFile)) {
-                $photo = $targetFile;
-            } else {
-                header("Location: ?c=admin&a=profile&error=1");
-                exit;
-            }
-        } else {
-            header("Location: ?c=admin&a=profile&error=2");
-            exit;
-        }
+        $photo = $this->userService->handleImage('admin_image', 'photo', 'admin', $id, $old_photo);
 
         $admin = $this->userService->getById($id);
         $admin->setName($name);
@@ -63,11 +89,15 @@ class AdminController
         $admin->setPhoto($photo);
 
         $this->userService->updateUser($admin);
-        header("Location: ?c=admin&a=profile&success=1");
+        $_SESSION['notification'] = [
+            'message' => 'Update profile successfully',
+            'alert-type' => 'success'
+        ];
+        header("Location: /admin/profile/$id");
         exit;
     }
 
-    public function changePassword()
+    public function changePassword($id)
     {
         $admin = $this->getInfoHeader();
 
@@ -83,14 +113,22 @@ class AdminController
         $admin = $this->userService->getById($id);
 
         if (!password_verify($old_password, $admin->getPassword())) {
-            header("Location: ?c=admin&a=changepassword&error=1");
+            $_SESSION['notification'] = [
+                'message' => 'Old password is incorrect, please try again',
+                'alert-type' => 'error',
+            ];
+            header("Location: /admin/change/password/$id");
             exit;
         }
 
         $admin->setPassword($new_password);
         $this->userService->updateUser($admin);
 
-        header("Location: ?c=admin&a=changepassword&success=1");
+        $_SESSION['notification'] = [
+            'message' => 'Change password successfully',
+            'alert-type' => 'success',
+        ];
+        header("Location: /admin/change/password/$id");
         exit;
     }
 }

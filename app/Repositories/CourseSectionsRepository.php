@@ -30,7 +30,7 @@ class CourseSectionsRepository implements CourseSectionsRepositoryInterface
 
     public function getSectionsByCourseId($id)
     {
-        $condition = "course_id = '$id'";
+        $condition = "course_id = '$id' ORDER BY id ASC";
         return $this->fetchAll($condition);
     }
 

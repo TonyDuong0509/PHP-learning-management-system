@@ -42,3 +42,6 @@ $serviceContainer->add(App\Services\CouponService::class, new App\Services\Coupo
 
 $serviceContainer->add(App\Repositories\Interfaces\PaymentsRepositoryInterface::class, new App\Repositories\PaymentsRepository());
 $serviceContainer->add(App\Services\PaymentsService::class, new App\Services\PaymentsService($serviceContainer->resolve(App\Repositories\Interfaces\PaymentsRepositoryInterface::class)));
+
+$serviceContainer->add(App\Repositories\Interfaces\QuestionsRepositoryInterface::class, new App\Repositories\QuestionsRepository());
+$serviceContainer->add(App\Services\QuestionsService::class, new App\Services\QuestionsService($serviceContainer->resolve(App\Repositories\Interfaces\QuestionsRepositoryInterface::class)));
