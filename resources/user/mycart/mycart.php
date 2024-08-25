@@ -20,23 +20,6 @@
     <?php if (!empty($cartTotals)): ?>
         <div class="container">
             <div class="table-responsive">
-                <?php if (isset($_GET['error'])) {
-                    if ($_GET['error'] == 1) {
-                        echo "
-                            <div class='alert alert-danger'>
-                                You have to at least 1 course to checkout.
-                            </div>
-                            ";
-                    }
-                    if ($_GET['error'] == 2) {
-                        echo "
-                            <div class='alert alert-danger'>
-                                You have to login before checkouting, click <a href='/login'>here</a> to login
-                            </div>
-                            ";
-                    }
-                }
-                ?>
                 <table class="table generic-table">
                     <thead>
                         <tr>

@@ -26,12 +26,11 @@
     <link rel="stylesheet" href="<?php ABSPATH ?>/public/frontend/css/tooltipster.bundle.css">
     <link rel="stylesheet" href="<?php ABSPATH ?>/public/frontend/css/animated-headline.css">
     <link rel="stylesheet" href="<?php ABSPATH ?>/public/frontend/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <!-- end inject -->
 </head>
 
 <?php
-global $c;
-global $a;
 global $router;
 ?>
 

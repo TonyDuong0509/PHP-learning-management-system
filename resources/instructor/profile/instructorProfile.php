@@ -1,28 +1,24 @@
-<?php require ABSPATH . 'resources/admin/layout/sidebar.php'; ?>
+<?php require ABSPATH . 'resources/instructor/layout/sidebar.php'; ?>
 
-<?php require ABSPATH . 'resources/admin/layout/header.php'; ?>
-
-<?php $admin = $admin; ?>
+<?php require ABSPATH . 'resources/instructor/layout/header.php'; ?>
 
 <div class="page-wrapper">
 
     <div class="page-content">
-        <!--breadcrumb-->
         <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-            <div class="breadcrumb-title pe-3">Change Password</div>
+            <div class="breadcrumb-title pe-3">Instructor Profile</div>
             <div class="ps-3">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb mb-0 p-0">
                         <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
                         </li>
-                        <li class="breadcrumb-item active" aria-current="page">Change Password</li>
+                        <li class="breadcrumb-item active" aria-current="page">Instructor Profile</li>
                     </ol>
                 </nav>
             </div>
             <div class="ms-auto">
             </div>
         </div>
-        <!--end breadcrumb-->
         <div class="container">
             <div class="main-body">
                 <div class="row">
@@ -30,11 +26,11 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="d-flex flex-column align-items-center text-center">
-                                    <img src="/<?php echo $admin->getPhoto() ?? '/upload/no_image.png'; ?>" alt="Admin" class="rounded-circle p-1 bg-primary" width="110">
+                                    <img src="/<?php echo $instructor->getPhoto() ?? 'public/upload/no_image.png'; ?>" alt="Admin" class="rounded-circle p-1 bg-primary" width="110">
                                     <div class="mt-3">
                                         <h4></h4>
-                                        <p class="text-secondary mb-1"><?php echo $admin->getName(); ?></p>
-                                        <p class="text-muted font-size-sm"><?php echo $admin->getEmail(); ?></p>
+                                        <p class="text-secondary mb-1"><?php echo $instructor->getName(); ?></p>
+                                        <p class="text-muted font-size-sm"><?php echo $instructor->getEmail(); ?></p>
                                         <button class="btn btn-primary">Follow</button>
                                         <button class="btn btn-outline-primary">Message</button>
                                     </div>
@@ -54,32 +50,47 @@
                     </div>
                     <div class="col-lg-8">
                         <div class="card">
-                            <form action="<?php echo $router->generate('admin.update.password'); ?>" method="POST" enctype="multipart/form-data">
-                                <input type="hidden" name="id" value="<?php echo $admin->getId(); ?>">
+                            <form action="<?php echo $router->generate('instructor.update.profile'); ?>" method="POST" enctype="multipart/form-data">
+                                <input type="hidden" name="old_photo" value="<?php echo $instructor->getPhoto(); ?>">
                                 <div class="card-body">
                                     <div class="row mb-3">
                                         <div class="col-sm-3">
-                                            <h6 class="mb-0">Old Password</h6>
+                                            <h6 class="mb-0">Name</h6>
                                         </div>
                                         <div class="col-sm-9 text-secondary">
-                                            <input type="password" name="old_password" class="form-control" id="old_password" />
+                                            <input type="text" name="name" class="form-control" value="<?php echo $instructor->getName(); ?>" />
                                         </div>
                                     </div>
                                     <div class="row mb-3">
                                         <div class="col-sm-3">
-                                            <h6 class="mb-0">New Password</h6>
+                                            <h6 class="mb-0">User Name</h6>
                                         </div>
                                         <div class="col-sm-9 text-secondary">
-                                            <input type="password" name="new_password" class="form-control" id="new_password" />
+                                            <input type="text" name="username" class="form-control" value="<?php echo $instructor->getUsername(); ?>" />
                                         </div>
                                     </div>
                                     <div class="row mb-3">
                                         <div class="col-sm-3">
-                                            <h6 class="mb-0">Confirm New Password</h6>
+                                            <h6 class="mb-0">Email</h6>
                                         </div>
                                         <div class="col-sm-9 text-secondary">
-                                            <input type="password" name="new_password_confirmation" class="form-control" id="new_password_confirmation" />
-                                            <span id='message'></span>
+                                            <input type="email" name="email" class="form-control" value="<?php echo $instructor->getEmail(); ?>" disabled />
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-sm-3">
+                                            <h6 class="mb-0">Profile Image</h6>
+                                        </div>
+                                        <div class="col-sm-9 text-secondary">
+                                            <input type="file" name="photo" id="photo" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-sm-3">
+                                            <h6 class="mb-0"></h6>
+                                        </div>
+                                        <div class="col-sm-9 text-secondary">
+                                            <img id="showImage" src="/<?php echo $instructor->getPhoto() ?? 'public/upload/no_image.png'; ?>" alt="Admin" class="rounded-circle p-1 bg-primary" width="80">
                                         </div>
                                     </div>
                                     <div class="row">
@@ -97,28 +108,26 @@
         </div>
     </div>
 </div>
-<!--end page wrapper -->
-<!--start overlay-->
-<div class="overlay toggle-icon"></div>
-<!--end overlay-->
-<!--Start Back To Top Button--> <a href="javaScript:;" class="back-to-top"><i class='bx bxs-up-arrow-alt'></i></a>
-<!--End Back To Top Button-->
-<?php require ABSPATH . 'resources/admin/layout/footer.php'; ?>
+
+<?php require ABSPATH . 'resources/instructor/layout/footer.php'; ?>
+
 </div>
-<!--end wrapper-->
 
-
-<?php require ABSPATH . 'resources/admin/layout/footerScript.php'; ?>
-
+<?php require ABSPATH . 'resources/instructor/layout/footerScript.php'; ?>
 <script>
-    $('#new_password, #new_password_confirmation').on('keyup', function() {
-        if ($('#new_password').val() == $('#new_password_confirmation').val()) {
-            $('#message').html('Matching').css('color', 'green');
-        } else
-            $('#message').html('Not Matching').css('color', 'red');
+    new PerfectScrollbar(".app-container")
+</script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#photo').change(function(e) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                $('#showImage').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(e.target.files['0']);
+        });
     });
 </script>
-
 </body>
 
 </html>

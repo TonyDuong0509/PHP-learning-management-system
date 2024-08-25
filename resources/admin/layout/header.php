@@ -341,14 +341,14 @@
                     </div>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
-                    <li><a class="dropdown-item d-flex align-items-center" href="?c=admin&a=profile"><i class="bx bx-user fs-5"></i><span>Profile</span></a>
+                    <li><a class="dropdown-item d-flex align-items-center" href="<?php echo $router->generate('admin.profile', ['id' => $admin->getId()]); ?>"><i class="bx bx-user fs-5"></i><span>Profile</span></a>
                     </li>
-                    <li><a class="dropdown-item d-flex align-items-center" href="?c=admin&a=changepassword"><i class="bx bx-cog fs-5"></i><span>Change Password</span></a>
+                    <li><a class="dropdown-item d-flex align-items-center" href="<?php echo $router->generate('admin.change.password', ['id' => $admin->getId()]); ?>"><i class="bx bx-cog fs-5"></i><span>Change Password</span></a>
                     </li>
                     <li>
                         <div class="dropdown-divider mb-0"></div>
                     </li>
-                    <li><a class="dropdown-item d-flex align-items-center" href="/admin/logout"><i class="bx bx-log-out-circle"></i><span>Logout</span></a>
+                    <li><a class="dropdown-item d-flex align-items-center" href="<?php echo $router->generate('admin.logout'); ?>"><i class="bx bx-log-out-circle"></i><span>Logout</span></a>
                     </li>
                 </ul>
             </div>

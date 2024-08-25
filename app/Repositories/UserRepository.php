@@ -111,7 +111,18 @@ class UserRepository implements UserRepositoryInterface
         return false;
     }
 
-    public function delete($id) {}
+    public function delete($id)
+    {
+        global $conn;
+
+        $sql = "DELETE FROM users
+                WHERE id = '$id'";
+        if ($conn->query($sql) === true) {
+            return true;
+        }
+        echo "Error: " . $sql . PHP_EOL;
+        return false;
+    }
 
     public function checkExist($email)
     {
@@ -120,5 +131,29 @@ class UserRepository implements UserRepositoryInterface
         $user = current($users);
 
         return $user;
+    }
+
+    public function checkEmailToRegister($email)
+    {
+        $condition = "email = '$email'";
+        $users = $this->fetchAll($condition);
+        $user = current($users);
+
+        return $user;
+    }
+
+    public function activeInstructor($id)
+    {
+        global $conn;
+
+        $sql = "UPDATE users
+                SET status = 1
+                WHERE id = '$id'";
+
+        if ($conn->query($sql) === true) {
+            return true;
+        }
+        echo "Error: " . $sql . PHP_EOL;
+        return false;
     }
 }

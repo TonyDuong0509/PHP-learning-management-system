@@ -6,6 +6,7 @@ use App\Services\CourseLecturesService;
 use App\Services\CourseSectionsService;
 use App\Services\OrdersService;
 use App\Services\PaymentsService;
+use App\Services\QuestionsService;
 use App\Services\UserService;
 
 class OrderController
@@ -15,6 +16,7 @@ class OrderController
     private $orderService;
     private $courseSectionService;
     private $courseLecturesService;
+    private $questionsService;
 
     public function __construct(
         UserService $userService,
@@ -22,12 +24,14 @@ class OrderController
         OrdersService $orderService,
         CourseSectionsService $courseSectionService,
         CourseLecturesService $courseLecturesService,
+        QuestionsService $questionsService,
     ) {
         $this->userService = $userService;
         $this->paymentsService = $paymentsService;
         $this->orderService = $orderService;
         $this->courseSectionService = $courseSectionService;
         $this->courseLecturesService = $courseLecturesService;
+        $this->questionsService = $questionsService;
     }
 
     private function getInfoHeader()
@@ -112,6 +116,10 @@ class OrderController
         $course = $this->orderService->getCourseInOrderByUserIdAndCourseId($course_id, $user->getId());
         $sections = $this->courseSectionService->getSectionsByCourseId($course_id);
         $lectures = $this->courseLecturesService->getLecturesBySectionId($sections[0]->getId());
+        $questionsOfCourse = $this->questionsService->getAllForOneCourseQAndA($user->getId(), $course_id);
+        foreach ($questionsOfCourse as $question) {
+            $replies = $this->questionsService->replayByParentId($question->getId(), $course_id);
+        }
 
         require ABSPATH . 'resources/user/dashboard/mycourse/courseView.php';
     }

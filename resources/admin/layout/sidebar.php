@@ -26,12 +26,11 @@
     <link rel="stylesheet" href="<?php ABSPATH ?>/public/backend/css/dark-theme.css" />
     <link rel="stylesheet" href="<?php ABSPATH ?>/public/backend/css/semi-dark.css" />
     <link rel="stylesheet" href="<?php ABSPATH ?>/public/backend/css/header-colors.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <title>Aduca - Admin</title>
 </head>
 
 <?php
-global $c;
-global $a;
 global $router;
 ?>
 

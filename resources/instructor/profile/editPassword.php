@@ -1,8 +1,6 @@
-<?php require ABSPATH . 'resources/admin/layout/sidebar.php'; ?>
+<?php require ABSPATH . 'resources/instructor/layout/sidebar.php'; ?>
 
-<?php require ABSPATH . 'resources/admin/layout/header.php'; ?>
-
-<?php $admin = $admin; ?>
+<?php require ABSPATH . 'resources/instructor/layout/header.php'; ?>
 
 <div class="page-wrapper">
 
@@ -30,11 +28,11 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="d-flex flex-column align-items-center text-center">
-                                    <img src="/<?php echo $admin->getPhoto() ?? '/upload/no_image.png'; ?>" alt="Admin" class="rounded-circle p-1 bg-primary" width="110">
+                                    <img src="/<?php echo $instructor->getPhoto() ?? 'public/upload/no_image.png'; ?>" alt="Admin" class="rounded-circle p-1 bg-primary" width="110">
                                     <div class="mt-3">
                                         <h4></h4>
-                                        <p class="text-secondary mb-1"><?php echo $admin->getName(); ?></p>
-                                        <p class="text-muted font-size-sm"><?php echo $admin->getEmail(); ?></p>
+                                        <p class="text-secondary mb-1"></p>
+                                        <p class="text-muted font-size-sm"></p>
                                         <button class="btn btn-primary">Follow</button>
                                         <button class="btn btn-outline-primary">Message</button>
                                     </div>
@@ -54,8 +52,7 @@
                     </div>
                     <div class="col-lg-8">
                         <div class="card">
-                            <form action="<?php echo $router->generate('admin.update.password'); ?>" method="POST" enctype="multipart/form-data">
-                                <input type="hidden" name="id" value="<?php echo $admin->getId(); ?>">
+                            <form action="<?php echo $router->generate('instructor.change.password'); ?>" method="POST" enctype="multipart/form-data">
                                 <div class="card-body">
                                     <div class="row mb-3">
                                         <div class="col-sm-3">
@@ -97,19 +94,15 @@
         </div>
     </div>
 </div>
-<!--end page wrapper -->
-<!--start overlay-->
-<div class="overlay toggle-icon"></div>
-<!--end overlay-->
-<!--Start Back To Top Button--> <a href="javaScript:;" class="back-to-top"><i class='bx bxs-up-arrow-alt'></i></a>
-<!--End Back To Top Button-->
-<?php require ABSPATH . 'resources/admin/layout/footer.php'; ?>
+
+<?php require ABSPATH . 'resources/instructor/layout/footer.php'; ?>
+
 </div>
-<!--end wrapper-->
 
-
-<?php require ABSPATH . 'resources/admin/layout/footerScript.php'; ?>
-
+<?php require ABSPATH . 'resources/instructor/layout/footerScript.php'; ?>
+<script>
+    new PerfectScrollbar(".app-container")
+</script>
 <script>
     $('#new_password, #new_password_confirmation').on('keyup', function() {
         if ($('#new_password').val() == $('#new_password_confirmation').val()) {
@@ -118,7 +111,6 @@
             $('#message').html('Not Matching').css('color', 'red');
     });
 </script>
-
 </body>
 
 </html>

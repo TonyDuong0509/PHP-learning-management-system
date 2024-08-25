@@ -18,7 +18,7 @@
                     <?php foreach ($myCourse as $item): ?>
                         <div class="card card-item card-item-list-layout">
                             <div class="card-image">
-                                <a href="course-details.html" class="d-block">
+                                <a href="<?php echo $router->generate('course.view', ['course_id' => $item->getCourseId()]); ?>" class="d-block">
                                     <img class="card-img-top" src="/<?php echo $item->getCourse()->getImage(); ?>" alt="Card image cap">
                                 </a>
                             </div>

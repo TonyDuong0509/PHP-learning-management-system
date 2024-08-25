@@ -50,7 +50,7 @@ class CategoryService
         return $this->categoryRepository->delete($id);
     }
 
-    public function handleImageFile($path, $fileName, $route = null, $param = null, $old_image = null)
+    public function handleImageFile($path, $fileName, $cid = null, $old_image = null)
     {
         if (!empty($old_image)) {
             unlink($old_image);
@@ -66,11 +66,19 @@ class CategoryService
             if (move_uploaded_file($_FILES[$fileName]['tmp_name'], $targetFile)) {
                 return $targetFile;
             } else {
-                header("Location: /admin/$route/$param?error=1");
+                $_SESSION['notification'] = [
+                    'message' => "Upload image failed, please try again",
+                    'alert-type' => 'error'
+                ];
+                header("Location: /admin/edit-category/$cid");
                 exit;
             }
         } else {
-            header("Location: /admin/$route/$param?error=2");
+            $_SESSION['notification'] = [
+                'message' => "Images have to JPG, JPEG, PNG",
+                'alert-type' => 'error'
+            ];
+            header("Location: /admin/edit-category/$cid");
             exit;
         }
     }

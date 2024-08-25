@@ -1,14 +1,3 @@
-<?php if (isset($_GET['success'])) {
-    if ($_GET['success'] == 1) {
-        echo "
-            <div class='alert alert-success text-center'>
-                Cash Payment submit successfully.
-            </div>
-            ";
-    }
-}
-?>
-
 <section class="hero-area position-relative hero-area-2">
     <div class="hero-slider-item hero-bg-4">
         <div class="container">

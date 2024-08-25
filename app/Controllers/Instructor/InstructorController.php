@@ -22,6 +22,16 @@ class InstructorController
         require ABSPATH . 'resources/instructor/dashboard/index.php';
     }
 
+    public function registerForm()
+    {
+        require ABSPATH . 'instructor/registerForm.php';
+    }
+
+    public function loginForm()
+    {
+        require ABSPATH . 'instructor/login.php';
+    }
+
     public function register()
     {
         $data = [];
@@ -32,15 +42,20 @@ class InstructorController
         $data['created_at'] = date('Y-m-d');
         $data['role'] = 'instructor';
         $data['status'] = 0;
-
-        $user = $this->userService->saveUser($data);
-
-        if ($user === false) {
-            header('Location: registerForm.php&error=1');
+        if ($this->userService->checkEmailToRegister($_POST['email'])) {
+            $_SESSION['notification'] = [
+                'message' => 'Email is exist, please chose another email !',
+                'alert-type' => 'error',
+            ];
+            header("Location: /instructor/register/form");
             exit;
         }
-
-        header('Location: login.php?success=1');
+        $this->userService->saveUser($data);
+        $_SESSION['notification'] = [
+            'message' => 'Register successfully, you can log in',
+            'alert-type' => 'success',
+        ];
+        header("Location: /instructor/login/form");
         exit;
     }
 
@@ -52,12 +67,20 @@ class InstructorController
         $user = $this->userService->getByEmail($email);
 
         if (!$user) {
-            header("Location: login.php?error=1");
+            $_SESSION['notification'] = [
+                'message' => 'User not exist, please try again !',
+                'alert-type' => 'error',
+            ];
+            header("Location: /instructor/login/form");
             exit;
         }
 
         if (!password_verify($password, $user->getPassword())) {
-            header("Location: login.php?error=2");
+            $_SESSION['notification'] = [
+                'message' => 'Password incorrect, please try again !',
+                'alert-type' => 'error',
+            ];
+            header("Location: /instructor/login/form");
             exit;
         }
 
@@ -65,14 +88,87 @@ class InstructorController
         $_SESSION['nameInstructor'] = $user->getName();
         $_SESSION['idInstructor'] = $user->getId();
 
-        header("Location: ?c=instructor&a=dashboard");
+        $_SESSION['notification'] = [
+            'message' => 'Sign in successfully',
+            'alert-type' => 'success',
+        ];
+        header("Location: /instructor/dashboard");
         exit;
     }
 
     public function logout()
     {
-        session_destroy();
-        header("Location: login.php");
+        unset($_SESSION['emailInstructor']);
+        header("Location: /instructor/login/form");
         exit;
+    }
+
+    public function instructorProfile($id)
+    {
+        $instructor = $this->userService->getById($id);
+
+        require ABSPATH . 'resources/instructor/profile/instructorProfile.php';
+    }
+
+    public function updateProfile()
+    {
+        $email = $_SESSION['emailInstructor'] ?? '';
+        $instructor = $this->userService->getByEmail($email);
+
+        $old_image = $_POST['old_photo'] ?? '';
+        $name = $_POST['name'];
+        $username = $_POST['username'];
+        $photo = $this->userService->handleImage('instructor_image', 'photo', 'instructor', $instructor->getId(), $old_image);
+
+        $instructor->setName($name);
+        $instructor->setUsername($username);
+        $instructor->setPhoto($photo);
+
+        $this->userService->updateUser($instructor);
+
+        $_SESSION['notification'] = [
+            'message' => "Upload Image successfully",
+            'alert-type' => 'success',
+        ];
+
+        header("Location: /instructor/profile/{$instructor->getId()}");
+        exit;
+    }
+
+    public function editPassword($id)
+    {
+        $instructor = $this->userService->getById($id);
+
+        require ABSPATH . 'resources/instructor/profile/editPassword.php';
+    }
+
+    public function changePassword()
+    {
+        $email = $_SESSION['emailInstructor'] ?? '';
+        $instructor = $this->userService->getByEmail($email);
+
+        $old_password = $_POST['old_password'] ?? '';
+        $new_password = password_hash($_POST['new_password'], PASSWORD_DEFAULT);
+        $passwordFromDb = $instructor->getPassword();
+        if (password_verify($old_password, $passwordFromDb)) {
+            $instructor->setPassword($new_password);
+            $this->userService->updateUser($instructor);
+
+            $_SESSION['notification'] = [
+                'message' => 'Change password successfully',
+                'alert-type' => 'success',
+            ];
+
+            header("Location: /instructor/edit/password/{$instructor->getId()}");
+            exit;
+        } else {
+            $_SESSION['notification'] = [
+                'message' => 'Old password not incorrect, please try again',
+                'alert-type' => 'error',
+            ];
+
+            header("Location: /instructor/edit/password/{$instructor->getId()}");
+            exit;
+        }
     }
 }
