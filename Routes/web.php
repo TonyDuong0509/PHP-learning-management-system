@@ -521,6 +521,12 @@ $router->map('GET', '/remove-wishlist/[i:id]', function ($id) use ($serviceConta
     $controller->removeWishList($id);
 });
 
+// Stripe routes
+$router->map('GET', '/stripe-payment', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\User\CartController::class);
+    $controller->stripePayment();
+});
+
 
 $match = $router->match();
 $routeName = is_array($match) ? ($match['name'] ?? null) : null;

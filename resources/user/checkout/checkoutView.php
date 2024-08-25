@@ -18,16 +18,6 @@
 
 <section class="cart-area section--padding">
     <div class="container">
-        <?php if (isset($_GET['error'])) {
-            if ($_GET['error'] == 1) {
-                echo "
-                                        <div class='alert alert-danger'>
-                                            You Have already enrolled in this course, please remove it from cart.
-                                        </div>
-                                        ";
-            }
-        }
-        ?>
         <div class="row">
             <div class="col-lg-7">
                 <div class="card card-item">
@@ -61,6 +51,7 @@
                                     <input checked="" id="bankTransfer" name="cash_delivery" type="radio" value="handcash">
                                     <label for="bankTransfer">Direct Payment</label>
                                 </div>
+
                                 <div class="payment-tab-toggle">
                                     <input checked="" id="bankTransfer" name="cash_delivery" type="radio" value="stripe">
                                     <label for="bankTransfer">Stripe Payment</label>
