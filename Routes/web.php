@@ -536,6 +536,7 @@ $router->map('GET', '/remove-wishlist/[i:id]', function ($id) use ($serviceConta
     $controller->removeWishList($id);
 });
 
+
 // Stripe routes
 $router->map('GET', '/stripe-payment', function () use ($serviceContainer) {
     $controller = $serviceContainer->resolve(App\Controllers\User\CartController::class);
@@ -547,5 +548,26 @@ $router->map('POST', '/stripe-order', function () use ($serviceContainer) {
     $controller->stripeOrder();
 }, 'stripe.order');
 
+
+// Report routes
+$router->map('GET', '/report/view', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\ReportController::class);
+    $controller->reportView();
+});
+
+$router->map('POST', '/search/by/date', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\ReportController::class);
+    $controller->searchByDate();
+}, 'admin.search.by.date');
+
+$router->map('POST', '/search/by/month', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\ReportController::class);
+    $controller->searchByMonth();
+}, 'admin.search.by.month');
+
+$router->map('POST', '/search/by/year', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\ReportController::class);
+    $controller->searchByYear();
+}, 'admin.search.by.year');
 
 $match = $router->match();

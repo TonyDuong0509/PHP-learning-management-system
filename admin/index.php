@@ -21,7 +21,7 @@ $publicRoutes = [
     'admin.login.form'
 ];
 
-if (!isset($_SESSION['emailAdmin']) && !in_array($match['name'], $publicRoutes)) {
+if (!isset($_SESSION['admin']['email']) && !in_array($match['name'], $publicRoutes)) {
     header("Location: /admin/login/form");
     exit;
 }

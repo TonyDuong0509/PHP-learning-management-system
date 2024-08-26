@@ -24,7 +24,7 @@ $publicRoutes = [
     'instructor.register.form',
 ];
 
-if (!isset($_SESSION['emailInstructor']) && !in_array($match['name'], $publicRoutes)) {
+if (!isset($_SESSION['instructor']['email']) && !in_array($match['name'], $publicRoutes)) {
     header("Location: /instructor/login/form");
     exit;
 }

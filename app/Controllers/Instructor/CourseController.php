@@ -44,7 +44,7 @@ class CourseController
 
     private function getInstructorInSidebar()
     {
-        $email = $_SESSION['emailInstructor'];
+        $email = $_SESSION['instructor']['email'];
         return $this->userService->getByEmail($email);
     }
 
@@ -82,7 +82,7 @@ class CourseController
         $params = [
             'category_id' => $_POST['category_id'] ?? '',
             'subcategory_id' => $_POST['subcategory_id'] ?? '',
-            'instructor_id' => $_SESSION['idInstructor'] ?? '',
+            'instructor_id' => $_SESSION['instructor']['id'] ?? '',
             'name' => $_POST['course_name'] ?? '',
             'title' => $_POST['course_title'] ?? '',
             'slug' => strtolower(str_replace(' ', '-', $_POST['course_name'])) ?? '',

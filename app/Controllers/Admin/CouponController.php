@@ -28,7 +28,7 @@ class CouponController
 
     private function getInfoHeader()
     {
-        $email = $_SESSION['emailAdmin'];
+        $email = $_SESSION['admin']['email'];
         return $this->userService->getByEmail($email);
     }
 

@@ -25,7 +25,7 @@ class UserController
 
     private function getHeaderProfile()
     {
-        $email = $_SESSION['emailUser'] ?? '';
+        $email = $_SESSION['user']['email'] ?? '';
         return $this->userService->getByEmail($email);
     }
 
@@ -67,6 +67,16 @@ class UserController
 
         $user = $this->userService->getByEmail($email);
 
+        if ($user->getRole() !== 'user') {
+            $_SESSION['notification'] = [
+                'message' => 'This account is not authorized, please input correct account',
+                'alert-type' => 'error',
+            ];
+
+            header("Location: /login");
+            exit;
+        }
+
         if (!$user) {
             $_SESSION['notification'] = [
                 'message' => 'User not exist, please try again',
@@ -87,8 +97,11 @@ class UserController
             exit;
         }
 
-        $_SESSION['emailUser'] = $user->getEmail();
-        $_SESSION['nameUser'] = $user->getName();
+        $_SESSION['user'] = [
+            'email' => $email,
+            'name' => $user->getName(),
+            'role' => $user->getRole(),
+        ];
 
         $_SESSION['notification'] = [
             'message' => 'Sign in successfully',
@@ -100,7 +113,7 @@ class UserController
 
     public function logout()
     {
-        unset($_SESSION['emailUser']);
+        unset($_SESSION['user']);
         header("Location: /");
         exit;
     }
@@ -174,7 +187,7 @@ class UserController
     public function deleteUserAccountBySelf($id)
     {
         $this->userService->deleteUser($id);
-        unset($_SESSION['emailUser']);
+        unset($_SESSION['user']);
         $_SESSION['notification'] = [
             'message' => 'Deleted Account successfully',
             'alert-type' => 'success',

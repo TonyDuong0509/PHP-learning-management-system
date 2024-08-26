@@ -25,7 +25,7 @@ class WishListController
 
     public function addToWishList($course_id)
     {
-        $email = $_SESSION['emailUser'] ?? '';
+        $email = $_SESSION['user']['email'] ?? '';
         $user = $this->userService->getByEmail($email);
 
         if ($this->userService->authCheck($email)) {
@@ -51,7 +51,7 @@ class WishListController
 
     public function getWishListsCourse()
     {
-        $email = $_SESSION['emailUser'] ?? '';
+        $email = $_SESSION['user']['email'] ?? '';
         $user = $this->userService->getByEmail($email);
         $wishListsCourse = $this->wishListService->getWishListsCoursesSameUserId($user->getId());
         $wishQty = count($wishListsCourse);
@@ -65,7 +65,7 @@ class WishListController
 
     public function removeWishList($id)
     {
-        $email = $_SESSION['emailUser'] ?? '';
+        $email = $_SESSION['user']['email'] ?? '';
 
         if ($this->userService->authCheck($email)) {
             $user = $this->userService->getByEmail($email);

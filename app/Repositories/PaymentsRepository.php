@@ -88,4 +88,16 @@ class PaymentsRepository implements PaymentsRepositoryInterface
         $payment = current($payments);
         return $payment;
     }
+
+    public function getAllByMonth($order_month, $order_year)
+    {
+        $condition = "order_month = '$order_month' AND order_year = '$order_year' ORDER BY created_at DESC";
+        return $this->fetchAll($condition);
+    }
+
+    public function getAllByDateTimeType($columnName, $dateTime)
+    {
+        $condition = "$columnName = '$dateTime' ORDER BY created_at DESC";
+        return $this->fetchAll($condition);
+    }
 }

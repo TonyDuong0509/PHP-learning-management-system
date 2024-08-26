@@ -208,7 +208,7 @@ class CartController
 
     public function checkoutCreate()
     {
-        $email = $_SESSION['emailUser'] ?? '';
+        $email = $_SESSION['user']['email'] ?? '';
         $user = $this->userService->getByEmail($email);
 
         if ($user) {
@@ -271,7 +271,7 @@ class CartController
 
             $paymentId = $this->paymentService->savePayment($paramsPayment);
             $payment = $this->paymentService->getById($paymentId);
-            $email = $_SESSION['emailUser'] ?? '';
+            $email = $_SESSION['user']['email'] ?? '';
             $user = $this->userService->getByEmail($email);
 
             foreach ($_POST['course_name'] as $key => $course_name) {
@@ -328,7 +328,7 @@ class CartController
 
     public function stripePayment()
     {
-        $email = $_SESSION['emailUser'];
+        $email = $_SESSION['user']['email'];
         $user = $this->userService->getByEmail($email);
 
         require ABSPATH . 'resources/user/payment/stripe.php';
@@ -336,7 +336,7 @@ class CartController
 
     public function stripeOrder()
     {
-        $email = $_SESSION['emailUser'];
+        $email = $_SESSION['user']['email'];
         $user = $this->userService->getByEmail($email);
 
         if (isset($_SESSION['coupon']) || !empty($_SESSION['coupon'])) {

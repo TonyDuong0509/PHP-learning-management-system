@@ -333,10 +333,10 @@
                     <?php endif; ?>
                     <div class="user-info">
                         <p class="user-name mb-0">
-                            <?php echo isset($_SESSION['nameAdmin']) ? $_SESSION['nameAdmin'] : '' ?>
+                            <?php echo isset($_SESSION['admin']['name']) ? $_SESSION['admin']['name'] : '' ?>
                         </p>
                         <p class="designattion mb-0">
-                            <?php echo isset($_SESSION['emailAdmin']) ? $_SESSION['emailAdmin'] : '' ?>
+                            <?php echo isset($_SESSION['admin']['email']) ? $_SESSION['admin']['email'] : '' ?>
                         </p>
                     </div>
                 </a>
