@@ -53,7 +53,7 @@
                         }
                         ?>
                         <div class="section-block"></div>
-                        <form method="POST" action="?c=user&a=login" class="pt-4">
+                        <form method="POST" action="<?php echo $router->generate('user.login'); ?>" class="pt-4">
                             <div class="d-flex flex-wrap align-items-center pb-4">
                                 <button class="btn theme-btn flex-grow-1 mx-2 mb-2"><i class="la la-google mr-2"></i>Google</button>
                                 <button class="btn theme-btn flex-grow-1 mx-2 mb-2"><i class="la la-facebook mr-2"></i>Facebook</button>

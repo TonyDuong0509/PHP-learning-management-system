@@ -11,6 +11,7 @@ use App\Services\OrdersService;
 use App\Services\PaymentsService;
 use App\Services\SubCategoryService;
 use App\Services\UserService;
+use Stripe;
 
 class CartController
 {
@@ -296,6 +297,7 @@ class CartController
 
                 $this->orderService->saveOrder($paramsOrder);
             }
+            unset($_SESSION['coupon']);
             $this->cartService->deleteAll();
 
             $to = $_POST['email'];
@@ -311,6 +313,8 @@ class CartController
             -----------------------<br>
             Email from $website
             ";
+
+            $this->emailService->send($to, $subject, $content);
 
             $_SESSION['notification'] = [
                 'message' => 'Cash payment submit successfully',
@@ -328,5 +332,84 @@ class CartController
         $user = $this->userService->getByEmail($email);
 
         require ABSPATH . 'resources/user/payment/stripe.php';
+    }
+
+    public function stripeOrder()
+    {
+        $email = $_SESSION['emailUser'];
+        $user = $this->userService->getByEmail($email);
+
+        if (isset($_SESSION['coupon']) || !empty($_SESSION['coupon'])) {
+            $total_amount = $_SESSION['coupon']['total_amount'];
+        } else {
+            $total_amount = round($this->cartService->total());
+        }
+
+        \Stripe\Stripe::setApiKey(STRIPE_SECRET_KEY);
+        $token = $_POST['stripeToken'];
+
+        $charge = \Stripe\Charge::create([
+            'amount' => $total_amount * 100,
+            'currency' => 'usd',
+            'description' => 'Lms',
+            'source' => $token,
+            'metadata' => ['order_id' => '3434'],
+        ]);
+
+        $paramsPayment = [
+            'name' => $user->getName(),
+            'email' => $email,
+            'cash_delivery' => 'stripe',
+            'total_amount' => $total_amount,
+            'payment_type' => 'Stripe',
+            'invoice_no' => 'EOS' . mt_rand(10000000, 99999999),
+            'order_date' => date_create('now')->format('d F Y'),
+            'order_month' => date_create('now')->format('F'),
+            'order_year' => date_create('now')->format('Y'),
+            'status' => 'pending',
+            'created_at' => date('Y-m-d H:i:s'),
+        ];
+
+        $payment_id = $this->paymentService->savePayment($paramsPayment);
+
+        $carts = $this->cartService->getAll();
+        foreach ($carts as $cart) {
+            $paramsOrder = [
+                'payment_id' => $payment_id,
+                'user_id' => $user->getId(),
+                'instructor_id' => $cart['options']['instructorId'],
+                'course_id' => $cart['course_id'],
+                'course_title' => $cart['name'],
+                'price' => $cart['price'],
+                'created_at' => date('Y-m-d H:i:s'),
+            ];
+            $this->orderService->saveOrder($paramsOrder);
+        }
+        unset($_SESSION['coupon']);
+        $this->cartService->deleteAll();
+
+        $to = $_POST['email'];
+        $subject = "Aduca - Payment successfully !";
+        $name = $user->getName();
+        $website = get_domain();
+        $content = "
+            Hello $name, <br>
+            This email from Aduca - E-Learning system. <br>
+            We want to say thank you very much because your support to us. <br>
+            If have some problem with our courses. Please send back email for us. We will support you. <br>
+            Thank you very much !
+            -----------------------<br>
+            Email from $website
+            ";
+
+        $this->emailService->send($to, $subject, $content);
+
+        $_SESSION['notification'] = [
+            'message' => 'Stripe Payment submit successfully',
+            'alert-type' => 'success',
+        ];
+
+        header("Location: /");
+        exit;
     }
 }

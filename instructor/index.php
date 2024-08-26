@@ -12,6 +12,11 @@ require '../Container/RegisteDJ.php';
 
 require '../Routes/web.php';
 
+if ($match === false) {
+    header("Location: /instructor/dashboard");
+    exit;
+}
+
 $publicRoutes = [
     'instructor.login',
     'instructor.register',

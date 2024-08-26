@@ -57,7 +57,21 @@ class OrderController
         require ABSPATH . 'resources/admin/orders/orderDetails.php';
     }
 
-    public function pendingConfirm($id)
+    public function pendingConfirmByInstructor($id)
+    {
+        $payment = $this->paymentsService->getById($id);
+        $this->paymentsService->updateStatus($payment);
+
+        $_SESSION['notification'] = [
+            'message' => "Order Confirmed successfully",
+            'alert-type' => 'success',
+        ];
+
+        header("Location: /instructor/all/order");
+        exit;
+    }
+
+    public function pendingConfirmByAdmin($id)
     {
         $payment = $this->paymentsService->getById($id);
         $this->paymentsService->updateStatus($payment);

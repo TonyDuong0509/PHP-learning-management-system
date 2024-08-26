@@ -101,7 +101,7 @@ $router = $router;
                                     </div>
                                     <div class="col-sm-9 text-secondary">
                                         <?php if ($payment->getStatus() == 'pending'): ?>
-                                            <a href="<?php echo $router->generate('pending-confirm', ['id' => $payment->getId()]); ?>" class="btn btn-block btn-primary" id="confirm">Confirm Order</a>
+                                            <a href="<?php echo $router->generate('pending-confirm-instructor', ['id' => $payment->getId()]); ?>" class="btn btn-block btn-primary" id="confirm">Confirm Order</a>
                                         <?php elseif ($payment->getStatus() == 'confirm'): ?>
                                             <button disabled class="btn btn-block btn-success">Confirmed</button>
                                         <?php endif; ?>

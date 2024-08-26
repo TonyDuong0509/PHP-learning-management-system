@@ -74,11 +74,19 @@ class CourseService
                 if (move_uploaded_file($_FILES[$inputName]['tmp_name'], $targetFile)) {
                     return $targetFile;
                 } else {
-                    header("Location: ?c=course&a=addCourse&error=1");
+                    $_SESSION['notification'] = [
+                        'message' => "Upload image failed, please try again",
+                        'alert-type' => 'error',
+                    ];
+                    header("Location: /instructor/add-course");
                     exit;
                 }
             } else {
-                header("Location: ?c=course&a=addCourse&error=2");
+                $_SESSION['notification'] = [
+                    'message' => "Images have to be JPG, JPEG, PNG",
+                    'alert-type' => 'error',
+                ];
+                header("Location: /instructor/add-course");
                 exit;
             }
         }
@@ -100,11 +108,19 @@ class CourseService
                 if (move_uploaded_file($_FILES[$inputName]['tmp_name'], $targetVideo)) {
                     return $targetVideo;
                 } else {
-                    header("Location: ?c=course&a=addCourse&error=3");
+                    $_SESSION['notification'] = [
+                        'message' => "Upload video failed, please try again",
+                        'alert-type' => 'error',
+                    ];
+                    header("Location: /instructor/add-course");
                     exit;
                 }
             } else {
-                header("Location: ?c=course&a=addCourse&error=4");
+                $_SESSION['notification'] = [
+                    'message' => "Video have to be MP4, MP3, VD",
+                    'alert-type' => 'error',
+                ];
+                header("Location: /instructor/add-course");
                 exit;
             }
         }
