@@ -14,11 +14,13 @@ class CouponRepository implements CouponRepositoryInterface
         $coupon_name = $params['coupon_name'];
         $coupon_discount = $params['coupon_discount'];
         $coupon_validity = $params['coupon_validity'];
-        $status = 1;
+        $instructor_id = $params['instructor_id'];
+        $course_id = $params['course_id'];
+        $status = 0;
         $created_at = $params['created_at'];
 
-        $sql = "INSERT INTO coupons (coupon_name, coupon_discount, coupon_validity, status, created_at)
-                VALUES ('$coupon_name', '$coupon_discount','$coupon_validity', '$status', '$created_at')";
+        $sql = "INSERT INTO coupons (coupon_name, coupon_discount, coupon_validity, instructor_id, course_id, status, created_at)
+                VALUES ('$coupon_name', '$coupon_discount','$coupon_validity', '$instructor_id', '$course_id', '$status', '$created_at')";
 
         if ($conn->query($sql) === true) {
             $last_id = $conn->insert_id;
@@ -40,12 +42,18 @@ class CouponRepository implements CouponRepositoryInterface
         $result = $conn->query($sql);
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
-                $coupon = new Coupon($row['id'], $row['coupon_name'], $row['coupon_discount'], $row['coupon_validity'], $row['status'], $row['created_at']);
+                $coupon = new Coupon($row['id'], $row['coupon_name'], $row['coupon_discount'], $row['coupon_validity'], $row['instructor_id'], $row['course_id'], $row['status'], $row['created_at']);
                 $coupons[] = $coupon;
             }
         }
 
         return $coupons;
+    }
+
+    public function getAllCouponsOfInstructor($instructor_id)
+    {
+        $condition = "instructor_id = '$instructor_id' ORDER BY created_at DESC";
+        return $this->fetchAll($condition);
     }
 
     public function getById($id)
@@ -72,11 +80,28 @@ class CouponRepository implements CouponRepositoryInterface
         $coupon_name = $coupon->getCouponName();
         $coupon_discount = $coupon->getCouponDiscount();
         $coupon_validity = $coupon->getCouponValidity();
+        $instructor_id = $coupon->getInstructorId();
+        $course_id = $coupon->getCourseId();
         $status = $coupon->getStatus();
         $created_at = $coupon->getCreatedAt();
 
         $sql = "UPDATE coupons
-                SET coupon_name = '$coupon_name', coupon_discount = '$coupon_discount', coupon_validity = '$coupon_validity', status = '$status', created_at = '$created_at'
+                SET coupon_name = '$coupon_name', coupon_discount = '$coupon_discount', coupon_validity = '$coupon_validity', instructor_id = '$instructor_id', course_id = '$course_id', status = '$status', created_at = '$created_at'
+                WHERE id = '$id'";
+
+        if ($conn->query($sql) === true) {
+            return true;
+        }
+        echo "Error: " . $sql . PHP_EOL;
+        return false;
+    }
+
+    public function active($value, $id)
+    {
+        global $conn;
+
+        $sql = "UPDATE coupons
+                SET status = '$value'
                 WHERE id = '$id'";
 
         if ($conn->query($sql) === true) {

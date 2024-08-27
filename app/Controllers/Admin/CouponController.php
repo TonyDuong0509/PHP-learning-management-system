@@ -3,6 +3,7 @@
 namespace App\Controllers\Admin;
 
 use App\Services\CouponService;
+use App\Services\CourseService;
 use App\Services\UserService;
 use DateTime;
 use DateTimeZone;
@@ -11,13 +12,16 @@ class CouponController
 {
     private $userService;
     private $couponService;
+    private $courseService;
 
     public function __construct(
         UserService $userService,
-        CouponService $couponService
+        CouponService $couponService,
+        CourseService $courseService,
     ) {
         $this->userService = $userService;
         $this->couponService = $couponService;
+        $this->courseService = $courseService;
     }
 
     private function getDateTime()
@@ -40,59 +44,30 @@ class CouponController
         require ABSPATH . 'resources/admin/coupon/allCoupon.php';
     }
 
-    public function adminAddCoupon()
+    public function activeCoupon($id)
     {
-        $admin = $this->getInfoHeader();
+        $this->couponService->active($id);
 
-        require ABSPATH . 'resources/admin/coupon/addCoupon.php';
-    }
-
-    public function storeCoupon()
-    {
-        $coupon_name = $_POST['coupon_name'] ?? '';
-        $coupon_discount = $_POST['coupon_discount'] ?? '';
-        $coupon_validity = $_POST['coupon_validity'] ?? '';
-        $created_at = $this->getDateTime();
-
-        $params = [
-            'coupon_name' => $coupon_name,
-            'coupon_discount' => $coupon_discount,
-            'coupon_validity' => $coupon_validity,
-            'created_at' => $created_at,
+        $_SESSION['notification'] = [
+            'message' => 'Actived Coupon successfully',
+            'alert-type' => 'success'
         ];
 
-        $this->couponService->saveCoupon($params);
-
-        header("Location: /admin/all/coupon?success=1");
+        header("Location: /admin/all/coupon");
         exit;
     }
 
-    public function editCoupon($id)
+    public function inactiveCoupon($id)
     {
-        $admin = $this->getInfoHeader();
-        $coupon = $this->couponService->getById($id);
-        $dateNow = $this->getDateTime();
 
-        require ABSPATH . 'resources/admin/coupon/editCoupon.php';
-    }
+        $this->couponService->inactive($id);
 
-    public function updateCoupon()
-    {
-        $id = $_POST['id'] ?? '';
-        $coupon_name = $_POST['coupon_name'] ?? '';
-        $coupon_discount = $_POST['coupon_discount'] ?? '';
-        $coupon_validity = $_POST['coupon_validity'] ?? '';
-        $created_at = $this->getDateTime();
+        $_SESSION['notification'] = [
+            'message' => 'In active Coupon successfully',
+            'alert-type' => 'success'
+        ];
 
-        $coupon = $this->couponService->getById($id);
-        $coupon->setCouponName($coupon_name);
-        $coupon->setCouponDiscount($coupon_discount);
-        $coupon->setCouponValidity($coupon_validity);
-        $coupon->setCreatedAt($created_at);
-
-        $this->couponService->updateCoupon($coupon);
-
-        header("Location: /admin/edit/coupon/$id?success=1");
+        header("Location: /admin/all/coupon");
         exit;
     }
 
@@ -100,7 +75,104 @@ class CouponController
     {
         $this->couponService->delete($id);
 
-        header("Location: /admin/all/coupon?success=2");
+        $_SESSION['notification'] = [
+            'message' => 'Deleted Coupon successfully',
+            'alert-type' => 'success'
+        ];
+        header("Location: /admin/all/coupon");
+        exit;
+    }
+
+    public function instructorDeleteCoupon($id)
+    {
+        $this->couponService->delete($id);
+
+        $_SESSION['notification'] = [
+            'message' => 'Deleted Coupon successfully',
+            'alert-type' => 'success'
+        ];
+        header("Location: /instructor/all/coupon");
+        exit;
+    }
+
+    public function instructorAllCoupon()
+    {
+        $email = $_SESSION['instructor']['email'] ?? '';
+        $instructor = $this->userService->getByEmail($email);
+        $coupons = $this->couponService->getAllCouponsOfInstructor($instructor->getId());
+
+        require ABSPATH . 'resources/instructor/coupon/allCoupon.php';
+    }
+
+    public function instructorAddCoupon()
+    {
+        $email = $_SESSION['instructor']['email'] ?? '';
+        $instructor = $this->userService->getByEmail($email);
+        $courses = $this->courseService->getCoursesSameInstructorId($instructor->getId());
+
+        require ABSPATH . 'resources/instructor/coupon/addCoupon.php';
+    }
+
+    public function instructorStoreCoupon()
+    {
+        $email = $_SESSION['instructor']['email'] ?? '';
+        $instructor = $this->userService->getByEmail($email);
+
+        $params = [
+            'coupon_name' => $_POST['coupon_name'],
+            'coupon_discount' => $_POST['coupon_discount'],
+            'coupon_validity' => $_POST['coupon_validity'],
+            'instructor_id' => $instructor->getId(),
+            'course_id' => $_POST['course_id'],
+            'status' => 0,
+            'created_at' => $this->getDateTime(),
+        ];
+
+        $this->couponService->saveCoupon($params);
+
+        $_SESSION['notification'] = [
+            'message' => 'Added Coupon successfully, please waiting admin active it',
+            'alert-type' => 'success'
+        ];
+
+        header("Location: /instructor/all/coupon");
+        exit;
+    }
+
+    public function instructorEditCoupon($id)
+    {
+        $email = $_SESSION['instructor']['email'] ?? '';
+        $instructor = $this->userService->getByEmail($email);
+        $coupon = $this->couponService->getById($id);
+        $courses = $this->courseService->getCoursesSameInstructorId($coupon->getInstructorId());
+
+        require ABSPATH . 'resources/instructor/coupon/editCoupon.php';
+    }
+
+    public function instructorUpdateCoupon()
+    {
+        $id = $_POST['coupon_id'] ?? '';
+        $coupon_name = $_POST['coupon_name'] ?? '';
+        $coupon_discount = $_POST['coupon_discount'] ?? '';
+        $coupon_validity = $_POST['coupon_validity'] ?? '';
+        $course_id = $_POST['course_id'] ?? '';
+        $created_at = $this->getDateTime();
+
+        $coupon = $this->couponService->getById($id);
+        $coupon->setCouponName($coupon_name);
+        $coupon->setCouponDiscount($coupon_discount);
+        $coupon->setCouponValidity($coupon_validity);
+        $coupon->setCourseId($course_id);
+        $coupon->setCreatedAt($created_at);
+
+        $this->couponService->updateCoupon($coupon);
+
+        $_SESSION['notification'] = [
+            'message' => 'Updated Coupon successfully',
+            'alert-type' => 'success'
+        ];
+
+        header("Location: /instructor/edit/coupon/$id");
         exit;
     }
 }

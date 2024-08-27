@@ -1,6 +1,6 @@
-<?php require ABSPATH . 'resources/admin/layout/sidebar.php'; ?>
+<?php require ABSPATH . 'resources/instructor/layout/sidebar.php'; ?>
 
-<?php require ABSPATH . 'resources/admin/layout/header.php'; ?>
+<?php require ABSPATH . 'resources/instructor/layout/header.php'; ?>
 
 <div class="page-wrapper">
     <div class="page-content">
@@ -15,48 +15,31 @@
                     </ol>
                 </nav>
             </div>
-            <!-- <div class="ms-auto">
+            <div class="ms-auto">
                 <div class="btn-group">
-                    <a href="/admin/add/coupon" class="btn btn-primary px-5">Add Coupon </a>
+                    <a href="<?php echo $router->generate('instructor.add.coupon'); ?>" class="btn btn-primary px-5">Add Coupon </a>
                 </div>
-            </div> -->
+            </div>
         </div>
         <!--end breadcrumb-->
 
         <div class="card">
             <div class="card-body">
                 <div class="table-responsive">
-                    <?php if (isset($_GET['success'])) {
-                        if ($_GET['success'] == 1) {
-                            echo "
-                                <div class='alert alert-success'>
-                                    Added Coupon successfully
-                                </div>
-                            ";
-                        }
-                        if ($_GET['success'] == 2) {
-                            echo "
-                                <div class='alert alert-success'>
-                                    Deleted Coupon successfully
-                                </div>
-                            ";
-                        }
-                    }
-                    ?>
                     <table id="example" class="table table-striped table-bordered" style="width:100%">
                         <thead>
                             <tr>
                                 <th>Id</th>
                                 <th>Coupon Name </th>
                                 <th>Coupon Discount</th>
-                                <th>Instructor Email</th>
                                 <th>Coupon Status</th>
                                 <th>Active</th>
+                                <th>Course Name</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php if (isset($coupons)): ?>
+                            <?php if (!empty($coupons)): ?>
                                 <?php foreach ($coupons as $key => $coupon): ?>
                                     <tr>
                                         <td>
@@ -69,16 +52,13 @@
                                             <?php echo $coupon->getCouponDiscount(); ?>%
                                         </td>
                                         <td>
-                                            <?php echo $coupon->getInstructorEmail(); ?>
-                                        </td>
-                                        <td>
                                             <?php if ($coupon->getCouponValidity() >= date('Y-m-d')): ?>
                                                 <span class="badge bg-success">Valid</span>
                                             <?php else: ?>
                                                 <span class="badge bg-danger">Invalid</span>
                                             <?php endif; ?>
                                         </td>
-                                        <td class="text-center">
+                                        <td>
                                             <?php if ($coupon->getStatus() == 1): ?>
                                                 <span class="badge bg-success">Actived</span>
                                             <?php else: ?>
@@ -86,9 +66,16 @@
                                             <?php endif; ?>
                                         </td>
                                         <td>
-                                            <a href="/admin/active/coupon/<?php echo $coupon->getId(); ?>" class="btn btn-info px-5">Active </a>
-                                            <a href="/admin/inactive/coupon/<?php echo $coupon->getId(); ?>" class="btn btn-warning px-5">Inactive </a>
-                                            <a href="/admin/destroy/coupon/<?php echo $coupon->getId(); ?>" class=" btn btn-danger px-5" onclick="return confirmDelete()">Delete </a>
+                                            <?php echo $coupon->getCourseName(); ?>
+                                        </td>
+                                        <td>
+                                            <?php if ($coupon->getStatus() == 0): ?>
+                                                <button disabled class="btn btn-info px-5">Edit </button>
+                                                <button disabled class="btn btn-danger px-5" id="delete">Delete </button>
+                                            <?php else: ?>
+                                                <a href="/instructor/edit/coupon/<?php echo $coupon->getId(); ?>" class="btn btn-info px-5">Edit </a>
+                                                <a href="/instructor/delete/coupon/<?php echo $coupon->getId(); ?>" class="btn btn-danger px-5" id="delete">Delete </a>
+                                            <?php endif; ?>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
@@ -101,31 +88,20 @@
     </div>
 </div>
 
-<div class="overlay toggle-icon"></div>
-<a href="javaScript:;" class="back-to-top"><i class='bx bxs-up-arrow-alt'></i></a>
-<?php require ABSPATH . 'resources/admin/layout/footer.php'; ?>
+<?php require ABSPATH . 'resources/instructor/layout/footer.php'; ?>
+
 </div>
 
-<?php require ABSPATH . 'resources/admin/layout/footerScript.php'; ?>
-
+<?php require ABSPATH . 'resources/instructor/layout/footerScript.php'; ?>
+<script src="<?php ABSPATH ?>/instructor/public/js/app.js"></script>
 <script>
-    $(document).ready(function() {
-        $('#example').DataTable();
-    });
+    new PerfectScrollbar(".app-container")
 </script>
-<script>
-    $(document).ready(function() {
-        var table = $('#example2').DataTable({
-            lengthChange: false,
-            buttons: ['copy', 'excel', 'pdf', 'print']
-        });
-
-        table.buttons().container()
-            .appendTo('#example2_wrapper .col-md-6:eq(0)');
-    });
+<script type="text/javascript">
+    function confirmDelete() {
+        return confirm("Are you sure? Click ok to delete !");
+    }
 </script>
-<script src="public/js/app.js"></script>
-
 </body>
 
 </html>
