@@ -28,7 +28,7 @@ class DashboardController
 
     private function getInfoHeader()
     {
-        $email = $_SESSION['emailAdmin'];
+        $email = $_SESSION['admin']['email'];
         return $this->userService->getByEmail($email);
     }
 
@@ -41,7 +41,7 @@ class DashboardController
 
     public function manageInstructor()
     {
-        $email = $_SESSION['emailAdmin'];
+        $email = $_SESSION['admin']['email'];
         $admin = $this->userService->getByEmail($email);
         $instructors = $this->userService->getInstructorByRole();
 

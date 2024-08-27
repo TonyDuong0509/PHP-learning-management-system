@@ -36,7 +36,7 @@ class OrderController
 
     private function getInfoHeader()
     {
-        $email = $_SESSION['emailAdmin'];
+        $email = $_SESSION['admin']['email'];
         return $this->userService->getByEmail($email);
     }
 
@@ -57,7 +57,21 @@ class OrderController
         require ABSPATH . 'resources/admin/orders/orderDetails.php';
     }
 
-    public function pendingConfirm($id)
+    public function pendingConfirmByInstructor($id)
+    {
+        $payment = $this->paymentsService->getById($id);
+        $this->paymentsService->updateStatus($payment);
+
+        $_SESSION['notification'] = [
+            'message' => "Order Confirmed successfully",
+            'alert-type' => 'success',
+        ];
+
+        header("Location: /instructor/all/order");
+        exit;
+    }
+
+    public function pendingConfirmByAdmin($id)
     {
         $payment = $this->paymentsService->getById($id);
         $this->paymentsService->updateStatus($payment);
@@ -81,7 +95,7 @@ class OrderController
 
     private function getInstructorInSidebar()
     {
-        $email = $_SESSION['emailInstructor'];
+        $email = $_SESSION['instructor']['email'];
         return $this->userService->getByEmail($email);
     }
 
@@ -102,7 +116,7 @@ class OrderController
 
     public function myCourse()
     {
-        $email = $_SESSION['emailUser'];
+        $email = $_SESSION['user']['email'];
         $user = $this->userService->getByEmail($email);
         $myCourse = $this->orderService->getOrdersLatestByCourseIdAndUserId($user->getId());
 
@@ -111,7 +125,7 @@ class OrderController
 
     public function courseView($course_id)
     {
-        $email = $_SESSION['emailUser'];
+        $email = $_SESSION['user']['email'];
         $user = $this->userService->getByEmail($email);
         $course = $this->orderService->getCourseInOrderByUserIdAndCourseId($course_id, $user->getId());
         $sections = $this->courseSectionService->getSectionsByCourseId($course_id);

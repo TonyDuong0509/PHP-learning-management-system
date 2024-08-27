@@ -12,7 +12,7 @@
             </div><!-- end col-lg-6 -->
             <div class="col-lg-6">
 
-                <?php if (isset($_SESSION['emailUser']) && !empty($_SESSION['emailUser'])) : ?>
+                <?php if (isset($_SESSION['user']['name']) && !empty($_SESSION['user']['name'])) : ?>
                     <div class="header-widget d-flex flex-wrap align-items-center justify-content-end">
                         <ul class="generic-list-item d-flex flex-wrap align-items-center fs-14 border-left border-left-gray pl-3 ml-3">
                             <li class="d-flex align-items-center pr-3 mr-3 border-right border-right-gray"><i class="la la-sign-in mr-1"></i><a href="<?php echo $router->generate('user.dashboard'); ?>">My Dashboard</a></li>
@@ -20,7 +20,7 @@
                         </ul>
                     </div><!-- end header-widget -->
 
-                <?php elseif (!isset($_SESSION['emailUser']) && empty($_SESSION['emailUser'])) : ?>
+                <?php elseif (!isset($_SESSION['user']['email']) && empty($_SESSION['user']['email'])) : ?>
 
                     <div class="header-widget d-flex flex-wrap align-items-center justify-content-end">
                         <ul class="generic-list-item d-flex flex-wrap align-items-center fs-14 border-left border-left-gray pl-3 ml-3">

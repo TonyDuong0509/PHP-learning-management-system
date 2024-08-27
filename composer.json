@@ -1,7 +1,8 @@
 {
   "require": {
     "altorouter/altorouter": "1.1.0",
-    "phpmailer/phpmailer": "^6.9"
+    "phpmailer/phpmailer": "^6.9",
+    "stripe/stripe-php": "^15.7"
   },
   "autoload": {
     "psr-4": {

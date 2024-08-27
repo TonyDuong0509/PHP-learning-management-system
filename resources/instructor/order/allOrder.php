@@ -59,7 +59,11 @@ $router = $router;
                                             <?php echo $item->getPayment()->getPaymentType(); ?>
                                         </td>
                                         <td>
-                                            <span class="badge bg-success"><?php echo $item->getPayment()->getStatus(); ?></span>
+                                            <?php if ($item->getPayment()->getStatus() == 'confirm'): ?>
+                                                <span class="badge bg-success"><?php echo $item->getPayment()->getStatus(); ?></span>
+                                            <?php else: ?>
+                                                <span class="badge bg-warning"><?php echo $item->getPayment()->getStatus(); ?></span>
+                                            <?php endif; ?>
                                         </td>
                                         <td>
                                             <a href="<?php echo $router->generate('instructor.order.details', ['payment_id' => $item->getPayment()->getId()]); ?>" class="btn btn-info" title="Edit"><i class="lni lni-eye"></i> </a>

@@ -24,6 +24,11 @@ class CouponService
         return $this->couponRepository->fetchAll($condition);
     }
 
+    public function getAllCouponsOfInstructor($instructor_id)
+    {
+        return $this->couponRepository->getAllCouponsOfInstructor($instructor_id);
+    }
+
     public function getById($id)
     {
         return $this->couponRepository->getById($id);
@@ -32,6 +37,16 @@ class CouponService
     public function updateCoupon($coupon)
     {
         return $this->couponRepository->update($coupon);
+    }
+
+    public function active($id)
+    {
+        return $this->couponRepository->active(1, $id);
+    }
+
+    public function inactive($id)
+    {
+        return $this->couponRepository->active(0, $id);
     }
 
     public function delete($id)

@@ -25,6 +25,7 @@
     <link rel="stylesheet" href="<?php ABSPATH ?>/public/frontend/css/fancybox.css">
     <link rel="stylesheet" href="<?php ABSPATH ?>/public/frontend/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <script src="https://js.stripe.com/v3/"></script>
     <!-- end inject -->
 </head>
 

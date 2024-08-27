@@ -42,7 +42,7 @@
                                         <p class="mb-0">Please fill the below details to create your account</p>
                                     </div>
                                     <div class="form-body">
-                                        <form action="?c=instructor&a=register" method="POST" class="row g-3">
+                                        <form action="<?php echo $router->generate('instructor.register'); ?>" method="POST" class="row g-3">
                                             <div class="col-12">
                                                 <label for="inputName" class="form-label">Full Name</label>
                                                 <input type="text" class="form-control" id="inputName" required placeholder="..." name="name">

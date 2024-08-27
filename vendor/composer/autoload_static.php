@@ -7,9 +7,19 @@ namespace Composer\Autoload;
 class ComposerStaticInitfdb55ab3a826cc81720434dd90eab926
 {
     public static $prefixLengthsPsr4 = array (
+        'S' => 
+        array (
+            'Stripe\\' => 7,
+        ),
         'P' => 
         array (
+            'Psr\\Http\\Server\\' => 16,
+            'Psr\\Http\\Message\\' => 17,
             'PHPMailer\\PHPMailer\\' => 20,
+        ),
+        'I' => 
+        array (
+            'Idealo\\Middleware\\' => 18,
         ),
         'A' => 
         array (
@@ -20,9 +30,26 @@ class ComposerStaticInitfdb55ab3a826cc81720434dd90eab926
     );
 
     public static $prefixDirsPsr4 = array (
+        'Stripe\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/stripe/stripe-php/lib',
+        ),
+        'Psr\\Http\\Server\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/http-server-handler/src',
+            1 => __DIR__ . '/..' . '/psr/http-server-middleware/src',
+        ),
+        'Psr\\Http\\Message\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/http-message/src',
+        ),
         'PHPMailer\\PHPMailer\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
+        ),
+        'Idealo\\Middleware\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/idealo/php-middleware-stack/src',
         ),
         'App\\Services\\' => 
         array (

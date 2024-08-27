@@ -13,6 +13,7 @@
 <script src="<?php ABSPATH ?>/public/frontend/js/emojionearea.min.js"></script>
 <script src="<?php ABSPATH ?>/public/frontend/js/animated-skills.js"></script>
 <script src="<?php ABSPATH ?>/public/frontend/js/jquery.MultiFile.min.js"></script>
+<script src="<?php ABSPATH ?>/public/frontend/js/jquery.lazy.min.js"></script>
 <script src="<?php ABSPATH ?>/public/frontend/js/main.js"></script>
 <script src="<?php ABSPATH ?>/public/frontend/js/script.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

@@ -11,6 +11,7 @@ use App\Services\OrdersService;
 use App\Services\PaymentsService;
 use App\Services\SubCategoryService;
 use App\Services\UserService;
+use Stripe;
 
 class CartController
 {
@@ -207,7 +208,7 @@ class CartController
 
     public function checkoutCreate()
     {
-        $email = $_SESSION['emailUser'] ?? '';
+        $email = $_SESSION['user']['email'] ?? '';
         $user = $this->userService->getByEmail($email);
 
         if ($user) {
@@ -243,12 +244,124 @@ class CartController
             $total_amount = $this->cartService->total();
         }
 
+        $data = array();
+        $data['name'] = $_POST['name'];
+        $data['email'] = $_POST['email'];
+        $data['course_title'] = $_POST['course_title'];
+        $cartTotal = $this->cartService->total();
+        $carts = $this->cartService->getAll();
+
+        if ($_POST['cash_delivery'] == 'stripe') {
+            header("Location: /stripe-payment");
+            exit;
+        } elseif ($_POST['cash_delivery'] == 'handcash') {
+            $paramsPayment = [
+                'name' => $_POST['name'],
+                'email' => $_POST['email'],
+                'cash_delivery' => $_POST['cash_delivery'],
+                'total_amount' => $total_amount,
+                'payment_type' => 'Direct Payment',
+                'invoice_no' => 'EOS' . mt_rand(10000000, 99999999),
+                'order_date' => date_create('now')->format('d F Y'),
+                'order_month' => date_create('now')->format('F'),
+                'order_year' => date_create('now')->format('Y'),
+                'status' => 'pending',
+                'created_at' => date('Y-m-d H:i:s'),
+            ];
+
+            $paymentId = $this->paymentService->savePayment($paramsPayment);
+            $payment = $this->paymentService->getById($paymentId);
+            $email = $_SESSION['user']['email'] ?? '';
+            $user = $this->userService->getByEmail($email);
+
+            foreach ($_POST['course_name'] as $key => $course_name) {
+                $existingOrder = $this->orderService->checkExist($user->getId(), $_POST['course_id'][$key]);
+                if ($existingOrder) {
+                    $_SESSION['notification'] = [
+                        'message' => 'You Have already enrolled in this course, please remove it from cart',
+                        'alert-type' => 'error',
+                    ];
+                    header("location: /checkout");
+                    exit;
+                }
+
+                $paramsOrder = [
+                    'payment_id' => $payment->getId(),
+                    'user_id' => $user->getId(),
+                    'instructor_id' => $_POST['instructorId'][$key],
+                    'course_id' => $_POST['course_id'][$key],
+                    'course_title' => $course_name,
+                    'price' => $_POST['price'][$key],
+                    'created_at' => date('Y-m-d H:i:s'),
+                ];
+
+                $this->orderService->saveOrder($paramsOrder);
+            }
+            unset($_SESSION['coupon']);
+            $this->cartService->deleteAll();
+
+            $to = $_POST['email'];
+            $subject = "Aduca - Payment successfully !";
+            $name = $_POST['name'];
+            $website = get_domain();
+            $content = "
+            Hello $name, <br>
+            This email from Aduca - E-Learning system. <br>
+            We want to say thank you very much because your support to us. <br>
+            If have some problem with our courses. Please send back email for us. We will support you. <br>
+            Thank you very much !
+            -----------------------<br>
+            Email from $website
+            ";
+
+            $this->emailService->send($to, $subject, $content);
+
+            $_SESSION['notification'] = [
+                'message' => 'Cash payment submit successfully',
+                'alert-type' => 'success',
+            ];
+
+            header("Location: /");
+            exit;
+        }
+    }
+
+    public function stripePayment()
+    {
+        $email = $_SESSION['user']['email'];
+        $user = $this->userService->getByEmail($email);
+
+        require ABSPATH . 'resources/user/payment/stripe.php';
+    }
+
+    public function stripeOrder()
+    {
+        $email = $_SESSION['user']['email'];
+        $user = $this->userService->getByEmail($email);
+
+        if (isset($_SESSION['coupon']) || !empty($_SESSION['coupon'])) {
+            $total_amount = $_SESSION['coupon']['total_amount'];
+        } else {
+            $total_amount = round($this->cartService->total());
+        }
+
+        \Stripe\Stripe::setApiKey(STRIPE_SECRET_KEY);
+        $token = $_POST['stripeToken'];
+
+        $charge = \Stripe\Charge::create([
+            'amount' => $total_amount * 100,
+            'currency' => 'usd',
+            'description' => 'Lms',
+            'source' => $token,
+            'metadata' => ['order_id' => '3434'],
+        ]);
+
         $paramsPayment = [
-            'name' => $_POST['name'],
-            'email' => $_POST['email'],
-            'cash_delivery' => $_POST['cash_delivery'],
+            'name' => $user->getName(),
+            'email' => $email,
+            'cash_delivery' => 'stripe',
             'total_amount' => $total_amount,
-            'payment_type' => 'Direct Payment',
+            'payment_type' => 'Stripe',
             'invoice_no' => 'EOS' . mt_rand(10000000, 99999999),
             'order_date' => date_create('now')->format('d F Y'),
             'order_month' => date_create('now')->format('F'),
@@ -257,35 +370,27 @@ class CartController
             'created_at' => date('Y-m-d H:i:s'),
         ];
 
-        $paymentId = $this->paymentService->savePayment($paramsPayment);
-        $payment = $this->paymentService->getById($paymentId);
-        $email = $_SESSION['emailUser'] ?? '';
-        $user = $this->userService->getByEmail($email);
+        $payment_id = $this->paymentService->savePayment($paramsPayment);
 
-        foreach ($_POST['course_name'] as $key => $course_name) {
-            $existingOrder = $this->orderService->checkExist($user->getId(), $_POST['course_id'][$key]);
-            if ($existingOrder) {
-                header("location: /checkout?error=1");
-                exit;
-            }
-
+        $carts = $this->cartService->getAll();
+        foreach ($carts as $cart) {
             $paramsOrder = [
-                'payment_id' => $payment->getId(),
+                'payment_id' => $payment_id,
                 'user_id' => $user->getId(),
-                'instructor_id' => $_POST['instructorId'][$key],
-                'course_id' => $_POST['course_id'][$key],
-                'course_title' => $course_name,
-                'price' => $_POST['price'][$key],
+                'instructor_id' => $cart['options']['instructorId'],
+                'course_id' => $cart['course_id'],
+                'course_title' => $cart['name'],
+                'price' => $cart['price'],
                 'created_at' => date('Y-m-d H:i:s'),
             ];
-
             $this->orderService->saveOrder($paramsOrder);
         }
+        unset($_SESSION['coupon']);
         $this->cartService->deleteAll();
 
         $to = $_POST['email'];
         $subject = "Aduca - Payment successfully !";
-        $name = $_POST['name'];
+        $name = $user->getName();
         $website = get_domain();
         $content = "
             Hello $name, <br>
@@ -297,18 +402,14 @@ class CartController
             Email from $website
             ";
 
-        if ($_POST['cash_delivery'] == 'stripe') {
-            echo "Stripe";
-        } else {
-            $this->emailService->send($to, $subject, $content);
+        $this->emailService->send($to, $subject, $content);
 
-            $_SESSION['notification'] = [
-                'message' => 'Payment Successfully. Thank you very much !',
-                'alert-type' => 'success',
-            ];
+        $_SESSION['notification'] = [
+            'message' => 'Stripe Payment submit successfully',
+            'alert-type' => 'success',
+        ];
 
-            header("location: /");
-            exit;
-        }
+        header("Location: /");
+        exit;
     }
 }

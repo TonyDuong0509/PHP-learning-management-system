@@ -10,7 +10,7 @@ $serviceContainer = new ServiceContainer();
 $router->map('GET', '/admin/dashboard', function () use ($serviceContainer) {
     $controller = $serviceContainer->resolve(App\Controllers\Admin\DashboardController::class);
     $controller->index();
-});
+}, 'admin.dashboard');
 
 $router->map('GET', '/admin/login/form', function () use ($serviceContainer) {
     $controller = $serviceContainer->resolve(App\Controllers\Admin\AdminController::class);
@@ -37,10 +37,15 @@ $router->map('GET', '/admin/order/details/[i:id]', function ($id) use ($serviceC
     $controller->adminOrderDetails($id);
 }, 'admin.order.details');
 
-$router->map('GET', '/pending-confirm/[i:id]', function ($id) use ($serviceContainer) {
+$router->map('GET', '/pending-confirm-instructor/[i:id]', function ($id) use ($serviceContainer) {
     $controller = $serviceContainer->resolve(App\Controllers\Admin\OrderController::class);
-    $controller->pendingConfirm($id);
-}, 'pending-confirm');
+    $controller->pendingConfirmByInstructor($id);
+}, 'pending-confirm-instructor');
+
+$router->map('GET', '/pending-confirm-admin/[i:id]', function ($id) use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\OrderController::class);
+    $controller->pendingConfirmByAdmin($id);
+}, 'pending-confirm-admin');
 
 $router->map('GET', '/admin/confirm/order', function () use ($serviceContainer) {
     $controller = $serviceContainer->resolve(App\Controllers\Admin\OrderController::class);
@@ -170,25 +175,15 @@ $router->map('GET', '/admin/all/coupon', function () use ($serviceContainer) {
     $controller->adminAllCoupon();
 });
 
-$router->map('GET', '/admin/add/coupon', function () use ($serviceContainer) {
+$router->map('GET', '/admin/active/coupon/[i:id]', function ($id) use ($serviceContainer) {
     $controller = $serviceContainer->resolve(App\Controllers\Admin\CouponController::class);
-    $controller->adminAddCoupon();
+    $controller->activeCoupon($id);
 });
 
-$router->map('POST', '/admin/store/coupon', function () use ($serviceContainer) {
+$router->map('GET', '/admin/inactive/coupon/[i:id]', function ($id) use ($serviceContainer) {
     $controller = $serviceContainer->resolve(App\Controllers\Admin\CouponController::class);
-    $controller->storeCoupon();
-}, 'admin.store.coupon');
-
-$router->map('GET', '/admin/edit/coupon/[i:id]', function ($id) use ($serviceContainer) {
-    $controller = $serviceContainer->resolve(App\Controllers\Admin\CouponController::class);
-    $controller->editCoupon($id);
+    $controller->inactiveCoupon($id);
 });
-
-$router->map('POST', '/admin/update/coupon', function () use ($serviceContainer) {
-    $controller = $serviceContainer->resolve(App\Controllers\Admin\CouponController::class);
-    $controller->updateCoupon();
-}, 'admin.update.coupon');
 
 $router->map('GET', '/admin/destroy/coupon/[i:id]', function ($id) use ($serviceContainer) {
     $controller = $serviceContainer->resolve(App\Controllers\Admin\CouponController::class);
@@ -263,10 +258,20 @@ $router->map('GET', '/register', function () use ($serviceContainer) {
     $controller->registerForm();
 }, 'register');
 
+$router->map('POST', '/user-register', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\User\UserController::class);
+    $controller->register();
+}, 'user.register');
+
 $router->map('GET', '/login', function () use ($serviceContainer) {
     $controller = $serviceContainer->resolve(App\Controllers\User\UserController::class);
     $controller->loginForm();
 }, 'login');
+
+$router->map('POST', '/user-login', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\User\UserController::class);
+    $controller->login();
+}, 'user.login');
 
 $router->map('GET', '/logout', function () use ($serviceContainer) {
     $controller = $serviceContainer->resolve(App\Controllers\User\UserController::class);
@@ -367,7 +372,7 @@ $router->map('GET', '/instructor/register/form', function () use ($serviceContai
 $router->map('POST', '/instructor/register', function () use ($serviceContainer) {
     $controller = $serviceContainer->resolve(App\Controllers\Instructor\InstructorController::class);
     $controller->register();
-});
+}, 'instructor.register');
 
 $router->map('GET', '/instructor/login/form', function () use ($serviceContainer) {
     $controller = $serviceContainer->resolve(App\Controllers\Instructor\InstructorController::class);
@@ -522,5 +527,76 @@ $router->map('GET', '/remove-wishlist/[i:id]', function ($id) use ($serviceConta
 });
 
 
+// Stripe routes
+$router->map('GET', '/stripe-payment', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\User\CartController::class);
+    $controller->stripePayment();
+});
+
+$router->map('POST', '/stripe-order', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\User\CartController::class);
+    $controller->stripeOrder();
+}, 'stripe.order');
+
+
+// Report routes
+$router->map('GET', '/report/view', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\ReportController::class);
+    $controller->reportView();
+});
+
+$router->map('POST', '/search/by/date', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\ReportController::class);
+    $controller->searchByDate();
+}, 'admin.search.by.date');
+
+$router->map('POST', '/search/by/month', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\ReportController::class);
+    $controller->searchByMonth();
+}, 'admin.search.by.month');
+
+$router->map('POST', '/search/by/year', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\ReportController::class);
+    $controller->searchByYear();
+}, 'admin.search.by.year');
+
+
+// Instructor coupon routes
+$router->map('GET', '/instructor/all/coupon', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\CouponController::class);
+    $controller->instructorAllCoupon();
+});
+
+$router->map('GET', '/instructor/add/coupon', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\CouponController::class);
+    $controller->instructorAddCoupon();
+}, 'instructor.add.coupon');
+
+$router->map('POST', '/instructor/store/coupon', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\CouponController::class);
+    $controller->instructorStoreCoupon();
+}, 'instructor.store.coupon');
+
+$router->map('GET', '/instructor/edit/coupon/[i:id]', function ($id) use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\CouponController::class);
+    $controller->instructorEditCoupon($id);
+}, 'instructor.edit.coupon');
+
+$router->map('POST', '/instructor/update/coupon', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\CouponController::class);
+    $controller->instructorUpdateCoupon();
+}, 'instructor.update.coupon');
+
+$router->map('GET', '/instructor/delete/coupon/[i:id]', function ($id) use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\CouponController::class);
+    $controller->instructorDeleteCoupon($id);
+}, 'instructor.delete.coupon');
+
+
+// Review routes
+$router->map('POST', '/store/review', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\ReviewController::class);
+    $controller->storeReview();
+}, 'store.review');
+
 $match = $router->match();
-$routeName = is_array($match) ? ($match['name'] ?? null) : null;

@@ -15,11 +15,11 @@
                     </ol>
                 </nav>
             </div>
-            <div class="ms-auto">
+            <!-- <div class="ms-auto">
                 <div class="btn-group">
                     <a href="/admin/add/coupon" class="btn btn-primary px-5">Add Coupon </a>
                 </div>
-            </div>
+            </div> -->
         </div>
         <!--end breadcrumb-->
 
@@ -49,8 +49,9 @@
                                 <th>Id</th>
                                 <th>Coupon Name </th>
                                 <th>Coupon Discount</th>
-                                <th>Coupon Validity</th>
-                                <th>Coupon Status </th>
+                                <th>Instructor Email</th>
+                                <th>Coupon Status</th>
+                                <th>Active</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -65,19 +66,28 @@
                                             <?php echo $coupon->getCouponName(); ?>
                                         </td>
                                         <td>
-                                            <?php echo $coupon->getCouponDiscount(); ?>%</td>
-                                        <td>
-                                            <?php echo $coupon->getCouponValidity(); ?>
+                                            <?php echo $coupon->getCouponDiscount(); ?>%
                                         </td>
-                                        <td class="text-center">
-                                            <?php if ($coupon->getStatus() == 1): ?>
+                                        <td>
+                                            <?php echo $coupon->getInstructorEmail(); ?>
+                                        </td>
+                                        <td>
+                                            <?php if ($coupon->getCouponValidity() >= date('Y-m-d')): ?>
                                                 <span class="badge bg-success">Valid</span>
                                             <?php else: ?>
                                                 <span class="badge bg-danger">Invalid</span>
                                             <?php endif; ?>
                                         </td>
+                                        <td class="text-center">
+                                            <?php if ($coupon->getStatus() == 1): ?>
+                                                <span class="badge bg-success">Actived</span>
+                                            <?php else: ?>
+                                                <span class="badge bg-danger">Inactive</span>
+                                            <?php endif; ?>
+                                        </td>
                                         <td>
-                                            <a href="/admin/edit/coupon/<?php echo $coupon->getId(); ?>" class="btn btn-info px-5">Edit </a>
+                                            <a href="/admin/active/coupon/<?php echo $coupon->getId(); ?>" class="btn btn-info px-5">Active </a>
+                                            <a href="/admin/inactive/coupon/<?php echo $coupon->getId(); ?>" class="btn btn-warning px-5">Inactive </a>
                                             <a href="/admin/destroy/coupon/<?php echo $coupon->getId(); ?>" class=" btn btn-danger px-5" onclick="return confirmDelete()">Delete </a>
                                         </td>
                                     </tr>

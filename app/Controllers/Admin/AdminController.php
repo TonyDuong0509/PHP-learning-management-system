@@ -16,7 +16,7 @@ class AdminController
 
     private function getInfoHeader()
     {
-        $email = $_SESSION['emailAdmin'];
+        $email = $_SESSION['admin']['email'];
         return $this->userService->getByEmail($email);
     }
 
@@ -31,6 +31,15 @@ class AdminController
         $password = $_POST['password'] ?? '';
 
         $user = $this->userService->getByEmail($email);
+
+        if ($user->getRole() !== 'admin') {
+            $_SESSION['notification'] = [
+                'message' => 'This account is not authorized, please input correct account',
+                'alert-type' => 'error',
+            ];
+            header("Location: /admin/login/form");
+            exit;
+        }
 
         if (!$user) {
             $_SESSION['notification'] = [
@@ -50,8 +59,11 @@ class AdminController
             exit;
         }
 
-        $_SESSION['emailAdmin'] = $user->getEmail();
-        $_SESSION['nameAdmin'] = $user->getName();
+        $_SESSION['admin'] = [
+            'email' => $email,
+            'name' => $user->getName(),
+            'role' => $user->getRole(),
+        ];
 
         $_SESSION['notification'] = [
             'message' => 'Sign in successfully !',
@@ -63,7 +75,7 @@ class AdminController
 
     public function logout()
     {
-        unset($_SESSION['emailAdmin']);
+        unset($_SESSION['admin']);
         header("Location: /admin/login/form");
         exit;
     }

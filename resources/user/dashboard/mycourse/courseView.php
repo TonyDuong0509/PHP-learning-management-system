@@ -370,51 +370,55 @@
 
                                             <div class="lecture-overview-item mt-0">
                                                 <div class="question-list-item">
-                                                    <?php foreach ($questionsOfCourse as $question): ?>
-                                                        <div class="media media-card border-bottom border-bottom-gray py-4 px-3">
-                                                            <div class="media-img rounded-full flex-shrink-0 avatar-sm">
-                                                                <img class="rounded-full" src="/<?php echo $question->getUser()->getPhoto(); ?>" alt="User image">
-                                                            </div>
-                                                            <div class="media-body">
-                                                                <div class="d-flex align-items-center justify-content-between">
-                                                                    <div class="question-meta-content">
-                                                                        <a href="javascript:void(0)" class="d-block">
-                                                                            <h5 class="fs-16 pb-1"><?php echo $question->getSubject(); ?></h5>
-                                                                            <p class="text-truncate fs-15 text-gray">
-                                                                                <?php echo $question->getQuestion(); ?>
-                                                                            </p>
-                                                                        </a>
-                                                                    </div>
-                                                                </div>
-                                                                <p class="meta-tags pt-1 fs-13">
-                                                                    <a href="#"><?php echo $question->getCreatedAt(); ?></a>
-                                                                </p>
-                                                            </div>
-                                                        </div>
-
-                                                        <?php foreach ($replies as $rep): ?>
+                                                    <?php if (!empty($questionsOfCourse)): ?>
+                                                        <?php foreach ($questionsOfCourse as $question): ?>
                                                             <div class="media media-card border-bottom border-bottom-gray py-4 px-3">
                                                                 <div class="media-img rounded-full flex-shrink-0 avatar-sm">
-                                                                    <img class="rounded-full" src="/<?php echo $rep->getInstructor()->getPhoto(); ?>" alt="User image">
+                                                                    <img class="rounded-full" src="/<?php echo $question->getUser()->getPhoto(); ?>" alt="User image">
                                                                 </div>
                                                                 <div class="media-body">
                                                                     <div class="d-flex align-items-center justify-content-between">
                                                                         <div class="question-meta-content">
                                                                             <a href="javascript:void(0)" class="d-block">
-                                                                                <h5 class="fs-16 pb-1"><?php echo $rep->getInstructor()->getName(); ?></h5>
+                                                                                <h5 class="fs-16 pb-1"><?php echo $question->getSubject(); ?></h5>
                                                                                 <p class="text-truncate fs-15 text-gray">
-                                                                                    <?php echo $rep->getQuestion(); ?>
+                                                                                    <?php echo $question->getQuestion(); ?>
                                                                                 </p>
                                                                             </a>
                                                                         </div>
                                                                     </div>
                                                                     <p class="meta-tags pt-1 fs-13">
-                                                                        <a href="#"><?php echo $rep->getCreatedAt(); ?></a>
+                                                                        <a href="#"><?php echo $question->getCreatedAt(); ?></a>
                                                                     </p>
                                                                 </div>
                                                             </div>
+
+                                                            <?php if (!empty($replies)): ?>
+                                                                <?php foreach ($replies as $rep): ?>
+                                                                    <div class="media media-card border-bottom border-bottom-gray py-4 px-3">
+                                                                        <div class="media-img rounded-full flex-shrink-0 avatar-sm">
+                                                                            <img class="rounded-full" src="/<?php echo $rep->getInstructor()->getPhoto(); ?>" alt="User image">
+                                                                        </div>
+                                                                        <div class="media-body">
+                                                                            <div class="d-flex align-items-center justify-content-between">
+                                                                                <div class="question-meta-content">
+                                                                                    <a href="javascript:void(0)" class="d-block">
+                                                                                        <h5 class="fs-16 pb-1"><?php echo $rep->getInstructor()->getName(); ?></h5>
+                                                                                        <p class="text-truncate fs-15 text-gray">
+                                                                                            <?php echo $rep->getQuestion(); ?>
+                                                                                        </p>
+                                                                                    </a>
+                                                                                </div>
+                                                                            </div>
+                                                                            <p class="meta-tags pt-1 fs-13">
+                                                                                <a href="#"><?php echo $rep->getCreatedAt(); ?></a>
+                                                                            </p>
+                                                                        </div>
+                                                                    </div>
+                                                                <?php endforeach; ?>
+                                                            <?php endif; ?>
                                                         <?php endforeach; ?>
-                                                    <?php endforeach; ?>
+                                                    <?php endif; ?>
                                                 </div>
                                                 <div class="question-btn-box pt-35px text-center">
                                                     <button class="btn theme-btn theme-btn-transparent w-100" type="button">See More</button>

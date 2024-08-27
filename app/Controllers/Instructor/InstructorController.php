@@ -15,7 +15,7 @@ class InstructorController
 
     public function dashboard()
     {
-        $email = $_SESSION['emailInstructor'];
+        $email = $_SESSION['instructor']['email'];
 
         $instructor = $this->userService->getByEmail($email);
 
@@ -66,6 +66,15 @@ class InstructorController
 
         $user = $this->userService->getByEmail($email);
 
+        if ($user->getRole() !== 'instructor') {
+            $_SESSION['notification'] = [
+                'message' => 'This account is not authorized, please try correct account',
+                'alert-type' => 'error',
+            ];
+            header("Location: /instructor/login/form");
+            exit;
+        }
+
         if (!$user) {
             $_SESSION['notification'] = [
                 'message' => 'User not exist, please try again !',
@@ -84,9 +93,12 @@ class InstructorController
             exit;
         }
 
-        $_SESSION['emailInstructor'] = $user->getEmail();
-        $_SESSION['nameInstructor'] = $user->getName();
-        $_SESSION['idInstructor'] = $user->getId();
+        $_SESSION['instructor'] = [
+            'email' => $email,
+            'name' => $user->getName(),
+            'role' => $user->getRole(),
+            'id' => $user->getId(),
+        ];
 
         $_SESSION['notification'] = [
             'message' => 'Sign in successfully',
@@ -98,7 +110,7 @@ class InstructorController
 
     public function logout()
     {
-        unset($_SESSION['emailInstructor']);
+        unset($_SESSION['instructor']['email']);
         header("Location: /instructor/login/form");
         exit;
     }
@@ -112,7 +124,7 @@ class InstructorController
 
     public function updateProfile()
     {
-        $email = $_SESSION['emailInstructor'] ?? '';
+        $email = $_SESSION['instructor']['email'] ?? '';
         $instructor = $this->userService->getByEmail($email);
 
         $old_image = $_POST['old_photo'] ?? '';
@@ -144,7 +156,7 @@ class InstructorController
 
     public function changePassword()
     {
-        $email = $_SESSION['emailInstructor'] ?? '';
+        $email = $_SESSION['instructor']['email'] ?? '';
         $instructor = $this->userService->getByEmail($email);
 
         $old_password = $_POST['old_password'] ?? '';

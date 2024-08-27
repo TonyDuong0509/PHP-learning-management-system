@@ -22,7 +22,7 @@ class QuestionController
 
     private function getInstructorInSidebar()
     {
-        $email = $_SESSION['emailInstructor'];
+        $email = $_SESSION['instructor']['email'];
         return $this->userService->getByEmail($email);
     }
 
@@ -36,7 +36,7 @@ class QuestionController
     {
         $course_id = $_POST['course_id'] ?? '';
         $instructor_id = $_POST['instructor_id'] ?? '';
-        $email = $_SESSION['emailUser'];
+        $email = $_SESSION['user']['email'];
         $user = $this->userService->getByEmail($email);
 
         $params = [

@@ -335,10 +335,10 @@ $router = $router;
                     <img src="/<?php echo $instructor->getPhoto() ?? 'public/upload/no_image.png'; ?>" class="user-img" alt="user avatar">
                     <div class="user-info">
                         <p class="user-name mb-0">
-                            <?php echo isset($_SESSION['nameInstructor']) ? $_SESSION['nameInstructor'] : '' ?>
+                            <?php echo isset($_SESSION['instructor']['name']) ? $_SESSION['instructor']['name'] : '' ?>
                         </p>
                         <p class="designattion mb-0">
-                            <?php echo isset($_SESSION['emailInstructor']) ? $_SESSION['emailInstructor'] : '' ?>
+                            <?php echo isset($_SESSION['instructor']['email']) ? $_SESSION['instructor']['email'] : '' ?>
                         </p>
                     </div>
                 </a>
