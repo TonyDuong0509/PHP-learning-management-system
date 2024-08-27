@@ -592,4 +592,11 @@ $router->map('GET', '/instructor/delete/coupon/[i:id]', function ($id) use ($ser
     $controller->instructorDeleteCoupon($id);
 }, 'instructor.delete.coupon');
 
+
+// Review routes
+$router->map('POST', '/store/review', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\ReviewController::class);
+    $controller->storeReview();
+}, 'store.review');
+
 $match = $router->match();

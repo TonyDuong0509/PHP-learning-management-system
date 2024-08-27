@@ -45,3 +45,6 @@ $serviceContainer->add(App\Services\PaymentsService::class, new App\Services\Pay
 
 $serviceContainer->add(App\Repositories\Interfaces\QuestionsRepositoryInterface::class, new App\Repositories\QuestionsRepository());
 $serviceContainer->add(App\Services\QuestionsService::class, new App\Services\QuestionsService($serviceContainer->resolve(App\Repositories\Interfaces\QuestionsRepositoryInterface::class)));
+
+$serviceContainer->add(App\Repositories\Interfaces\ReviewRepositoryInterface::class, new App\Repositories\ReviewRepository());
+$serviceContainer->add(App\Services\ReviewService::class, new App\Services\ReviewService($serviceContainer->resolve(App\Repositories\Interfaces\ReviewRepositoryInterface::class)));

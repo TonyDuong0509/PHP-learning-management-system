@@ -103,11 +103,19 @@ class UserController
             'role' => $user->getRole(),
         ];
 
+        if (isset($_SESSION['redirect_after_login'])) {
+            $redirectUrl = $_SESSION['redirect_after_login'];
+            unset($_SESSION['redirect_after_login']);
+        } else {
+            $redirectUrl = '/login';
+        }
+
         $_SESSION['notification'] = [
             'message' => 'Sign in successfully',
             'alert-type' => 'success',
         ];
-        header("Location: /");
+
+        header("Location: " . $redirectUrl);
         exit;
     }
 
