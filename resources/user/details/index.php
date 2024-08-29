@@ -68,7 +68,8 @@
                                 <span class="la la-star"></span>
                             <?php endif; ?>
                         </div>
-                        <span class="student-total pl-2">540,815 students</span>
+                        <span class="rating-total pl-1"><?php echo count($reviews); ?> (ratings)</span>
+                        <span class="student-total pl-2"><?php echo count($enrollmentCount); ?> (students)</span>
                     </div>
                 </div><!-- end d-flex -->
                 <p class="pt-2 pb-1">Created by <a href="<?php echo $router->generate('instructor.details', ['id' => $course->getInstructorId()]); ?>" class="text-color hover-underline"><?php echo $instructor->getName(); ?></a></p>
@@ -255,76 +256,58 @@
                         <div class="feedback-wrap">
                             <div class="media media-card align-items-center">
                                 <div class="review-rating-summary">
-                                    <span class="stats-average__count">4.6</span>
+                                    <span class="stats-average__count"><?php echo $averageRating; ?></span>
                                     <div class="rating-wrap pt-1">
                                         <div class="review-stars">
-                                            <span class="la la-star"></span>
-                                            <span class="la la-star"></span>
-                                            <span class="la la-star"></span>
-                                            <span class="la la-star"></span>
-                                            <span class="la la-star-half-alt"></span>
+
+                                            <?php if ($averageRating == 0): ?>
+                                                <span class="la la-star-o"></span>
+                                                <span class="la la-star-o"></span>
+                                                <span class="la la-star-o"></span>
+                                                <span class="la la-star-o"></span>
+                                                <span class="la la-star-o"></span>
+
+                                            <?php elseif ($averageRating == 1 || $averageRating < 2): ?>
+                                                <span class="la la-star"></span>
+                                                <span class="la la-star-o"></span>
+                                                <span class="la la-star-o"></span>
+                                                <span class="la la-star-o"></span>
+                                                <span class="la la-star-o"></span>
+
+                                            <?php elseif ($averageRating == 2 || $averageRating < 3): ?>
+                                                <span class="la la-star"></span>
+                                                <span class="la la-star"></span>
+                                                <span class="la la-star-o"></span>
+                                                <span class="la la-star-o"></span>
+                                                <span class="la la-star-o"></span>
+
+                                            <?php elseif ($averageRating == 3 || $averageRating < 4): ?>
+                                                <span class="la la-star"></span>
+                                                <span class="la la-star"></span>
+                                                <span class="la la-star"></span>
+                                                <span class="la la-star-o"></span>
+                                                <span class="la la-star-o"></span>
+
+                                            <?php elseif ($averageRating == 4 || $averageRating < 5): ?>
+                                                <span class="la la-star"></span>
+                                                <span class="la la-star"></span>
+                                                <span class="la la-star"></span>
+                                                <span class="la la-star"></span>
+                                                <span class="la la-star-o"></span>
+
+                                            <?php elseif ($averageRating == 5 || $averageRating < 5): ?>
+                                                <span class="la la-star"></span>
+                                                <span class="la la-star"></span>
+                                                <span class="la la-star"></span>
+                                                <span class="la la-star"></span>
+                                                <span class="la la-star"></span>
+                                            <?php endif; ?>
+
                                         </div>
-                                        <span class="rating-total d-block">(2,533)</span>
+                                        <span class="rating-total d-block">(<?php echo count($reviews); ?>)</span>
                                         <span>Course Rating</span>
                                     </div><!-- end rating-wrap -->
                                 </div><!-- end review-rating-summary -->
-                                <div class="media-body">
-                                    <div class="review-bars d-flex align-items-center mb-2">
-                                        <div class="review-bars__text">5 stars</div>
-                                        <div class="review-bars__fill">
-                                            <div class="skillbar-box">
-                                                <div class="skillbar" data-percent="77%">
-                                                    <div class="skillbar-bar bg-3"></div>
-                                                </div> <!-- End Skill Bar -->
-                                            </div>
-                                        </div><!-- end review-bars__fill -->
-                                        <div class="review-bars__percent">77%</div>
-                                    </div><!-- end review-bars -->
-                                    <div class="review-bars d-flex align-items-center mb-2">
-                                        <div class="review-bars__text">4 stars</div>
-                                        <div class="review-bars__fill">
-                                            <div class="skillbar-box">
-                                                <div class="skillbar" data-percent="54%">
-                                                    <div class="skillbar-bar bg-3"></div>
-                                                </div> <!-- End Skill Bar -->
-                                            </div>
-                                        </div><!-- end review-bars__fill -->
-                                        <div class="review-bars__percent">54%</div>
-                                    </div><!-- end review-bars -->
-                                    <div class="review-bars d-flex align-items-center mb-2">
-                                        <div class="review-bars__text">3 stars</div>
-                                        <div class="review-bars__fill">
-                                            <div class="skillbar-box">
-                                                <div class="skillbar" data-percent="14%">
-                                                    <div class="skillbar-bar bg-3"></div>
-                                                </div> <!-- End Skill Bar -->
-                                            </div>
-                                        </div><!-- end review-bars__fill -->
-                                        <div class="review-bars__percent">14%</div>
-                                    </div><!-- end review-bars -->
-                                    <div class="review-bars d-flex align-items-center mb-2">
-                                        <div class="review-bars__text">2 stars</div>
-                                        <div class="review-bars__fill">
-                                            <div class="skillbar-box">
-                                                <div class="skillbar" data-percent="5%">
-                                                    <div class="skillbar-bar bg-3"></div>
-                                                </div> <!-- End Skill Bar -->
-                                            </div>
-                                        </div><!-- end review-bars__fill -->
-                                        <div class="review-bars__percent">5%</div>
-                                    </div><!-- end review-bars -->
-                                    <div class="review-bars d-flex align-items-center mb-2">
-                                        <div class="review-bars__text">1 stars</div>
-                                        <div class="review-bars__fill">
-                                            <div class="skillbar-box">
-                                                <div class="skillbar" data-percent="2%">
-                                                    <div class="skillbar-bar bg-3"></div>
-                                                </div> <!-- End Skill Bar -->
-                                            </div>
-                                        </div><!-- end review-bars__fill -->
-                                        <div class="review-bars__percent">2%</div>
-                                    </div><!-- end review-bars -->
-                                </div><!-- end media-body -->
                             </div>
                         </div><!-- end feedback-wrap -->
                     </div><!-- end course-overview-card -->

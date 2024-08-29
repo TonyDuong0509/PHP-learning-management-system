@@ -18,6 +18,11 @@ class OrdersService
         return $this->orderRepository->fetchAll();
     }
 
+    public function getAllByCourseId($course_id)
+    {
+        return $this->orderRepository->getAllByCourseId($course_id);
+    }
+
     public function getCourseInOrderByUserIdAndCourseId($course_id, $user_id)
     {
         $condition = "course_id = '$course_id' AND user_id = '$user_id' LIMIT 1";

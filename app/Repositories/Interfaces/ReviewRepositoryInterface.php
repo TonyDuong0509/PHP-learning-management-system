@@ -8,4 +8,5 @@ interface ReviewRepositoryInterface
     public function fetchAll($condition = null);
     public function getAllByCourseId($course_id);
     public function getAverageRatingByCourseId($course_id);
+    public function getAllByInstructorId($instructor_id);
 }

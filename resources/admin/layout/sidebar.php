@@ -62,6 +62,17 @@ global $router;
                     <a href="javascript:;" class="has-arrow">
                         <div class="parent-icon"><i class="bx bx-category"></i>
                         </div>
+                        <div class="menu-title">Manage User</div>
+                    </a>
+                    <ul>
+                        <li> <a href="/all/users"><i class='bx bx-radio-circle'></i>All User</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="javascript:;" class="has-arrow">
+                        <div class="parent-icon"><i class="bx bx-category"></i>
+                        </div>
                         <div class="menu-title">Manage Instructor</div>
                     </a>
                     <ul>

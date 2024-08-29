@@ -105,6 +105,12 @@ class OrdersRepository implements OrdersRepositoryInterface
         return $orders;
     }
 
+    public function getAllByCourseId($course_id)
+    {
+        $condition = "course_id = '$course_id'";
+        return $this->fetchAll($condition);
+    }
+
     public function checkExist($user_id, $course_id)
     {
         $condition = "user_id = '$user_id' AND course_id = '$course_id' LIMIT 1";

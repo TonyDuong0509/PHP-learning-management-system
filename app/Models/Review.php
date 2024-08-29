@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Repositories\CourseRepository;
 use App\Repositories\UserRepository;
 
 class Review
@@ -184,5 +185,12 @@ class Review
         $userRepository = new UserRepository();
         $user = $userRepository->getById($this->user_id);
         return $user;
+    }
+
+    public function getCourse()
+    {
+        $courseRepository = new CourseRepository();
+        $course = $courseRepository->getById($this->course_id);
+        return $course;
     }
 }

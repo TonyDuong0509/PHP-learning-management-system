@@ -254,4 +254,12 @@ class DashboardController
         header("Location: /admin/manage-instructor");
         exit;
     }
+
+    public function allUser()
+    {
+        $admin = $this->getInfoHeader();
+        $users = $this->userService->getAllUserByRole();
+
+        require ABSPATH . 'resources/admin/dashboard/manageUser.php';
+    }
 }

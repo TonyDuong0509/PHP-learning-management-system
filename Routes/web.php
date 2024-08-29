@@ -77,6 +77,11 @@ $router->map('POST', '/admin/active/instructor/[i:id]', function ($id) use ($ser
     $controller->activeInstructor($id);
 }, 'admin.active.instructor');
 
+$router->map('GET', '/all/users', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\DashboardController::class);
+    $controller->allUser();
+});
+
 
 // Category
 $router->map('GET', '/admin/manage-category', function () use ($serviceContainer) {
@@ -598,5 +603,10 @@ $router->map('POST', '/store/review', function () use ($serviceContainer) {
     $controller = $serviceContainer->resolve(App\Controllers\Admin\ReviewController::class);
     $controller->storeReview();
 }, 'store.review');
+
+$router->map('GET', '/instructor/all/review', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\ReviewController::class);
+    $controller->instructorAllReview();
+});
 
 $match = $router->match();

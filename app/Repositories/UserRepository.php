@@ -79,12 +79,14 @@ class UserRepository implements UserRepositoryInterface
 
     public function getInstructorsByRole()
     {
-        global $conn;
+        $condition = "role = 'instructor' ORDER BY created_at DESC";
+        return $this->fetchAll($condition);
+    }
 
-        $condition = "role = 'instructor'";
-        $instructors = $this->fetchAll($condition);
-
-        return $instructors;
+    public function getAllUserByRole()
+    {
+        $condition = "role = 'user' ORDER BY created_at DESC";
+        return $this->fetchAll($condition);
     }
 
     public function update($user)

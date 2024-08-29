@@ -7,6 +7,7 @@ use App\Services\CourseGoalsService;
 use App\Services\CourseLecturesService;
 use App\Services\CourseSectionsService;
 use App\Services\CourseService;
+use App\Services\OrdersService;
 use App\Services\ReviewService;
 use App\Services\SubCategoryService;
 use App\Services\UserService;
@@ -21,6 +22,7 @@ class DetailsController
     private $categoryService;
     private $subCategoryService;
     private $reviewService;
+    private $orderService;
 
     public function __construct(
         CourseService $courseService,
@@ -31,6 +33,7 @@ class DetailsController
         CategoryService $categoryService,
         SubCategoryService $subCategoryService,
         ReviewService $reviewService,
+        OrdersService $orderService,
     ) {
         $this->courseService = $courseService;
         $this->courseGoalsService = $courseGoalsService;
@@ -40,6 +43,7 @@ class DetailsController
         $this->categoryService = $categoryService;
         $this->subCategoryService = $subCategoryService;
         $this->reviewService = $reviewService;
+        $this->orderService = $orderService;
     }
 
     public function index($id, $slug)
@@ -60,6 +64,8 @@ class DetailsController
         $coursesSameInstructorId = $this->courseService->getCoursesSameInstructorId($course->getInstructorId());
         $reviews = $this->reviewService->getAllByCourseId($id);
         $averageRating = $this->reviewService->getAverageRatingByCourseId($id);
+        $enrollmentCount = $this->orderService->getAllByCourseId($id);
+
 
         require ABSPATH . 'resources/user/details/index.php';
     }

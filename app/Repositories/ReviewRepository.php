@@ -66,6 +66,12 @@ class ReviewRepository implements ReviewRepositoryInterface
         return $this->fetchAll($condition);
     }
 
+    public function getAllByInstructorId($instructor_id)
+    {
+        $condition = "instructor_id = '$instructor_id' ORDER BY id DESC";
+        return $this->fetchAll($condition);
+    }
+
     public function getAverageRatingByCourseId($course_id)
     {
         global $conn;

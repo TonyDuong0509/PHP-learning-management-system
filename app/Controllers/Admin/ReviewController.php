@@ -20,6 +20,12 @@ class ReviewController
         $this->userService = $userService;
     }
 
+    private function getInstructorInSidebar()
+    {
+        $email = $_SESSION['instructor']['email'];
+        return $this->userService->getByEmail($email);
+    }
+
     private function getDateTime()
     {
         $date = new DateTime('now', new DateTimeZone('Asia/Ho_Chi_Minh'));
@@ -52,5 +58,13 @@ class ReviewController
 
         header("Location: " . $_SERVER['HTTP_REFERER']);
         exit;
+    }
+
+    public function instructorAllReview()
+    {
+        $instructor = $this->getInstructorInSidebar();
+        $reviews = $this->reviewService->getAllByInstructorId($instructor->getId());
+
+        require ABSPATH . 'resources/instructor/review/allReview.php';
     }
 }

@@ -13,4 +13,5 @@ interface UserRepositoryInterface
     public function delete($id);
     public function checkExist($email);
     public function activeInstructor($id);
+    public function getAllUserByRole();
 }

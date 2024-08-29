@@ -9,4 +9,5 @@ interface OrdersRepositoryInterface
     public function save($params);
     public function fetchOrdersLatestByPaymentIdAndInstructorId($instructor_id);
     public function fetchOrdersLatestByCourseIdAndUserId($user_id);
+    public function getAllByCourseId($course_id);
 }

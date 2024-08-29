@@ -88,14 +88,14 @@
                                                     <p class="card-text"><a href="<?php echo $router->generate('instructor.details', ['id' => $course->getInstructorId()]); ?>"><?php echo $course->getInstructorName(); ?></a></p>
                                                     <div class="rating-wrap d-flex align-items-center py-2">
                                                         <div class="review-stars">
-                                                            <span class="rating-number">4.4</span>
+                                                            <span class="rating-number"><?php echo count($reviews); ?></span>
                                                             <span class="la la-star"></span>
                                                             <span class="la la-star"></span>
                                                             <span class="la la-star"></span>
                                                             <span class="la la-star"></span>
                                                             <span class="la la-star-o"></span>
                                                         </div>
-                                                        <span class="rating-total pl-1">(20,230)</span>
+                                                        <span class="rating-total pl-1">(<?php echo count($enrollmentStudents); ?> students)</span>
                                                     </div><!-- end rating-wrap -->
                                                     <div class="d-flex justify-content-between align-items-center">
                                                         <?php if ($course->getDiscountPrice() != 0): ?>

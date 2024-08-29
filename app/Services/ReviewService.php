@@ -27,4 +27,9 @@ class ReviewService
     {
         return $this->reviewRepository->getAverageRatingByCourseId($course_id);
     }
+
+    public function getAllByInstructorId($instructor_id)
+    {
+        return $this->reviewRepository->getAllByInstructorId($instructor_id);
+    }
 }
