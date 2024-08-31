@@ -65,7 +65,7 @@
                                     </ul>
                                 </li>
                                 <li>
-                                    <a href="#">Blog </a>
+                                    <a href="/blog/posts/all">Blog </a>
                                 </li>
                             </ul><!-- end ul -->
                         </nav><!-- end main-menu -->

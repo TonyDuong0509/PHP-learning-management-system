@@ -2,6 +2,7 @@
 
 namespace App\Controllers\User;
 
+use App\Services\BlogPostsService;
 use App\Services\CategoryService;
 use App\Services\CourseService;
 use App\Services\CourseTypesService;
@@ -17,6 +18,7 @@ class HomeController
     private $subCategoryService;
     private $reviewService;
     private $orderService;
+    private $blogPostsService;
 
     public function __construct(
         CourseService $courseService,
@@ -25,6 +27,7 @@ class HomeController
         SubCategoryService $subCategoryService,
         ReviewService $reviewService,
         OrdersService $orderService,
+        BlogPostsService $blogPostsService,
     ) {
         $this->courseService = $courseService;
         $this->categoryService = $categoryService;
@@ -32,6 +35,7 @@ class HomeController
         $this->subCategoryService = $subCategoryService;
         $this->reviewService = $reviewService;
         $this->orderService = $orderService;
+        $this->blogPostsService = $blogPostsService;
     }
 
     public function index()
@@ -48,6 +52,7 @@ class HomeController
         $reviews = $this->reviewService->getAllByCourseId($courses[0]->getId());
         $averageRating = $this->reviewService->getAverageRatingByCourseId($courses[0]->getId());
         $enrollmentStudents = $this->orderService->getAllByCourseId($courses[0]->getId());
+        $blogPosts = $this->blogPostsService->getPostsHomeArea();
 
         require ABSPATH . 'resources/user/home/index.php';
     }

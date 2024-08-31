@@ -48,3 +48,9 @@ $serviceContainer->add(App\Services\QuestionsService::class, new App\Services\Qu
 
 $serviceContainer->add(App\Repositories\Interfaces\ReviewRepositoryInterface::class, new App\Repositories\ReviewRepository());
 $serviceContainer->add(App\Services\ReviewService::class, new App\Services\ReviewService($serviceContainer->resolve(App\Repositories\Interfaces\ReviewRepositoryInterface::class)));
+
+$serviceContainer->add(App\Repositories\Interfaces\BlogCategoriesRepositoryInterface::class, new App\Repositories\BlogCategoriesRepository());
+$serviceContainer->add(App\Services\BlogCategoriesService::class, new App\Services\BlogCategoriesService($serviceContainer->resolve(App\Repositories\Interfaces\BlogCategoriesRepositoryInterface::class)));
+
+$serviceContainer->add(App\Repositories\Interfaces\BLogPostsRepositoryInterface::class, new App\Repositories\BlogPostsRepository());
+$serviceContainer->add(App\Services\BlogPostsService::class, new App\Services\BlogPostsService($serviceContainer->resolve(App\Repositories\Interfaces\BLogPostsRepositoryInterface::class)));

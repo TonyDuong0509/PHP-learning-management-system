@@ -52,8 +52,8 @@ class UserRepository implements UserRepositoryInterface
                     $row['role'],
                     $row['status']
                 );
+                $users[] = $user;
             }
-            $users[] = $user;
         }
 
         return $users;

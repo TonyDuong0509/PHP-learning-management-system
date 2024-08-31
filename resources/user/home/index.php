@@ -8,13 +8,13 @@
 
 <?php require ABSPATH . 'resources/user/home/layout/categoryArea.php' ?>
 
-<?php require ABSPATH . 'resources/user/home/layout/startedArea.php' ?>
+<?php require ABSPATH . 'resources/user/home/layout/blogArea.php' ?>
 
 <?php require ABSPATH . 'resources/user/home/layout/clientLogoArea.php' ?>
 
 <div class="section-block"></div>
 
-<?php require ABSPATH . 'resources/user/home/layout/startedArea_2.php' ?>
+<?php require ABSPATH . 'resources/user/home/layout/startedArea.php' ?>
 
 <?php require ABSPATH . 'resources/user/home/layout/subscriberArea.php' ?>
 
