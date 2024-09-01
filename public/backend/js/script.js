@@ -63,3 +63,16 @@ $(document).on("click", "#confirm", function (e) {
     }
   });
 });
+
+function categoryEdit(id) {
+  $.ajax({
+    type: "GET",
+    url: "/blog/category/edit/" + id,
+    dataType: "json",
+    success: function (data) {
+      console.log(data);
+      $("#cat").val(data.category_name);
+      $("#cat_id").val(data.id);
+    },
+  });
+}

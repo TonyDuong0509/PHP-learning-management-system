@@ -609,4 +609,78 @@ $router->map('GET', '/instructor/all/review', function () use ($serviceContainer
     $controller->instructorAllReview();
 });
 
+
+// Blog roues
+$router->map('GET', '/blog/category', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\BlogController::class);
+    $controller->allBlogCategory();
+});
+
+$router->map('POST', '/blog/category/store', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\BlogController::class);
+    $controller->storeBlogCategory();
+}, 'blog.category.store');
+
+$router->map('GET', '/blog/category/edit/[i:id]', function ($id) use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\BlogController::class);
+    $controller->editBlogCategory($id);
+}, 'blog.category.edit');
+
+$router->map('POST', '/blog/category/update', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\BlogController::class);
+    $controller->updateBlogCategory();
+}, 'blog.category.update');
+
+$router->map('GET', '/blog/category/delete/[i:id]', function ($id) use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\BlogController::class);
+    $controller->deleteBlogCategory($id);
+}, 'blog.category.delete');
+
+
+// Blog Posts routes
+$router->map('GET', '/blog/posts', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\BlogPostsController::class);
+    $controller->blogPosts();
+});
+
+$router->map('GET', '/add/blog/posts', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\BlogPostsController::class);
+    $controller->addBlogPosts();
+}, 'blog.posts.add');
+
+$router->map('POST', '/store/blog/posts', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\BlogPostsController::class);
+    $controller->storeBlogPosts();
+}, 'blog.posts.store');
+
+$router->map('GET', '/edit/blog/posts/[i:id]', function ($id) use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\BlogPostsController::class);
+    $controller->editBlogPosts($id);
+}, 'blog.posts.edit');
+
+$router->map('POST', '/update/blog/posts', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\BlogPostsController::class);
+    $controller->updateBlogPosts();
+}, 'blog.posts.update');
+
+$router->map('GET', '/delete/blog/posts/[i:id]', function ($id) use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\BlogPostsController::class);
+    $controller->deleteBlogPosts($id);
+}, 'blog.posts.delete');
+
+$router->map('GET', '/blog/details/[*:slug]', function ($slug) use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\BlogPostsController::class);
+    $controller->blogDetails($slug);
+}, 'blog.details');
+
+$router->map('GET', '/blog/category/list/[i:id]', function ($id) use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\BlogPostsController::class);
+    $controller->blogCategoryList($id);
+});
+
+$router->map('GET', '/blog/posts/all', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\BlogPostsController::class);
+    $controller->allBlogPosts();
+});
+
 $match = $router->match();

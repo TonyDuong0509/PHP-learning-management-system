@@ -143,5 +143,18 @@ global $router;
                         </li>
                     </ul>
                 </li>
+                <li>
+                    <a class="has-arrow" href="javascript:;">
+                        <div class="parent-icon"><i class='bx bx-bookmark-heart'></i>
+                        </div>
+                        <div class="menu-title">Manage Blog Posts</div>
+                    </a>
+                    <ul>
+                        <li> <a href="/blog/category"><i class='bx bx-radio-circle'></i>All Blog Category</a>
+                        </li>
+                        <li> <a href="/blog/posts"><i class='bx bx-radio-circle'></i>All Blog Posts</a>
+                        </li>
+                    </ul>
+                </li>
             </ul>
         </div>
