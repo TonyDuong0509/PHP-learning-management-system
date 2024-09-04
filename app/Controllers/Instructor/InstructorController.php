@@ -2,22 +2,28 @@
 
 namespace App\Controllers\Instructor;
 
+use App\Services\NotificationsService;
 use App\Services\UserService;
 
 class InstructorController
 {
     private $userService;
+    private $notificationsService;
 
-    public function __construct(UserService $userService)
-    {
+    public function __construct(
+        UserService $userService,
+        NotificationsService $notificationsService,
+    ) {
         $this->userService = $userService;
+        $this->notificationsService = $notificationsService;
     }
 
     public function dashboard()
     {
         $email = $_SESSION['instructor']['email'];
-
         $instructor = $this->userService->getByEmail($email);
+        $notifications = $this->notificationsService->getNotificationsForInstructor($instructor->getId());
+        $totalNotifications = $this->notificationsService->getTotalNotificationsForInstructor($instructor->getId());
 
         require ABSPATH . 'resources/instructor/dashboard/index.php';
     }
@@ -182,5 +188,14 @@ class InstructorController
             header("Location: /instructor/edit/password/{$instructor->getId()}");
             exit;
         }
+    }
+
+    public function updateStatusNotifications()
+    {
+        $this->notificationsService->updateStatusNotifications();
+
+        header('Content-Type: application/json');
+        echo json_encode(['success' => true]);
+        exit;
     }
 }

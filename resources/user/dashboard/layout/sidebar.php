@@ -2,7 +2,7 @@
     <i class="la la-times"></i>
 </div>
 <div class="logo-box px-4">
-    <a href="index.html" class="logo"><img src="<?php ABSPATH ?>/public/frontend/images/logo.png" alt="logo"></a>
+    <a href="/" class="logo"><img src="<?php ABSPATH ?>/public/frontend/images/logo.png" alt="logo"></a>
 </div>
 
 <ul class="generic-list-item off-canvas-menu-list off--canvas-menu-list pt-35px">
@@ -23,11 +23,6 @@
                 <path d="M0 0h24v24H0V0z" fill="none" />
                 <path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2zm0 15l-5-2.18L7 18V5h10v13z" />
             </svg> Wishlist <span class="badge badge-info p-1 ml-2" id="wishQty"></span></a></li>
-
-    <li><a href="dashboard-reviews.html"><svg class="mr-2" xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 0 24 24" width="18px">
-                <path d="M0 0h24v24H0V0z" fill="none" />
-                <path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z" />
-            </svg> Reviews</a></li>
 
     <li><a href="<?php echo $router->generate('user.change.password'); ?>"><svg class="mr-2" xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 0 24 24" width="18px">
                 <path d="M0 0h24v24H0V0z" fill="none" />

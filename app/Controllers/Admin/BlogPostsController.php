@@ -4,6 +4,8 @@ namespace App\Controllers\Admin;
 
 use App\Services\BlogCategoriesService;
 use App\Services\BlogPostsService;
+use App\Services\CategoryService;
+use App\Services\SubCategoryService;
 use App\Services\UserService;
 use DateTime;
 use DateTimeZone;
@@ -13,15 +15,21 @@ class BlogPostsController
     private $userSerivce;
     private $blogPostsService;
     private $blogCategoriesService;
+    private $categoryService;
+    private $subCategoryService;
 
     public function __construct(
         UserService $userSerivce,
         BlogPostsService $blogPostsService,
         BlogCategoriesService $blogCategoriesService,
+        CategoryService $categoryService,
+        SubCategoryService $subCategoryService,
     ) {
         $this->userSerivce = $userSerivce;
         $this->blogPostsService = $blogPostsService;
         $this->blogCategoriesService = $blogCategoriesService;
+        $this->categoryService = $categoryService;
+        $this->subCategoryService = $subCategoryService;
     }
 
     private function getInfoHeader()
@@ -161,6 +169,13 @@ class BlogPostsController
 
     public function allBlogPosts()
     {
+        $categories = $this->categoryService->getAllCategories();
+
+        $subCategories = [];
+        for ($i = 0; $i < count($categories); $i++) {
+            $category_id = $categories[$i]->getId();
+            $subCategories[$category_id] = $this->subCategoryService->getByCategoryId($category_id);
+        }
         $blogPosts = $this->blogPostsService->getAllPosts();
 
         require ABSPATH . 'resources/user/blog/allBlog.php';

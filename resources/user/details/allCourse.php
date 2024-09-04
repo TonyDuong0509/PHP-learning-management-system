@@ -5,11 +5,11 @@
     <div class="container">
         <div class="breadcrumb-content d-flex flex-wrap align-items-center justify-content-between">
             <div class="section-heading">
-                <h2 class="section__title text-white"><?php echo $categoryCourse->getName(); ?></h2>
+                <h2 class="section__title text-white">Home</h2>
             </div>
             <ul class="generic-list-item generic-list-item-white generic-list-item-arrow d-flex flex-wrap align-items-center">
                 <li><a href="index.html">Home</a></li>
-                <li><?php echo $categoryCourse->getName(); ?></li>
+                <li>All Courses</li>
             </ul>
         </div><!-- end breadcrumb-content -->
     </div><!-- end container -->
@@ -153,84 +153,6 @@
     <i class="la la-arrow-up" title="Go top"></i>
 </div>
 <!-- end scroll top -->
-
-<div class="tooltip_templates">
-    <div id="tooltip_content_1">
-        <div class="card card-item">
-            <div class="card-body">
-                <p class="card-text pb-2">By <a href="">Jose Portilla</a></p>
-                <h5 class="card-title pb-1"><a href="course-details.html">The Business Intelligence Analyst Course 2021</a></h5>
-                <div class="d-flex align-items-center pb-1">
-                    <h6 class="ribbon fs-14 mr-2">Bestseller</h6>
-                    <p class="text-success fs-14 font-weight-medium">Updated<span class="font-weight-bold pl-1">November 2020</span></p>
-                </div>
-                <ul class="generic-list-item generic-list-item-bullet generic-list-item--bullet d-flex align-items-center fs-14">
-                    <li>23 total hours</li>
-                    <li>All Levels</li>
-                </ul>
-                <p class="card-text pt-1 fs-14 lh-22">The skills you need to become a BI Analyst - Statistics, Database theory, SQL, Tableau – Everything is included</p>
-                <ul class="generic-list-item fs-14 py-3">
-                    <li><i class="la la-check mr-1 text-black"></i> Become an expert in Statistics, SQL, Tableau, and problem solving</li>
-                    <li><i class="la la-check mr-1 text-black"></i> Boost your resume with in-demand skills</li>
-                    <li><i class="la la-check mr-1 text-black"></i> Gather, organize, analyze and visualize data</li>
-                </ul>
-                <div class="d-flex justify-content-between align-items-center">
-                    <a href="#" class="btn theme-btn flex-grow-1 mr-3"><i class="la la-shopping-cart mr-1 fs-18"></i> Add to Cart</a>
-                    <div class="icon-element icon-element-sm shadow-sm cursor-pointer" title="Add to Wishlist"><i class="la la-heart-o"></i></div>
-                </div>
-            </div>
-        </div><!-- end card -->
-    </div>
-</div><!-- end tooltip_templates -->
-
-<!-- Modal -->
-<div class="modal fade modal-container" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="reportModalTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header border-bottom-gray">
-                <div class="pr-2">
-                    <h5 class="modal-title fs-19 font-weight-semi-bold lh-24" id="reportModalTitle">Report Abuse</h5>
-                    <p class="pt-1 fs-14 lh-24">Flagged content is reviewed by Aduca staff to determine whether it violates Terms of Service or Community Guidelines. If you have a question or technical issue, please contact our
-                        <a href="contact.html" class="text-color hover-underline">Support team here</a>.
-                    </p>
-                </div>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true" class="la la-times"></span>
-                </button>
-            </div><!-- end modal-header -->
-            <div class="modal-body">
-                <form method="post">
-                    <div class="input-box">
-                        <label class="label-text">Select Report Type</label>
-                        <div class="form-group">
-                            <div class="select-container w-auto">
-                                <select class="select-container-select">
-                                    <option value>-- Select One --</option>
-                                    <option value="1">Inappropriate Course Content</option>
-                                    <option value="2">Inappropriate Behavior</option>
-                                    <option value="3">Aduca Policy Violation</option>
-                                    <option value="4">Spammy Content</option>
-                                    <option value="5">Other</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="input-box">
-                        <label class="label-text">Write Message</label>
-                        <div class="form-group">
-                            <textarea class="form-control form--control pl-3" name="message" placeholder="Provide additional details here..." rows="5"></textarea>
-                        </div>
-                    </div>
-                    <div class="btn-box text-right pt-2">
-                        <button type="button" class="btn font-weight-medium mr-3" data-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn theme-btn theme-btn-sm lh-30">Submit <i class="la la-arrow-right icon ml-1"></i></button>
-                    </div>
-                </form>
-            </div><!-- end modal-body -->
-        </div><!-- end modal-content -->
-    </div><!-- end modal-dialog -->
-</div><!-- end modal -->
-
 
 <?php require ABSPATH . 'resources/user/layout/footerScript.php'; ?>
 </body>

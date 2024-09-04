@@ -2,15 +2,36 @@
 
 namespace App\Controllers\User;
 
+use App\Services\CartService;
+use App\Services\CategoryService;
+use App\Services\CourseService;
+use App\Services\SubCategoryService;
 use App\Services\UserService;
+use App\Services\WishListService;
 
 class UserController
 {
     private $userService;
+    private $cartService;
+    private $wishlistService;
+    private $categoryService;
+    private $subCategoryService;
+    private $courseService;
 
-    public function __construct(UserService $userService)
-    {
+    public function __construct(
+        UserService $userService,
+        CartService $cartService,
+        WishListService $wishlistService,
+        CategoryService $categoryService,
+        SubCategoryService $subCategoryService,
+        CourseService $courseService,
+    ) {
         $this->userService = $userService;
+        $this->cartService = $cartService;
+        $this->wishlistService = $wishlistService;
+        $this->categoryService = $categoryService;
+        $this->subCategoryService = $subCategoryService;
+        $this->courseService = $courseService;
     }
 
     public function registerForm()
@@ -67,16 +88,6 @@ class UserController
 
         $user = $this->userService->getByEmail($email);
 
-        if ($user->getRole() !== 'user') {
-            $_SESSION['notification'] = [
-                'message' => 'This account is not authorized, please input correct account',
-                'alert-type' => 'error',
-            ];
-
-            header("Location: /login");
-            exit;
-        }
-
         if (!$user) {
             $_SESSION['notification'] = [
                 'message' => 'User not exist, please try again',
@@ -97,6 +108,16 @@ class UserController
             exit;
         }
 
+        if ($user->getRole() !== 'user') {
+            $_SESSION['notification'] = [
+                'message' => 'This account is not authorized, please input correct account',
+                'alert-type' => 'error',
+            ];
+
+            header("Location: /login");
+            exit;
+        }
+
         $_SESSION['user'] = [
             'email' => $email,
             'name' => $user->getName(),
@@ -107,7 +128,7 @@ class UserController
             $redirectUrl = $_SESSION['redirect_after_login'];
             unset($_SESSION['redirect_after_login']);
         } else {
-            $redirectUrl = '/login';
+            $redirectUrl = '/';
         }
 
         $_SESSION['notification'] = [
@@ -129,6 +150,9 @@ class UserController
     public function dashboard()
     {
         $user = $this->getHeaderProfile();
+        $cartTotal = $this->cartService->total();
+        $carts = $this->cartService->getAll();
+        $wishlists = $this->wishlistService->getWishListsCoursesSameUserId($user->getId());
 
         require ABSPATH . 'resources/user/dashboard/index.php';
     }
@@ -203,5 +227,19 @@ class UserController
 
         header("Location: /");
         exit;
+    }
+
+    public function allCourse()
+    {
+        $courses = $this->courseService->getAllCourses();
+        $categories = $this->categoryService->getAllCategories();
+
+        $subCategories = [];
+        for ($i = 0; $i < count($categories); $i++) {
+            $category_id = $categories[$i]->getId();
+            $subCategories[$category_id] = $this->subCategoryService->getByCategoryId($category_id);
+        }
+
+        require ABSPATH . 'resources/user/details/allCourse.php';
     }
 }

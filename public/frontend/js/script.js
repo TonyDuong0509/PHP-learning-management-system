@@ -41,7 +41,6 @@ function wishList() {
 
       var rows = "";
       $.each(response.wishlist, function (key, value) {
-        console.log(value);
         rows += `
                         <div class="col-lg-4 responsive-column-half">
                         <div class="card card-item">
@@ -82,7 +81,7 @@ function wishList() {
                             ${
                               value.discount_price == 0
                                 ? `<p class="card-price text-black font-weight-bold">$${value.selling_price}</p>`
-                                : `<p class="card-price text-black font-weight-bold">$${value.discount_price} <span class="before-price font-weight-medium">$${value.selling_price}</span></p>`
+                                : `<p class="card-price text-black font-weight-bold">$${value.selling_price - value.discount_price} <span class="before-price font-weight-medium">$${value.selling_price}</span></p>`
                             }
                                     <div class="icon-element icon-element-sm shadow-sm cursor-pointer" data-toggle="tooltip" data-placement="top" title="Remove from Wishlist" id="${
                                       value.wishlist_id

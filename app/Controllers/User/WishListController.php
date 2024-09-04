@@ -2,6 +2,9 @@
 
 namespace App\Controllers\User;
 
+use App\Repositories\OrdersRepository;
+use App\Services\CartService;
+use App\Services\ReviewService;
 use App\Services\UserService;
 use App\Services\WishListService;
 
@@ -9,17 +12,31 @@ class WishListController
 {
     private $userService;
     private $wishListService;
+    private $cartService;
 
     public function __construct(
         UserService $userService,
-        WishListService $wishListService
+        WishListService $wishListService,
+        CartService $cartService,
     ) {
         $this->userService = $userService;
         $this->wishListService = $wishListService;
+        $this->cartService = $cartService;
+    }
+
+    private function getHeaderProfile()
+    {
+        $email = $_SESSION['user']['email'] ?? '';
+        return $this->userService->getByEmail($email);
     }
 
     public function allWishList()
     {
+        $user = $this->getHeaderProfile();
+        $cartTotal = $this->cartService->total();
+        $carts = $this->cartService->getAll();
+        $wishlists = $this->wishListService->getWishListsCoursesSameUserId($user->getId());
+
         require ABSPATH . 'resources/user/dashboard/allWishList.php';
     }
 

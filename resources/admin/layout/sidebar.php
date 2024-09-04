@@ -156,5 +156,26 @@ global $router;
                         </li>
                     </ul>
                 </li>
+                <li>
+                    <a class="has-arrow" href="javascript:;">
+                        <div class="parent-icon"><i class='bx bx-bookmark-heart'></i>
+                        </div>
+                        <div class="menu-title">Role & Permission</div>
+                    </a>
+                    <ul>
+                        <li> <a href="/all/permission"><i class='bx bx-radio-circle'></i>All Permission</a>
+                        </li>
+                        <li> <a href="/add/permission"><i class='bx bx-radio-circle'></i>Add Permission</a>
+                        </li>
+                        <li> <a href="/all/roles"><i class='bx bx-radio-circle'></i>All Roles</a>
+                        </li>
+                        <li> <a href="/add/role"><i class='bx bx-radio-circle'></i>Add Role</a>
+                        </li>
+                        <li> <a href="/add/roles/permission"><i class='bx bx-radio-circle'></i>Role In Permission</a>
+                        </li>
+                        <li> <a href="/all/roles/permission"><i class='bx bx-radio-circle'></i>All Role In Permission</a>
+                        </li>
+                    </ul>
+                </li>
             </ul>
         </div>

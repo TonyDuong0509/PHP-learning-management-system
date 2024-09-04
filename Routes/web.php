@@ -233,6 +233,11 @@ $router->map('GET', '/user/dashboard', function () use ($serviceContainer) {
     $controller->dashboard();
 }, 'user.dashboard');
 
+$router->map('GET', '/all/course', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\User\UserController::class);
+    $controller->allCourse();
+});
+
 $router->map('GET', '/course-details/[i:id]/[*:slug]', function ($id, $slug) use ($serviceContainer) {
     $controller = $serviceContainer->resolve(App\Controllers\User\DetailsController::class);
     $controller->index($id, $slug);
@@ -335,7 +340,7 @@ $router->map('POST', '/instructor/reply', function () use ($serviceContainer) {
 $router->map('POST', '/cart/data/store/[i:id]', function ($id) use ($serviceContainer) {
     $controller = $serviceContainer->resolve(App\Controllers\User\CartController::class);
     $controller->addToCart($id);
-});
+}, 'add.to.cart');
 
 $router->map('GET', '/cart/data/', function () use ($serviceContainer) {
     $controller = $serviceContainer->resolve(App\Controllers\User\CartController::class);
@@ -682,5 +687,105 @@ $router->map('GET', '/blog/posts/all', function () use ($serviceContainer) {
     $controller = $serviceContainer->resolve(App\Controllers\Admin\BlogPostsController::class);
     $controller->allBlogPosts();
 });
+
+
+// Notification routes
+$router->map('POST', '/notification/update/status', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Instructor\InstructorController::class);
+    $controller->updateStatusNotifications();
+}, 'notification.update.status');
+
+// Permissions routes
+$router->map('GET', '/all/permission', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\AuthController::class);
+    $controller->allPermissions();
+});
+
+$router->map('GET', '/add/permission', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\AuthController::class);
+    $controller->addPermission();
+}, 'add.permission');
+
+$router->map('POST', '/store/permission', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\AuthController::class);
+    $controller->storePermission();
+}, 'store.permission');
+
+$router->map('GET', '/edit/permission/[i:id]', function ($id) use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\AuthController::class);
+    $controller->editPermission($id);
+}, 'edit.permission');
+
+$router->map('POST', '/update/permission', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\AuthController::class);
+    $controller->updatePermission();
+}, 'update.permission');
+
+$router->map('GET', '/delete/permission/[i:id]', function ($id) use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\AuthController::class);
+    $controller->deletePermission($id);
+}, 'delete.permission');
+
+
+// Roles routes
+$router->map('GET', '/all/roles', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\AuthController::class);
+    $controller->allRoles();
+});
+
+$router->map('GET', '/add/role', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\AuthController::class);
+    $controller->addRole();
+}, 'add.role');
+
+$router->map('POST', '/store/role', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\AuthController::class);
+    $controller->storeRole();
+}, 'store.role');
+
+$router->map('GET', '/edit/role/[i:id]', function ($id) use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\AuthController::class);
+    $controller->editRole($id);
+}, 'edit.role');
+
+$router->map('POST', '/update/role', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\AuthController::class);
+    $controller->updateRole();
+}, 'update.role');
+
+$router->map('GET', '/delete/role/[i:id]', function ($id) use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\AuthController::class);
+    $controller->deleteRole($id);
+}, 'delete.role');
+
+$router->map('GET', '/add/roles/permission', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\AuthController::class);
+    $controller->addRolesPermission();
+}, 'add.roles.permission');
+
+$router->map('POST', '/role/permission/store', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\AuthController::class);
+    $controller->rolePermissionStore();
+}, 'role.permission.store');
+
+$router->map('GET', '/all/roles/permission', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\AuthController::class);
+    $controller->allRolesPermission();
+}, 'all.roles.permission');
+
+$router->map('GET', '/admin/edit/roles/[i:id]', function ($id) use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\AuthController::class);
+    $controller->adminEditRoles($id);
+}, 'admin.edit.roles');
+
+$router->map('POST', '/admin/roles/update/[i:id]', function ($id) use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\AuthController::class);
+    $controller->adminUpdateRoles($id);
+}, 'admin.roles.update');
+
+$router->map('GET', '/admin/roles/delete/[i:id]', function ($id) use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\AuthController::class);
+    $controller->adminDeleteRoles($id);
+}, 'admin.roles.delete');
 
 $match = $router->match();
