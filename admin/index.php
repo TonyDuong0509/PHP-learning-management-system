@@ -29,5 +29,6 @@ if (!isset($_SESSION['admin']['email']) && !in_array($match['name'], $publicRout
 if (isset($match['target']) && is_callable($match['target'])) {
     call_user_func_array($match['target'], $match['params']);
 } else {
-    echo "404 not found";
+    header("Location: /404.php");
+    exit;
 }

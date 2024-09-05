@@ -89,6 +89,12 @@ class UserRepository implements UserRepositoryInterface
         return $this->fetchAll($condition);
     }
 
+    public function getAllAdminByRole()
+    {
+        $condition = "role = 2 OR role = 3 ORDER BY created_at DESC";
+        return $this->fetchAll($condition);
+    }
+
     public function update($user)
     {
         global $conn;

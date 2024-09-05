@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-
 class Roles
 {
   protected $id;
@@ -52,24 +51,16 @@ class Roles
     return $this;
   }
 
-  /**
-   * Get the value of permissions
-   */
   public function getPermissions()
   {
     return $this->permissions;
   }
 
-  /**
-   * Set the value of permissions
-   */
-  public function setPermissions($permissions)
+  public function setPermissions($permissions): self
   {
-    if (is_array($permissions)) {
-      $this->permissions = $permissions;
-    } else {
-      $this->permissions = [];
-    }
+    $this->permissions = $permissions;
+
+    return $this;
   }
 
   public function hasPermissionTo($permissionName)

@@ -2,9 +2,6 @@
 
 namespace App\Models;
 
-use App\Repositories\PermissionsRepository;
-use App\Repositories\RoleHasPermissionsRepository;
-
 class RoleHasPermissions
 {
   protected $role_id;

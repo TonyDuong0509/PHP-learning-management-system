@@ -4,6 +4,8 @@ namespace App\Controllers\Admin;
 
 use App\Services\CategoryService;
 use App\Services\CourseService;
+use App\Services\RoleHasPermissionsService;
+use App\Services\RolesService;
 use App\Services\SubCategoryService;
 use App\Services\UserService;
 
@@ -13,17 +15,20 @@ class DashboardController
     private $categoryService;
     private $subCategoryService;
     private $courseService;
+    private $roleHasPermissionsService;
 
     public function __construct(
         UserService $userService,
         CategoryService $categoryService,
         SubCategoryService $subCategoryService,
-        CourseService $courseService
+        CourseService $courseService,
+        RoleHasPermissionsService $roleHasPermissionsService,
     ) {
         $this->userService = $userService;
         $this->categoryService = $categoryService;
         $this->subCategoryService = $subCategoryService;
         $this->courseService = $courseService;
+        $this->roleHasPermissionsService = $roleHasPermissionsService;
     }
 
     private function getInfoHeader()
@@ -39,11 +44,29 @@ class DashboardController
         require ABSPATH . 'resources/admin/dashboard/index.php';
     }
 
+    public function checkPermission($requiredPermission, $role_id)
+    {
+        $permissions = $this->roleHasPermissionsService->getPermissionsByRoleId((int) $role_id);
+        $allowedPermissions = array_column($permissions, 'guard_name');
+
+        if (!in_array($requiredPermission, $allowedPermissions)) {
+            $_SESSION['notification'] = [
+                'message' => "You don't have permission to access !",
+                'alert-type' => 'error',
+            ];
+
+            header("Location: /admin/dashboard");
+            exit;
+        }
+    }
+
     public function manageInstructor()
     {
         $email = $_SESSION['admin']['email'];
         $admin = $this->userService->getByEmail($email);
         $instructors = $this->userService->getInstructorByRole();
+
+        $this->checkPermission('Instructor', $admin->getRole());
 
         require ABSPATH . 'resources/admin/dashboard/manageInstructor.php';
     }
@@ -52,6 +75,8 @@ class DashboardController
     {
         $admin = $this->getInfoHeader();
         $categories = $this->categoryService->getAllCategories();
+
+        $this->checkPermission('Category', $admin->getRole());
 
         require ABSPATH . 'resources/admin/dashboard/manageCategory.php';
     }
@@ -68,6 +93,8 @@ class DashboardController
     {
         $admin = $this->getInfoHeader();
 
+        $this->checkPermission('Category', $admin->getRole());
+
         require ABSPATH . 'resources/admin/dashboard/addCategory.php';
     }
 
@@ -75,6 +102,8 @@ class DashboardController
     {
         $admin = $this->getInfoHeader();
         $categories = $this->categoryService->getAllCategories();
+
+        $this->checkPermission('Category', $admin->getRole());
 
         require ABSPATH . 'resources/admin/dashboard/addSubCategory.php';
     }
@@ -212,6 +241,9 @@ class DashboardController
     {
         $admin = $this->getInfoHeader();
         $courses = $this->courseService->getAllCourses();
+
+        $this->checkPermission('Course', $admin->getRole());
+
         require ABSPATH . 'resources/admin/course/allCourse.php';
     }
 
@@ -259,6 +291,8 @@ class DashboardController
     {
         $admin = $this->getInfoHeader();
         $users = $this->userService->getAllUserByRole();
+
+        $this->checkPermission('User', $admin->getRole());
 
         require ABSPATH . 'resources/admin/dashboard/manageUser.php';
     }

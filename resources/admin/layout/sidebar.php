@@ -177,5 +177,16 @@ global $router;
                         </li>
                     </ul>
                 </li>
+                <li>
+                    <a class="has-arrow" href="javascript:;">
+                        <div class="parent-icon"><i class='bx bx-bookmark-heart'></i>
+                        </div>
+                        <div class="menu-title">Manage Admin</div>
+                    </a>
+                    <ul>
+                        <li> <a href="/all/admin"><i class='bx bx-radio-circle'></i>All Admin</a>
+                        </li>
+                    </ul>
+                </li>
             </ul>
         </div>

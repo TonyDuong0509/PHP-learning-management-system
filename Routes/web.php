@@ -788,4 +788,36 @@ $router->map('GET', '/admin/roles/delete/[i:id]', function ($id) use ($serviceCo
     $controller->adminDeleteRoles($id);
 }, 'admin.roles.delete');
 
+
+// Multi Admin routes
+$router->map('GET', '/all/admin', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\AdminController::class);
+    $controller->allAdmin();
+});
+
+$router->map('GET', '/add/admin', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\AdminController::class);
+    $controller->addAdmin();
+}, 'add.admin');
+
+$router->map('POST', '/store/admin', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\AdminController::class);
+    $controller->storeAdmin();
+}, 'store.admin');
+
+$router->map('GET', '/edit/admin/[i:id]', function ($id) use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\AdminController::class);
+    $controller->editAdmin($id);
+}, 'edit.admin');
+
+$router->map('POST', '/update/admin', function () use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\AdminController::class);
+    $controller->updateAdmin();
+}, 'update.admin');
+
+$router->map('GET', '/delete/admin/[i:id]', function ($id) use ($serviceContainer) {
+    $controller = $serviceContainer->resolve(App\Controllers\Admin\AdminController::class);
+    $controller->deleteAdmin($id);
+}, 'delete.admin');
+
 $match = $router->match();

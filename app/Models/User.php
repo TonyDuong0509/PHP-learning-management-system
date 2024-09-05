@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Repositories\RolesRepository;
+
 class User
 {
     protected $id;
@@ -187,5 +189,12 @@ class User
         $this->status = $status;
 
         return $this;
+    }
+
+    public function getRoleNameForAdmin()
+    {
+        $rolesRepository = new RolesRepository();
+        $role = $rolesRepository->getById((int) $this->role);
+        return $role->getName();
     }
 }
