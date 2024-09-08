@@ -54,3 +54,15 @@ $serviceContainer->add(App\Services\BlogCategoriesService::class, new App\Servic
 
 $serviceContainer->add(App\Repositories\Interfaces\BLogPostsRepositoryInterface::class, new App\Repositories\BlogPostsRepository());
 $serviceContainer->add(App\Services\BlogPostsService::class, new App\Services\BlogPostsService($serviceContainer->resolve(App\Repositories\Interfaces\BLogPostsRepositoryInterface::class)));
+
+$serviceContainer->add(App\Repositories\Interfaces\NotificationsRepositoryInterface::class, new App\Repositories\NotificationsRepository());
+$serviceContainer->add(App\Services\NotificationsService::class, new App\Services\NotificationsService($serviceContainer->resolve(App\Repositories\Interfaces\NotificationsRepositoryInterface::class)));
+
+$serviceContainer->add(App\Repositories\Interfaces\RolesRepositoryInterface::class, new App\Repositories\RolesRepository());
+$serviceContainer->add(App\Services\RolesService::class, new App\Services\RolesService($serviceContainer->resolve(App\Repositories\Interfaces\RolesRepositoryInterface::class)));
+
+$serviceContainer->add(App\Repositories\Interfaces\PermissionsRepositoryInterface::class, new App\Repositories\PermissionsRepository());
+$serviceContainer->add(App\Services\PermissionsService::class, new App\Services\PermissionsService($serviceContainer->resolve(App\Repositories\Interfaces\PermissionsRepositoryInterface::class)));
+
+$serviceContainer->add(App\Repositories\Interfaces\RoleHasPermissionsRepositoryInterface::class, new App\Repositories\RoleHasPermissionsRepository());
+$serviceContainer->add(App\Services\RoleHasPermissionsService::class, new App\Services\RoleHasPermissionsService($serviceContainer->resolve(App\Repositories\Interfaces\RoleHasPermissionsRepositoryInterface::class)));

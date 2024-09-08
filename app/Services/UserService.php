@@ -44,6 +44,11 @@ class UserService
         return $this->userRepository->getAllUserByRole();
     }
 
+    public function getAllAdminByRole()
+    {
+        return $this->userRepository->getAllAdminByRole();
+    }
+
     public function updateUser($user)
     {
         return $this->userRepository->update($user);

@@ -360,7 +360,23 @@
 <!--app JS-->
 <script src="<?php ABSPATH ?>../public/backend/js/app.js"></script>
 <script>
-    new PerfectScrollbar(".app-container")
+    $(document).ready(function() {
+        $('#notification-icon').on('click', function(e) {
+            e.preventDefault();
+
+            $.ajax({
+                type: "POST",
+                url: "/notification/update/status",
+                success: function(response) {
+                    $('.alert-count').fadeOut();
+                },
+                error: function(error) {
+                    console.error("AJAX request failed", error);
+                }
+            });
+
+        });
+    });
 </script>
 </body>
 

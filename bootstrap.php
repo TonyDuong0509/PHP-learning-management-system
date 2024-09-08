@@ -16,6 +16,10 @@ require_once ABSPATH . "app/Repositories/Interfaces/QuestionsRepositoryInterface
 require_once ABSPATH . "app/Repositories/Interfaces/ReviewRepositoryInterface.php";
 require_once ABSPATH . "app/Repositories/Interfaces/BlogCategoriesRepositoryInterface.php";
 require_once ABSPATH . "app/Repositories/Interfaces/BLogPostsRepositoryInterface.php";
+require_once ABSPATH . "app/Repositories/Interfaces/NotificationsRepositoryInterface.php";
+require_once ABSPATH . "app/Repositories/Interfaces/RolesRepositoryInterface.php";
+require_once ABSPATH . "app/Repositories/Interfaces/PermissionsRepositoryInterface.php";
+require_once ABSPATH . "app/Repositories/Interfaces/RoleHasPermissionsRepositoryInterface.php";
 
 require_once ABSPATH . "app/Models/Category.php";
 require_once ABSPATH . "app/Repositories/CategoryRepository.php";
@@ -51,6 +55,17 @@ require_once ABSPATH . "app/Models/BlogCategories.php";
 require_once ABSPATH . "app/Repositories/BlogCategoriesRepository.php";
 require_once ABSPATH . "app/Models/BlogPosts.php";
 require_once ABSPATH . "app/Repositories/BlogPostsRepository.php";
+require_once ABSPATH . "app/Models/Notifications.php";
+require_once ABSPATH . "app/Repositories/NotificationsRepository.php";
+require_once ABSPATH . "app/Models/Roles.php";
+require_once ABSPATH . "app/Repositories/RolesRepository.php";
+require_once ABSPATH . "app/Models/Permissions.php";
+require_once ABSPATH . "app/Repositories/PermissionsRepository.php";
+
+require_once ABSPATH . "app/Models/RoleHasPermissions.php";
+require_once ABSPATH . "app/Repositories/RoleHasPermissionsRepository.php";
+require_once ABSPATH . "app/Models/UserHasRoles.php";
+
 
 require_once ABSPATH . "Container/ServiceContainer.php";
 
@@ -70,6 +85,10 @@ require_once ABSPATH . "app/Services/QuestionsService.php";
 require_once ABSPATH . "app/Services/ReviewService.php";
 require_once ABSPATH . "app/Services/BlogCategoriesService.php";
 require_once ABSPATH . "app/Services/BlogPostsService.php";
+require_once ABSPATH . "app/Services/NotificationsService.php";
+require_once ABSPATH . "app/Services/RolesService.php";
+require_once ABSPATH . "app/Services/PermissionsService.php";
+require_once ABSPATH . "app/Services/RoleHasPermissionsService.php";
 
 
 //aduca.com

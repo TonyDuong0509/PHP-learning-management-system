@@ -7,10 +7,13 @@ use App\Services\CategoryService;
 use App\Services\CouponService;
 use App\Services\CourseService;
 use App\Services\EmailService;
+use App\Services\NotificationsService;
 use App\Services\OrdersService;
 use App\Services\PaymentsService;
 use App\Services\SubCategoryService;
 use App\Services\UserService;
+use DateTime;
+use DateTimeZone;
 use Stripe;
 
 class CartController
@@ -24,6 +27,7 @@ class CartController
     private $paymentService;
     private $orderService;
     private $emailService;
+    private $notificationsService;
 
     public function __construct(
         CourseService $courseService,
@@ -35,6 +39,7 @@ class CartController
         PaymentsService $paymentService,
         OrdersService $orderService,
         EmailService $emailService,
+        NotificationsService $notificationsService,
     ) {
         $this->courseService = $courseService;
         $this->cartService = $cartService;
@@ -45,6 +50,7 @@ class CartController
         $this->paymentService = $paymentService;
         $this->orderService = $orderService;
         $this->emailService = $emailService;
+        $this->notificationsService = $notificationsService;
     }
 
     public function addToCart($id)
@@ -90,6 +96,12 @@ class CartController
 
         echo json_encode(['success' => 'Successfully added on your cart']);
         exit;
+    }
+
+    private function getDateTime()
+    {
+        $date = new DateTime('now', new DateTimeZone('Asia/Ho_Chi_Minh'));
+        return $date->format('Y-m-d H:i:s');
     }
 
     public function cartData()
@@ -247,7 +259,6 @@ class CartController
         $data = array();
         $data['name'] = $_POST['name'];
         $data['email'] = $_POST['email'];
-        $data['course_title'] = $_POST['course_title'];
         $cartTotal = $this->cartService->total();
         $carts = $this->cartService->getAll();
 
@@ -274,6 +285,7 @@ class CartController
             $email = $_SESSION['user']['email'] ?? '';
             $user = $this->userService->getByEmail($email);
 
+            $paramsOrder = [];
             foreach ($_POST['course_name'] as $key => $course_name) {
                 $existingOrder = $this->orderService->checkExist($user->getId(), $_POST['course_id'][$key]);
                 if ($existingOrder) {
@@ -294,8 +306,33 @@ class CartController
                     'price' => $_POST['price'][$key],
                     'created_at' => date('Y-m-d H:i:s'),
                 ];
-
                 $this->orderService->saveOrder($paramsOrder);
+            }
+            foreach ($carts as $cart) {
+                $instructor = $this->userService->getById($cart['options']['instructorId']);
+                $to = $instructor->getEmail();
+                $subject = "Aduca - Payment successfully !";
+                $name = $instructor->getName();
+                $website = get_domain();
+                $content = "
+                    Hello $name, <br>
+                    This email from Aduca - E-Learning system. <br>
+                    Your course is payed by student, so please check your bank account <br>
+                    if you didn't recieve money, please response to admin $website to resolve. <br>
+                    Thank you very much <br>
+                    -----------------------<br>
+                    Email from $website
+                ";
+                $paramsNotify = [
+                    'type' => 'Direct Payment',
+                    'notifiable' => $cart['options']['instructorId'],
+                    'data' => "{$cart['name']} is payed directly by {$data['email']}",
+                    'read_at' => 0,
+                    'created_at' => $this->getDateTime(),
+                ];
+
+                $this->notificationsService->saveNotify($paramsNotify);
+                $this->emailService->send($to, $subject, $content);
             }
             unset($_SESSION['coupon']);
             $this->cartService->deleteAll();

@@ -58,13 +58,6 @@
                                     <a href="/">Home</a>
                                 </li>
                                 <li>
-                                    <a href="#">Course <i class="la la-angle-down fs-12"></i></a>
-                                    <ul class="dropdown-menu-item">
-                                        <li><a href="course-grid.html">course grid</a></li>
-                                        <li><a href="course-list.html">course list</a></li>
-                                    </ul>
-                                </li>
-                                <li>
                                     <a href="/blog/posts/all">Blog </a>
                                 </li>
                             </ul><!-- end ul -->
@@ -93,9 +86,6 @@
                                 </li>
                             </ul>
                         </div><!-- end shop-cart -->
-                        <div class="nav-right-button">
-                            <a href="admission.html" class="btn theme-btn d-none d-lg-inline-block"><i class="la la-user-plus mr-1"></i> Admission</a>
-                        </div><!-- end nav-right-button -->
                     </div><!-- end menu-wrapper -->
                 </div><!-- end col-lg-10 -->
             </div><!-- end row -->
