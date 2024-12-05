@@ -1,4 +1,4 @@
-🌟 ** Iventory Management System ** 🌟
+🌟 ** Learning Management System ** 🌟
 
 **Key Features**
 
